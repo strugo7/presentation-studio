@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "title": "Spaced practice beats cramming",
+    "subtitle": "A five-minute case for how we schedule training",
+    "authors": ["Studio Demo"],
+    "event": "presentation-studio example",
+    "date": "2026-11-15",
+    "language": "en",
+    "rtl": false,
+    "aspect": "16:9",
+    "durationMinutes": 5,
+    "audience": { "who": "L&D team", "expertise": "informed", "goal": "decide" }
+  },
+  "narrative": {
+    "scaffold": "case",
+    "throughline": "Spacing the same material over time roughly doubles retention versus one long session.",
+    "ask": "Move onboarding from one 6-hour day to four 90-minute sessions."
+  },
+  "design": {
+    "system": "cobalt-grid",
+    "palette": { "bg": "FFFFFF", "bgAlt": "F6F7F9", "ink": "1A2230", "mute": "5B6472", "accent": "2C5F7C", "accent2": "B4722E", "hair": "E2E5EA", "dark": "1C2A3A" },
+    "fonts": { "display": "Assistant", "body": "Assistant", "mono": "JetBrains Mono" },
+    "motif": "faint graph grid + big section numbers",
+    "gridBackground": true
+  },
+  "sections": [
+    { "id": "s1", "title": "Case", "slideIds": ["cover", "problem", "method", "evidence", "compare", "close"] }
+  ],
+  "slides": [
+    {
+      "id": "cover", "section": "s1", "role": "cover", "dark": true,
+      "kicker": "L&D proposal",
+      "actionTitle": "Spaced practice beats cramming",
+      "background": { "kind": "navy" },
+      "speakerNotes": "We schedule onboarding as one long day. The evidence says that is close to the worst way to do it. Here is the case for spacing it out."
+    },
+    {
+      "id": "problem", "section": "s1", "role": "stakes", "dark": true,
+      "actionTitle": "Half of what we teach on day one is gone by week two.",
+      "bullets": [{ "text": "Forgetting is fastest right after a single massed session." }],
+      "background": { "kind": "navy" },
+      "animation": { "transition": "fade", "reveals": [{ "step": 1, "show": ["bullet:0"] }] },
+      "speakerNotes": "Our post-onboarding quiz scores drop by about half within two weeks. That is not a people problem, it is a scheduling problem."
+    },
+    {
+      "id": "method", "section": "s1", "role": "process",
+      "kicker": "The idea",
+      "actionTitle": "Same hours, spread across four sessions",
+      "exhibit": { "type": "diagram", "data": { "steps": ["Session 1", "Gap", "Session 2", "Gap", "Session 3", "Recall"] }, "caption": "Four 90-minute blocks with recall gaps between them" },
+      "background": { "kind": "grid" },
+      "animation": { "transition": "morph", "reveals": [{ "step": 1, "show": ["exhibit"] }] },
+      "speakerNotes": "The total teaching time is identical. We just break it into four blocks with a gap in between, and start each block by recalling the last one."
+    },
+    {
+      "id": "evidence", "section": "s1", "role": "evidence",
+      "kicker": "The evidence",
+      "actionTitle": "Spacing roughly doubles two-week retention",
+      "exhibit": {
+        "type": "chart", "side": "left",
+        "data": { "kind": "bar", "categories": ["Crammed", "Spaced"], "series": [{ "name": "Retained at 2 weeks", "values": [38, 71] }] },
+        "caption": "Illustrative retention, matched total study time", "annotate": "highlight the Spaced bar"
+      },
+      "bullets": [
+        { "text": "Same material, same total minutes.", "lead": "Only the schedule changed" },
+        { "text": "The gap forces effortful recall, which is what fixes memory." }
+      ],
+      "background": { "kind": "grid" },
+      "animation": { "transition": "fade", "reveals": [{ "step": 1, "show": ["exhibit"] }, { "step": 2, "show": ["bullet:0", "bullet:1"] }] },
+      "speakerNotes": "In matched studies, the spaced group retains roughly twice as much two weeks later. The mechanism is the gap: recalling after you have started to forget is what strengthens the memory."
+    },
+    {
+      "id": "compare", "section": "s1", "role": "comparison",
+      "kicker": "Side by side",
+      "actionTitle": "Four short sessions cost us nothing extra",
+      "exhibit": {
+        "type": "table",
+        "data": { "columns": ["", "One long day", "Four sessions"], "rows": [
+          ["Total hours", "6", "6"],
+          ["Retention (2wk)", "~38%", "~71%"],
+          ["Scheduling", "Easy", "Four calendar holds"]
+        ] }
+      },
+      "background": { "kind": "grid" },
+      "speakerNotes": "The only real cost is four calendar holds instead of one. Everything else is equal or better."
+    },
+    {
+      "id": "close", "section": "s1", "role": "close", "dark": true,
+      "actionTitle": "Let us pilot four-session onboarding next cohort.",
+      "background": { "kind": "navy" },
+      "speakerNotes": "I am asking to run the next onboarding cohort as four 90-minute sessions and compare the two-week scores. Low cost, and the evidence says it is worth it."
+    }
+  ],
+  "navigation": { "mode": "linear" },
+  "assets": []
+}

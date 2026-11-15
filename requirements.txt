@@ -1,0 +1,6 @@
+# presentation-studio — Python deps for the builders
+python-pptx>=1.0
+Pillow>=10
+# PDF export needs Google Chrome or Chromium on PATH (no pip package).
+# Optional, raises pptx->pdf fidelity if present: LibreOffice (the `soffice` binary).
+# Hebrew/RTL decks: install a Hebrew-capable font (e.g. Assistant) or pass --font to embed it.

@@ -1,0 +1,12 @@
+{
+  "name": "presentation-studio",
+  "owner": { "name": "Ofek, Uri, Noam" },
+  "plugins": [
+    {
+      "name": "presentation-studio",
+      "source": "./",
+      "description": "Orchestrated, multi-agent presentation builder (HTML / PPTX / PDF / Keynote / Google Slides) with a pedagogy-first planning engine and a Socratic topic-sharpening skill.",
+      "version": "0.1.0"
+    }
+  ]
+}
