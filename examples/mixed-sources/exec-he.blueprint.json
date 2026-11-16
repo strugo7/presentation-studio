@@ -1,0 +1,334 @@
+{
+ "meta": {
+  "title": "להמשיך בסימולציות פישינג חודשיות ולהוסיף מסלול לעובדים חדשים",
+  "subtitle": "תדריך החלטה להנהלה",
+  "authors": [
+   "צוות ההדרכה"
+  ],
+  "date": "2026-11-16",
+  "language": "he",
+  "rtl": true,
+  "durationMinutes": 8,
+  "audience": {
+   "who": "הנהלה",
+   "expertise": "informed",
+   "goal": "decide",
+   "profile": "הנהלה בכירה; מכירה את הארגון, לא את שיטת ההדרכה",
+   "priorKnowledge": "עלויות ותקציב, סיכוני סייבר ברמה עסקית",
+   "motivation": "להחליט אם להמשיך לממן את התוכנית",
+   "convincingEvidence": "מספר מכריע אחד והשוואת חלופות"
+  },
+  "deliveryMode": "exec-briefing",
+  "tone": "ישיר, מספרים קודם"
+ },
+ "narrative": {
+  "scaffold": "answer-first",
+  "throughline": "הסימולציות החודשיות הורידו את שיעור ההקלקה בשני שלישים בעלות נמוכה; כדאי להמשיך ולהרחיב לעובדים חדשים.",
+  "ask": "לאשר את המשך התוכנית ל-2027 ומסלול קליטה לעובדים חדשים."
+ },
+ "design": {
+  "system": "executive-data-briefing",
+  "variant": "signal compact, hairline frames, running head",
+  "fonts": {
+   "display": "Assistant",
+   "body": "Assistant",
+   "mono": "JetBrains Mono"
+  }
+ },
+ "sources": [
+  {
+   "id": "notes",
+   "title": "סיכום תוכנית מודעות לפישינג — חצי שנה ראשונה",
+   "shortTitle": "סיכום התוכנית",
+   "kind": "markdown",
+   "file": {
+    "name": "notes.md",
+    "path": "sources/notes.md"
+   },
+   "creator": "צוות ההדרכה (חומר דוגמה)",
+   "accessedAt": "2026-11-16",
+   "notes": "ארגון ונתונים בדויים לצורך דוגמה"
+  },
+  {
+   "id": "results",
+   "title": "תוצאות סימולציות פישינג ינואר–יוני 2026 (נתוני דוגמה)",
+   "shortTitle": "results.csv",
+   "kind": "csv",
+   "file": {
+    "name": "results.csv",
+    "path": "sources/results.csv"
+   },
+   "creator": "צוות ההדרכה (חומר דוגמה)",
+   "accessedAt": "2026-11-16"
+  },
+  {
+   "id": "dash",
+   "title": "לוח מחוונים של הסימולציות, יוני 2026 (צילום מסך)",
+   "shortTitle": "צילום לוח המחוונים",
+   "kind": "image",
+   "file": {
+    "name": "dashboard.png",
+    "path": "sources/dashboard.png"
+   },
+   "creator": "צוות ההדרכה (חומר דוגמה)",
+   "accessedAt": "2026-11-16"
+  },
+  {
+   "id": "attack",
+   "title": "MITRE ATT&CK — T1566 Phishing",
+   "shortTitle": "ATT&CK T1566",
+   "kind": "web",
+   "url": "https://attack.mitre.org/techniques/T1566/",
+   "creator": "The MITRE Corporation",
+   "accessedAt": "2026-11-16",
+   "license": "ATT&CK Terms of Use (© The MITRE Corporation; reproduced with permission)"
+  }
+ ],
+ "sections": [
+  {
+   "id": "d",
+   "title": "ההחלטה",
+   "slideIds": [
+    "cover",
+    "decision",
+    "number",
+    "trend",
+    "options",
+    "dash",
+    "close"
+   ]
+  }
+ ],
+ "slides": [
+  {
+   "id": "cover",
+   "section": "d",
+   "role": "cover",
+   "dark": true,
+   "kicker": "תדריך החלטה · נובמבר 2026",
+   "actionTitle": "להמשיך בסימולציות פישינג חודשיות ולהוסיף מסלול לעובדים חדשים"
+  },
+  {
+   "id": "decision",
+   "section": "d",
+   "role": "concept",
+   "layout": "statement",
+   "kicker": "ההמלצה",
+   "actionTitle": "מבקשים לאשר המשך סימולציות חודשיות ב-2027, ומסלול קצר לעובדים חדשים בחודש הראשון.",
+   "bullets": [
+    {
+     "text": "עלות שנתית: רישיון 12,000 ₪ ושעתיים לעובד"
+    }
+   ],
+   "citations": [
+    {
+     "sourceId": "notes",
+     "locator": "עלויות; המלצת הצוות",
+     "kind": "fact"
+    }
+   ],
+   "speakerNotes": "ההחלטה קודם. כל השאר הוא הראיות שתומכות בה."
+  },
+  {
+   "id": "number",
+   "section": "d",
+   "role": "evidence",
+   "layout": "big-number",
+   "kicker": "התוצאה",
+   "actionTitle": "שיעור ההקלקה על מיילים מזויפים ירד בשני שלישים בתוך חצי שנה",
+   "exhibit": {
+    "type": "chart",
+    "bigNumber": {
+     "value": "−67%",
+     "unit": "",
+     "context": "שיעור הקלקה: 18.5% בינואר מול 6.1% ביוני 2026, 400 עובדים (נתוני דוגמה)"
+    }
+   },
+   "bullets": [
+    {
+     "text": "ובמקביל, שיעור הדיווח עלה מ-4% ל-24.9%"
+    }
+   ],
+   "citations": [
+    {
+     "sourceId": "results",
+     "locator": "results.csv!C2,C7",
+     "kind": "derived",
+     "claim": "(18.5−6.1)/18.5"
+    },
+    {
+     "sourceId": "results",
+     "locator": "results.csv!D2,D7",
+     "kind": "fact"
+    }
+   ],
+   "speakerNotes": "67% זו ירידה יחסית שחישבנו משתי השורות בקובץ. הנתון המדווח עצמו הוא 18.5% מול 6.1%."
+  },
+  {
+   "id": "trend",
+   "section": "d",
+   "role": "evidence",
+   "layout": "full-exhibit",
+   "kicker": "המגמה",
+   "actionTitle": "עובדים לא רק נמנעים מלחיצה, הם מדווחים: הדיווחים עקפו את ההקלקות באפריל",
+   "exhibit": {
+    "type": "chart",
+    "caption": "שיעור הקלקה ושיעור דיווח לפי חודש (נתוני דוגמה)",
+    "data": {
+     "kind": "column",
+     "categories": [
+      "ינו׳",
+      "פבר׳",
+      "מרץ",
+      "אפר׳",
+      "מאי",
+      "יוני"
+     ],
+     "series": [
+      {
+       "name": "הקלקה",
+       "values": [
+        18.5,
+        15.2,
+        12.8,
+        9.6,
+        7.9,
+        6.1
+       ]
+      },
+      {
+       "name": "דיווח",
+       "values": [
+        4.0,
+        7.5,
+        11.2,
+        16.8,
+        21.4,
+        24.9
+       ]
+      }
+     ],
+     "unit": "%",
+     "yLabel": "אחוז מהעובדים",
+     "decimals": 1
+    }
+   },
+   "citations": [
+    {
+     "sourceId": "results",
+     "locator": "results.csv!A2:D7",
+     "kind": "fact"
+    }
+   ],
+   "speakerNotes": "הדיווח חשוב יותר מההימנעות: כל דיווח הוא התרעה מוקדמת לצוות האבטחה."
+  },
+  {
+   "id": "options",
+   "section": "d",
+   "role": "comparison",
+   "kicker": "חלופות וסיכונים",
+   "actionTitle": "הדרכה שנתית אחת זולה בזמן, אבל אין לה מדידה ואין לה משוב מיידי",
+   "exhibit": {
+    "type": "table",
+    "data": {
+     "columns": [
+      "",
+      "סימולציות חודשיות + מסלול חדשים",
+      "הדרכה שנתית פרונטלית"
+     ],
+     "rows": [
+      [
+       "עלות ישירה",
+       "12,000 ₪ רישיון לשנה",
+       "לא צוינה בחומר"
+      ],
+      [
+       "זמן עובד",
+       "כ-2 שעות בשנה",
+       "שעתיים בשנה"
+      ],
+      [
+       "מדידה",
+       "חודשית: הקלקה ודיווח",
+       "אין"
+      ],
+      [
+       "סיכון עיקרי",
+       "עייפות מסימולציות",
+       "שכחה בין הדרכות"
+      ]
+     ]
+    }
+   },
+   "bullets": [
+    {
+     "text": "עובדים חדשים לוחצים בערך פי שניים (הערכת הצוות, לא נמדד)"
+    }
+   ],
+   "citations": [
+    {
+     "sourceId": "notes",
+     "locator": "עלויות",
+     "kind": "fact"
+    },
+    {
+     "sourceId": "notes",
+     "locator": "תצפית 2",
+     "kind": "disputed",
+     "claim": "הערכה, לא נמדד בנפרד"
+    }
+   ],
+   "speakerNotes": "את הנתון על עובדים חדשים אני מציג כהערכה. אם תאשרו, נמדוד אותו בנפרד מהחודש הראשון."
+  },
+  {
+   "id": "dash",
+   "section": "d",
+   "role": "evidence",
+   "layout": "split",
+   "kicker": "ראיה",
+   "actionTitle": "הלוח החי מאפשר לעקוב אחרי כל קמפיין, כך שההחלטה ניתנת לבדיקה",
+   "exhibit": {
+    "type": "screenshot",
+    "ref": "dashboard",
+    "side": "right",
+    "caption": "לוח המחוונים, יוני 2026"
+   },
+   "bullets": [
+    {
+     "text": "מדד חודשי אחד להנהלה: שיעור הדיווח"
+    }
+   ],
+   "citations": [
+    {
+     "sourceId": "dash",
+     "locator": "צילום מסך, יוני 2026",
+     "kind": "fact"
+    }
+   ],
+   "speakerNotes": "אם תאשרו, נשלח את המדד הזה פעם בחודש."
+  },
+  {
+   "id": "close",
+   "section": "d",
+   "role": "close",
+   "dark": true,
+   "actionTitle": "היום: אישור המשך התוכנית ל-2027. בעוד חודש: נתונים ראשונים ממסלול העובדים החדשים.",
+   "speakerNotes": "ההחלטה נשארת על המסך בזמן השאלות."
+  }
+ ],
+ "navigation": {
+  "mode": "linear"
+ },
+ "assets": [
+  {
+   "id": "dashboard",
+   "path": "sources/dashboard.png",
+   "kind": "screenshot",
+   "provider": "original",
+   "creator": "צוות ההדרכה (חומר דוגמה)",
+   "credit": "צילום מסך מקורי של לוח הדוגמה",
+   "license": "MIT (חומר דוגמה של הריפו)",
+   "alt": "לוח מחוונים: שיעור הקלקה יורד ושיעור דיווח עולה מינואר עד יוני"
+  }
+ ]
+}

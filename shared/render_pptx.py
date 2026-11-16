@@ -253,6 +253,10 @@ def ex_chart(slide, data, x, y, w, h):
     va.has_major_gridlines = True; va.major_gridlines.format.line.color.rgb = C("hair")
     va.format.line.fill.background()
     va.tick_labels.number_format = "General"; va.tick_labels.number_format_is_linked = False
+    if sp["kind"] in ("column", "bar", "line"):
+        allv0 = [v for s in sp["series"] for v in s["values"]] or [0]
+        base0 = sp["yMin"] if (sp["kind"] == "line" and sp["yMin"] is not None) else min(0, min(allv0))
+        lo, hi, stp = bl.nice_ticks(max(allv0), base0); va.maximum_scale = hi; va.major_unit = stp
     allv = [v for s in sp["series"] for v in s["values"]] or [0]
     if sp["kind"] in ("column", "bar"): va.minimum_scale = min(0, min(allv))
     elif sp["kind"] == "line": va.minimum_scale = sp["yMin"] if sp["yMin"] is not None else min(0, min(allv))
@@ -347,7 +351,8 @@ def ex_code(slide, text, x, y, w, h, caption):
     rrect(slide, x, y, w, h, C("dark"), None, rad=0.03)
     t = tb(slide, x+0.3, y+0.25, w-0.6, h-0.5)
     for ln in str(text).splitlines() or [""]:
-        para(t, ln, 15, WHITE, font=FM, align=PP_ALIGN.LEFT, sa=2, first=(t.paragraphs[0].runs == []))
+        p = para(t, ln, 15, WHITE, font=FM, align=PP_ALIGN.LEFT, sa=2, first=(t.paragraphs[0].runs == []))
+        p._p.get_or_add_pPr().set('rtl', '0')   # code is LTR even in RTL decks
 
 def place_exhibit(slide, ex, box, bleed=False):
     x, y, w, h = box; t = ex.get("type"); cap = ex.get("caption", "")
@@ -586,4 +591,4 @@ with zipfile.ZipFile(OUT) as zin, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED
 shutil.move(tmp, OUT)
 shutil.rmtree(_TMP, ignore_errors=True)
 for w in A.warnings: print("warning:", w)
-print("saved", OUT, "slides:", len(prs.slides._sldIdLst), "| rtl:", RTL, "| zoom:", ZOOM, "| system:", SYS)
+print("saved", OUT, "slides:", len(prs.slides._sldIdLst), "| rtl:", RTL, "| zoom:", ZOOM, "| system:", d.get("system") or SYS)

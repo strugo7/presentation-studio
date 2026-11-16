@@ -106,8 +106,8 @@ def svg_chart(data):
     else:
         cats = sp["categories"]; n = max(len(cats), 1); m = max(len(sp["series"]), 1)
         allv = [v for s in sp["series"] for v in s["values"]] or [0]
-        vmx = bl.nice_max(max(allv)); vmn = min(0, min(allv)) if k != "line" or sp["yMin"] is None else sp["yMin"]
-        if k == "line" and sp["yMin"] is None: vmn = min(0, min(allv))
+        base = sp["yMin"] if (k == "line" and sp["yMin"] is not None) else min(0, min(allv))
+        vmn, vmx, vstep = bl.nice_ticks(max(allv), base)
         if k == "bar":
             L = 240
             X = lambda v: L + (W-L-R-60) * (v - vmn) / ((vmx - vmn) or 1)
@@ -125,8 +125,9 @@ def svg_chart(data):
             body.append(f'<line x1="{X(0):.0f}" y1="{T}" x2="{X(0):.0f}" y2="{H-B}" stroke="#{pal["mute"]}" stroke-width="2"/>')
         else:
             Y = lambda v: H - B - (H-B-T) * (v - vmn) / ((vmx - vmn) or 1)
-            for i in range(5):
-                v = vmn + (vmx-vmn)*i/4; y = Y(v)
+            nt = int(round((vmx - vmn) / vstep))
+            for i in range(nt + 1):
+                v = vmn + vstep * i; y = Y(v)
                 body.append(f'<line x1="{L}" y1="{y:.0f}" x2="{W-R}" y2="{y:.0f}" stroke="#{pal["hair"]}" stroke-width="1.5"/><text x="{L-12}" y="{y+8:.0f}" text-anchor="end" font-size="26" fill="#{pal["mute"]}">{E(bl.fmt_num(v, 0 if float(v).is_integer() else dec))}</text>')
             band = (W-L-R) / n
             for i, c in enumerate(cats):
@@ -155,8 +156,7 @@ def svg_chart(data):
             + title + _legend(sp, W, 40 if sp["title"] else 30) + "".join(body) + _axis_labels(sp, W, H, L, B) + '</svg>')
 
 def table_html(data):
-    cols = data.get("columns", []); rows = data.get("rows", [])
-    if RTL: cols = list(reversed(cols)); rows = [list(reversed(r)) for r in rows]
+    cols = data.get("columns", []); rows = data.get("rows", [])   # dir=rtl already mirrors the columns
     th = "".join(f"<th>{E(str(c))}</th>" for c in cols)
     trs = "".join("<tr>" + "".join(f"<td>{E(str(c))}</td>" for c in r) + "</tr>" for r in rows)
     return f'<table class="ex-table"><thead><tr>{th}</tr></thead><tbody>{trs}</tbody></table>'
@@ -307,8 +307,8 @@ def slide_section(sl):
         body = f'<div class="split side-{side}">{vis + txt if side == "left" else txt + vis}</div>'
     elif lay == "full-exhibit":
         strip = " · ".join(E(b.get("text", "")) for b in sl.get("bullets", []))
-        body = (head(sl, kicker, title) + f'<div class="bd full"><div class="fx" data-rk="exhibit">{exhibit_html(ex)}</div>'
-                + (f'<div class="strip" data-rk="bullet:0">{strip}</div>' if strip else "") + f'{eng}</div>')
+        body = (f'<div class="stack">{head(sl, kicker, title)}<div class="full"><div class="fx" data-rk="exhibit">{exhibit_html(ex)}</div>'
+                + (f'<div class="strip" data-rk="bullet:0">{strip}</div>' if strip else "") + f'{eng}</div></div>')
     elif role == "agenda":
         tiles = []
         for i, sec in enumerate(sections):
@@ -419,7 +419,7 @@ HTML = r'''<!DOCTYPE html><html lang="''' + E(LANG) + '"' + (' dir="rtl"' if RTL
 .shot .frame.chart{background:#fff;padding:14px}.frame-bleed .shot .frame.chart{background:none}.shot .frame.ph{color:#8aa;font-family:var(--mono);padding:60px}
 .shot img{display:block;max-width:100%;max-height:560px}.shot figcaption{font-size:22px;color:var(--mute);margin-top:10px}
 .chart-svg,.seq-svg{direction:ltr}svg text{unicode-bidi:plaintext}.refs .rn{font-weight:800;color:var(--ink);unicode-bidi:isolate}
-pre.code{color:#cfe;font-family:var(--mono);font-size:22px;padding:24px;text-align:left;direction:ltr;overflow:auto}
+pre.code{color:#cfe;font-family:var(--mono);font-size:22px;padding:24px;text-align:left;direction:ltr;unicode-bidi:plaintext;overflow:auto;white-space:pre-wrap}
 .ex-table{width:100%;border-collapse:collapse;font-size:28px}.ex-table th{background:var(--dark);color:#fff;font-weight:700;padding:20px;text-align:''' + START + r'''}
 .ex-table td{padding:20px;color:var(--mute);border-bottom:1px solid var(--hair)}.ex-table tbody tr:nth-child(odd){background:var(--bgAlt)}
 .ex-table td:first-child{color:var(--ink);font-weight:700}
@@ -449,8 +449,12 @@ pre.code{color:#cfe;font-family:var(--mono);font-size:22px;padding:24px;text-ali
 .sp-vis.fill img{width:100%;height:100%;max-height:none;object-fit:cover}.sp-vis.fill figcaption{position:absolute;bottom:0;padding:14px 24px;background:rgba(255,255,255,.88)}
 .sp-vis>*{width:100%}.sp-vis .shot img{max-height:760px;margin:0 auto}.sp-vis{position:relative}
 .sp-txt{padding:120px var(--m);display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}.sp-txt .title{margin-bottom:46px}
-.full{top:250px}.full .fx{height:100%;display:flex;align-items:flex-start;justify-content:center}.full .fx>*{width:100%;max-height:100%}
-.full .shot img{max-height:560px;margin:0 auto}.strip{position:absolute;bottom:-70px;font-size:28px;color:var(--mute)}
+.stack{position:absolute;top:74px;bottom:120px;right:var(--m);left:var(--m);display:flex;flex-direction:column;z-index:2}.motif-rule .stack{top:96px}
+.stack .hd{position:static;margin-bottom:34px}.full{flex:1;min-height:0;display:flex;flex-direction:column}
+.full .fx{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}.full .fx>*{max-width:100%;max-height:100%}
+.full .shot{display:flex;flex-direction:column;max-height:100%}.full .shot .frame{min-height:0}
+.full .fx>*{width:100%}.full .chart-svg,.full .seq-svg{width:100%!important;height:560px!important}
+.full .shot img{max-height:560px;margin:0 auto}.strip{font-size:28px;color:var(--mute);margin-top:14px}
 .tiles{display:flex;gap:40px;height:100%;align-items:center}.tile{flex:1;height:460px;border-radius:24px;padding:40px;cursor:pointer;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.16);transition:transform .4s,border-color .3s;font:inherit;text-align:inherit;display:block}
 .slide.light .tile{background:#fff;border-color:var(--hair)}.tile:hover,.tile:focus-visible{transform:translateY(-10px);border-color:var(--accent2)}.tile .tn{display:block;font-size:90px;font-weight:800;color:var(--accent2)}.tile .ts{display:block;font-size:48px;font-weight:800;color:#fff;margin-top:14px}.slide.light .tile .ts{color:var(--ink)}
 .runhead{position:absolute;top:30px;right:var(--m);left:var(--m);display:flex;justify-content:space-between;font-size:20px;letter-spacing:.06em;color:var(--mute);padding-bottom:12px;border-bottom:1px solid var(--hair);z-index:2}
@@ -547,4 +551,4 @@ window.deck={go,next,prev,overview,setRM,state:()=>({idx,step,RM})};
 with open(os.path.join(OUT, "index.html"), "w", encoding="utf-8") as f:
     f.write(HTML)
 for w in A.warnings: print("warning:", w)
-print("saved", os.path.join(OUT, "index.html"), "| slides:", len(slides), "| rtl:", RTL, "| zoom:", ZOOM, "| system:", SYS)
+print("saved", os.path.join(OUT, "index.html"), "| slides:", len(slides), "| rtl:", RTL, "| zoom:", ZOOM, "| system:", d.get("system") or SYS)

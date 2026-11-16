@@ -584,6 +584,18 @@ def nice_max(v):
     return 10 * e
 
 
+def nice_ticks(vmax, vmin=0, n=4):
+    """Round axis: returns (lo, hi, step) with a 1/2/2.5/5 x 10^k step and ~n intervals."""
+    import math
+    span = (vmax - vmin) or 1
+    raw = span / n
+    e = 10 ** math.floor(math.log10(raw))
+    step = next(m * e for m in (1, 2, 2.5, 5, 10) if m * e >= raw)
+    lo = math.floor(vmin / step) * step
+    hi = math.ceil(vmax / step) * step
+    return lo, hi, step
+
+
 def table_from_chart(spec):
     data = spec.get("data") or {}
     cats = data.get("categories", [])

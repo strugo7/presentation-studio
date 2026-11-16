@@ -155,5 +155,41 @@ class PDFRender(TmpDirMixin, unittest.TestCase):
         self.assertIn("RFC 8446", txt)                           # sources page
 
 
+MIXED = os.path.join(EXAMPLES, "mixed-sources")
+
+
+class MixedSourcesDecks(TmpDirMixin, unittest.TestCase):
+    """Two decks from one source set must share facts but differ in structure, evidence and direction."""
+    def setUp(self):
+        super().setUp()
+        self.stu = bl.load(os.path.join(MIXED, "students-he.blueprint.json"))
+        self.exe = bl.load(os.path.join(MIXED, "exec-he.blueprint.json"))
+
+    def test_same_sources_valid(self):
+        self.assertEqual(self.stu["sources"], self.exe["sources"])
+        for bp in (self.stu, self.exe):
+            self.assertEqual(bl.validate(bp, MIXED)[0], [])
+
+    def test_every_fact_slide_cites(self):
+        for bp in (self.stu, self.exe):
+            for s in bp["slides"]:
+                if s.get("exhibit", {}).get("type") in ("chart", "table") or s.get("layout") == "big-number":
+                    self.assertTrue(s.get("citations"), s["id"])
+
+    def test_decks_differ(self):
+        lay = lambda bp: [s.get("layout") or s["role"] for s in bp["slides"]]
+        self.assertNotEqual(lay(self.stu), lay(self.exe))
+        self.assertNotEqual(bl.resolve_system(self.stu["design"])[0], bl.resolve_system(self.exe["design"])[0])
+        self.assertTrue(any(s.get("engagement", {}).get("type") == "quiz" for s in self.stu["slides"]))
+        self.assertFalse(any(s.get("engagement", {}).get("type") == "quiz" for s in self.exe["slides"]))
+        self.assertEqual(self.exe["slides"][1]["layout"], "statement")        # decision first
+        self.assertEqual(self.stu["slides"][1].get("engagement", {}).get("type"), "question")  # question first
+
+    def test_both_render(self):
+        for name in ("students-he", "exec-he"):
+            run_script("render_html.py", os.path.join(MIXED, name + ".blueprint.json"), os.path.join(self.tmp, name), MIXED)
+            run_script("render_pptx.py", os.path.join(MIXED, name + ".blueprint.json"), os.path.join(self.tmp, name + ".pptx"), MIXED)
+
+
 if __name__ == "__main__":
     unittest.main()

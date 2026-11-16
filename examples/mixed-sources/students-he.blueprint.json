@@ -1,0 +1,433 @@
+{
+ "meta": {
+  "title": "איך מזהים מייל פישינג לפני שלוחצים?",
+  "subtitle": "שיעור פתיחה בסדנת מודעות לאבטחת מידע",
+  "authors": [
+   "צוות ההדרכה"
+  ],
+  "date": "2026-11-16",
+  "language": "he",
+  "rtl": true,
+  "durationMinutes": 20,
+  "audience": {
+   "who": "סטודנטים מתחילים",
+   "expertise": "lay",
+   "goal": "learn",
+   "profile": "סטודנטים בשנה א׳, משתמשים בדוא״ל יומיומי, בלי רקע באבטחה",
+   "priorKnowledge": "שימוש בדוא״ל ובדפדפן",
+   "motivation": "לא ליפול בהונאה",
+   "convincingEvidence": "דוגמה פתורה ותרגול"
+  },
+  "deliveryMode": "workshop",
+  "tone": "סקרן וחם, בגוף שני רבים",
+  "accessibility": {
+   "reducedMotion": false
+  }
+ },
+ "narrative": {
+  "scaffold": "workshop",
+  "throughline": "שלושה סימנים קבועים חושפים את רוב מיילי הפישינג, ואפשר ללמוד אותם בתרגול קצר.",
+  "ask": "לבדוק את כתובת השולח לפני כל לחיצה על קישור."
+ },
+ "design": {
+  "system": "classroom-workshop",
+  "variant": "cobalt-grid חם, כותרות ממוספרות, כרטיסים מעוגלים",
+  "fonts": {
+   "display": "Assistant",
+   "body": "Assistant",
+   "mono": "JetBrains Mono"
+  }
+ },
+ "sources": [
+  {
+   "id": "notes",
+   "title": "סיכום תוכנית מודעות לפישינג — חצי שנה ראשונה",
+   "shortTitle": "סיכום התוכנית",
+   "kind": "markdown",
+   "file": {
+    "name": "notes.md",
+    "path": "sources/notes.md"
+   },
+   "creator": "צוות ההדרכה (חומר דוגמה)",
+   "accessedAt": "2026-11-16",
+   "notes": "ארגון ונתונים בדויים לצורך דוגמה"
+  },
+  {
+   "id": "results",
+   "title": "תוצאות סימולציות פישינג ינואר–יוני 2026 (נתוני דוגמה)",
+   "shortTitle": "results.csv",
+   "kind": "csv",
+   "file": {
+    "name": "results.csv",
+    "path": "sources/results.csv"
+   },
+   "creator": "צוות ההדרכה (חומר דוגמה)",
+   "accessedAt": "2026-11-16"
+  },
+  {
+   "id": "dash",
+   "title": "לוח מחוונים של הסימולציות, יוני 2026 (צילום מסך)",
+   "shortTitle": "צילום לוח המחוונים",
+   "kind": "image",
+   "file": {
+    "name": "dashboard.png",
+    "path": "sources/dashboard.png"
+   },
+   "creator": "צוות ההדרכה (חומר דוגמה)",
+   "accessedAt": "2026-11-16"
+  },
+  {
+   "id": "attack",
+   "title": "MITRE ATT&CK — T1566 Phishing",
+   "shortTitle": "ATT&CK T1566",
+   "kind": "web",
+   "url": "https://attack.mitre.org/techniques/T1566/",
+   "creator": "The MITRE Corporation",
+   "accessedAt": "2026-11-16",
+   "license": "ATT&CK Terms of Use (© The MITRE Corporation; reproduced with permission)"
+  }
+ ],
+ "sections": [
+  {
+   "id": "q",
+   "title": "השאלה",
+   "slideIds": [
+    "cover",
+    "hook",
+    "model"
+   ]
+  },
+  {
+   "id": "ex",
+   "title": "דוגמה ותרגול",
+   "slideIds": [
+    "worked",
+    "evidence",
+    "quiz",
+    "summary",
+    "close"
+   ]
+  }
+ ],
+ "slides": [
+  {
+   "id": "cover",
+   "section": "q",
+   "role": "cover",
+   "dark": true,
+   "kicker": "סדנת מודעות · שיעור 1",
+   "actionTitle": "איך מזהים מייל פישינג לפני שלוחצים?",
+   "speakerNotes": "פותחים בשאלה, לא בהגדרה. היום נצא עם שלושה סימנים שאפשר לבדוק בעשר שניות."
+  },
+  {
+   "id": "hook",
+   "section": "q",
+   "role": "concept",
+   "layout": "statement",
+   "kicker": "שאלה לחדר",
+   "actionTitle": "מתוך כל 100 עובדים שקיבלו מייל מזויף בינואר, כמה לחצו על הקישור?",
+   "bullets": [
+    {
+     "text": "התשובה: כמעט 19 מכל 100, בארגון של 400 עובדים."
+    }
+   ],
+   "citations": [
+    {
+     "sourceId": "results",
+     "locator": "results.csv!C2",
+     "kind": "fact"
+    }
+   ],
+   "engagement": {
+    "type": "question",
+    "prompt": "נחשו לפני שחושפים",
+    "presenterCue": "אוספים שלוש הערכות מהחדר, ואז חושפים."
+   },
+   "animation": {
+    "transition": "fade",
+    "reveals": [
+     {
+      "step": 1,
+      "show": [
+       "bullet:0"
+      ]
+     }
+    ]
+   },
+   "speakerNotes": "רוב האנשים מנחשים מספר נמוך מדי. זה בדיוק הפער שהשיעור הזה סוגר."
+  },
+  {
+   "id": "model",
+   "section": "q",
+   "role": "process",
+   "kicker": "המודל",
+   "actionTitle": "מתקפת פישינג עוברת ארבעה שלבים, ואפשר לעצור אותה כבר בשני",
+   "exhibit": {
+    "type": "diagram",
+    "caption": "שרשרת פישינג פשוטה (T1566 בשפת MITRE ATT&CK)",
+    "data": {
+     "kind": "chain",
+     "steps": [
+      "מייל מתחזה",
+      "לחיצה על קישור",
+      "הזנת סיסמה",
+      "גישה לחשבון"
+     ]
+    }
+   },
+   "bullets": [
+    {
+     "text": "הלחיצה היא הרגע שבו אתם עדיין שולטים"
+    }
+   ],
+   "citations": [
+    {
+     "sourceId": "attack",
+     "locator": "T1566",
+     "kind": "fact"
+    },
+    {
+     "sourceId": "notes",
+     "locator": "רקע",
+     "kind": "fact"
+    }
+   ],
+   "animation": {
+    "transition": "morph",
+    "reveals": [
+     {
+      "step": 1,
+      "show": [
+       "exhibit"
+      ]
+     },
+     {
+      "step": 2,
+      "show": [
+       "bullet:0"
+      ]
+     }
+    ]
+   },
+   "speakerNotes": "MITRE מתעדים את הטכניקה הזו בשם T1566. השלב השני, הלחיצה, הוא המקום שבו הרגל קטן עוצר את כל השרשרת."
+  },
+  {
+   "id": "worked",
+   "section": "ex",
+   "role": "evidence",
+   "layout": "full-exhibit",
+   "kicker": "דוגמה פתורה",
+   "actionTitle": "כך נראית המתקפה מהצד של המערכת: שלוש הודעות, ואחת מהן היא שלכם",
+   "exhibit": {
+    "type": "diagram",
+    "caption": "מהלך מייל פישינג אופייני, מפושט",
+    "data": {
+     "kind": "sequence",
+     "actors": [
+      "תוקף",
+      "עובד/ת",
+      "אתר מזויף"
+     ],
+     "messages": [
+      {
+       "from": "תוקף",
+       "to": "עובד/ת",
+       "label": "מייל מ-support@paypa1.com"
+      },
+      {
+       "from": "עובד/ת",
+       "to": "אתר מזויף",
+       "label": "לחיצה על \"אמתו את החשבון\"",
+       "emphasis": true
+      },
+      {
+       "from": "אתר מזויף",
+       "to": "תוקף",
+       "label": "שם משתמש וסיסמה"
+      }
+     ]
+    }
+   },
+   "bullets": [
+    {
+     "text": "סימן 1: כתובת שולח שונה באות אחת · סימן 2: דחיפות · סימן 3: קישור שלא תואם"
+    }
+   ],
+   "citations": [
+    {
+     "sourceId": "notes",
+     "locator": "תצפית 3",
+     "kind": "fact"
+    }
+   ],
+   "speakerNotes": "עוצרים על ההודעה המודגשת: זו הפעולה היחידה שבידיים שלכם. הסימן שהכי פחות עובדים זיהו בארגון היה כתובת שונה באות אחת."
+  },
+  {
+   "id": "evidence",
+   "section": "ex",
+   "role": "evidence",
+   "kicker": "זה עובד",
+   "actionTitle": "אחרי חצי שנה של תרגול, עובדים לוחצים פי שלושה פחות",
+   "exhibit": {
+    "type": "chart",
+    "side": "left",
+    "caption": "שיעור הקלקה חודשי, 400 עובדים (נתוני דוגמה)",
+    "data": {
+     "kind": "line",
+     "categories": [
+      "ינו׳",
+      "פבר׳",
+      "מרץ",
+      "אפר׳",
+      "מאי",
+      "יוני"
+     ],
+     "series": [
+      {
+       "name": "שיעור הקלקה",
+       "values": [
+        18.5,
+        15.2,
+        12.8,
+        9.6,
+        7.9,
+        6.1
+       ]
+      }
+     ],
+     "unit": "%",
+     "yLabel": "אחוז העובדים שלחצו",
+     "decimals": 1
+    }
+   },
+   "bullets": [
+    {
+     "text": "מ-18.5% בינואר ל-6.1% ביוני",
+     "lead": "ירידה חדה"
+    },
+    {
+     "text": "הקפיצה הגדולה הגיעה עם דף ההסבר המיידי"
+    }
+   ],
+   "citations": [
+    {
+     "sourceId": "results",
+     "locator": "results.csv!C2:C7",
+     "kind": "fact"
+    },
+    {
+     "sourceId": "notes",
+     "locator": "תצפית 1",
+     "kind": "derived"
+    }
+   ],
+   "animation": {
+    "transition": "fade",
+    "reveals": [
+     {
+      "step": 1,
+      "show": [
+       "exhibit"
+      ]
+     },
+     {
+      "step": 2,
+      "show": [
+       "bullet:0",
+       "bullet:1"
+      ]
+     }
+    ]
+   },
+   "speakerNotes": "שימו לב לשיפוע בין מרץ לאפריל. לפי הצוות, זה החודש שבו הוסיפו דף הסבר קצר מיד אחרי הלחיצה. זו פרשנות שלהם, לא ניסוי מבוקר."
+  },
+  {
+   "id": "quiz",
+   "section": "ex",
+   "role": "concept",
+   "kicker": "תרגול",
+   "actionTitle": "תורכם: איזה פרט במייל הזה הוא הסימן החשוד ביותר?",
+   "exhibit": {
+    "type": "code",
+    "data": "From: IT Support <it-support@micros0ft-help.com>\nSubject: הסיסמה שלך תפוג היום\n\nלחצו כאן כדי לשמור על הגישה לחשבון."
+   },
+   "engagement": {
+    "type": "quiz",
+    "prompt": "בחרו תשובה אחת",
+    "options": [
+     {
+      "id": "a",
+      "text": "כתובת השולח"
+     },
+     {
+      "id": "b",
+      "text": "השעה שבה נשלח"
+     },
+     {
+      "id": "c",
+      "text": "החתימה בסוף המייל"
+     }
+    ],
+    "correctOptionId": "a",
+    "feedback": {
+     "a": "נכון: micros0ft עם אפס במקום o. זה הסימן שהכי פחות עובדים זיהו.",
+     "b": "שעה חריגה יכולה לעורר חשד, אבל כאן יש סימן חד יותר.",
+     "c": "קל לזייף חתימה. בדקו קודם את הכתובת."
+    },
+    "presenterCue": "נותנים 20 שניות לבחירה ורק אז חושפים.",
+    "answerPlacement": "next-slide"
+   },
+   "citations": [
+    {
+     "sourceId": "notes",
+     "locator": "תצפית 3",
+     "kind": "fact"
+    }
+   ],
+   "speakerNotes": "שאלת תרגול אחת, מיד אחרי הדוגמה הפתורה."
+  },
+  {
+   "id": "summary",
+   "section": "ex",
+   "role": "concept",
+   "layout": "statement",
+   "kicker": "מה לוקחים",
+   "actionTitle": "לפני כל לחיצה: כתובת, דחיפות, קישור.",
+   "bullets": [
+    {
+     "text": "כתובת שולח: אות אחת שונה מספיקה"
+    },
+    {
+     "text": "דחיפות: \"היום\", \"מיד\", \"אחרת החשבון ייחסם\""
+    },
+    {
+     "text": "קישור: מעבר עכבר לפני לחיצה"
+    }
+   ],
+   "speakerNotes": "זה השקף שנשאר על המסך בזמן השאלות."
+  },
+  {
+   "id": "close",
+   "section": "ex",
+   "role": "close",
+   "dark": true,
+   "actionTitle": "השבוע: בדקו את כתובת השולח בכל מייל עם קישור, ודווחו על אחד חשוד.",
+   "speakerNotes": "הבקשה קטנה ומדידה. בשבוע הבא נתחיל מהמיילים שדיווחתם עליהם."
+  }
+ ],
+ "navigation": {
+  "mode": "linear"
+ },
+ "assets": [
+  {
+   "id": "dashboard",
+   "path": "sources/dashboard.png",
+   "kind": "screenshot",
+   "provider": "original",
+   "creator": "צוות ההדרכה (חומר דוגמה)",
+   "credit": "צילום מסך מקורי של לוח הדוגמה",
+   "license": "MIT (חומר דוגמה של הריפו)",
+   "alt": "לוח מחוונים: שיעור הקלקה יורד ושיעור דיווח עולה מינואר עד יוני"
+  }
+ ]
+}
