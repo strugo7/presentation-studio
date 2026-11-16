@@ -1,6 +1,8 @@
 # presentation-studio — Python deps for the builders
 python-pptx>=1.0
 Pillow>=10
+jsonschema>=4   # optional: schema check in validate_blueprint.py (cross-reference checks run without it)
 # PDF export needs Google Chrome or Chromium on PATH (no pip package).
 # Optional, raises pptx->pdf fidelity if present: LibreOffice (the `soffice` binary).
-# Hebrew/RTL decks: install a Hebrew-capable font (e.g. Assistant) or pass --font to embed it.
+# Hebrew/RTL: the OFL Assistant font ships in shared/fonts/ and is embedded in HTML automatically.
+# Optional test tooling: node + playwright (interaction test), pdftotext (PDF content test).

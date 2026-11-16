@@ -40,13 +40,14 @@ Every content slide title is a complete sentence stating the "so what". Topic la
 the city, the number, the week. Specificity is credibility.
 
 ## Citations (academic integrity applies to slides)
-- On-slide citation for every borrowed claim/figure/dataset, in a small muted font at the bottom,
-  field-standard format (parenthetical or numeric), consistent throughout.
-- A `references` slide listing full citations. A figure from a paper gets a source caption beneath it.
+- Every borrowed claim/figure/dataset is backed by the slide's `citations[]`; the builders print a small
+  numbered footer and generate the **Sources & credits** slides. Details: audience-voice-and-citations.md §3–4.
+- A figure from a paper gets a source caption beneath it; the caption must agree with the citation.
 
 ## Language & RTL
 - Write in the deck's language. For Hebrew/Arabic: right-aligned; Latin tool/command tokens stay inline
-  LTR; keep each run tagged with its language so the renderer picks a script-correct font.
+  LTR; keep each run tagged with its language so the renderer picks a script-correct font. Units,
+  numbers, code and mixed terms: audience-voice-and-citations.md §5.
 
 ## Closing copy
 End on the conclusions/ask slide — the one action/belief to leave with. Never "Thank You" or a blank.

@@ -73,6 +73,7 @@ view. **HTML:** the engine scales the exhibit image to a named region on a revea
 ## Restraint rules (so motion helps, not hurts)
 - One payoff per section gets the richest motion; keep the rest quiet. Uneven rhythm > uniform.
 - Never put meaning *only* in motion — the static slide must still carry the point (reduce-motion, PDF).
+  Interaction (quiz/poll/demo) behaviour per format: interaction-patterns.md.
 - Morph only between slides that truly share objects; otherwise it looks like random drift.
 - Zoom navigation earns its cost at 3+ sections; below that, linear + fade is cleaner.
 - Durations: morph ~1–1.6s; camera flight ~1.1–2.6s; reveals ~0.4–0.9s. Slower = more cinematic, to a

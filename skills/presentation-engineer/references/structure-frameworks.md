@@ -1,6 +1,8 @@
 # Narrative scaffolds — pick one, apply it consistently
 
-A scaffold is a starting structure, not a cage. Choose from audience + goal; deviate on purpose, not
+A scaffold is a starting structure, not a cage. Audience-specific sequences built on these (executive,
+investor, students, technical, self-read, demo) are in deck-playbooks.md; exhibit choice per slide is in
+charts-and-diagrams.md. Choose from audience + goal; deviate on purpose, not
 by accident. Each entry: when to use, the ordered beats, the failure mode.
 
 ---

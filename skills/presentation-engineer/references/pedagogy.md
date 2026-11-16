@@ -62,3 +62,8 @@ Each chosen moment → a slide's `engagement` field + a note in `speakerNotes` o
 - For mixed/international audiences: define acronyms on first use, avoid idioms, plainer sentences.
 - RTL languages (Hebrew/Arabic): right-aligned, reading order right-to-left, Latin tokens stay LTR
   inline; tag every text run with its language so renderers choose a script-correct font (see builders).
+
+## See also
+- deck-playbooks.md §3 — the beginner-student sequence (question → model → worked example → practice).
+- deck-animator/references/interaction-patterns.md — how a quiz/poll/activity behaves in each format.
+- Quiz fields: `engagement.options`, `correctOptionId`, per-option `feedback`, `presenterCue`, `answerPlacement`.

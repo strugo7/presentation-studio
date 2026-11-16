@@ -23,7 +23,18 @@ not a workaround.
 3. **Any OS, by hand:** open `out.pptx` in Keynote → File → Save (keeps it as a Keynote document), or
    File → Export.
 
-## What survives the import, and what to tell the user
+## Capabilities
+What this format does with each blueprint feature (layouts, charts, quizzes, polls, reveals, sources,
+fonts, RTL) and its fallbacks: **`skills/presentation-studio/references/format-capabilities.md`** — the
+single matrix for all builders. Read the row for this format before telling the user what they'll get.
+
+## Validate first
+```bash
+python shared/validate_blueprint.py blueprint.json [assets_dir]
+```
+
+## What survives the import
+- **Verify in the target environment:** this repo can't open Keynote or a Google account; check charts, links (quiz → answer slides, sources), and mixed Hebrew/English alignment after import., and what to tell the user
 - **Survives well:** slide layout, text, action titles, tables, images, generated backgrounds, native
   charts, speaker notes.
 - **Degrades:** **Morph** transitions map imperfectly to Keynote's *Magic Move* — re-check the few

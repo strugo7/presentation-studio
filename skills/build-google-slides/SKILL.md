@@ -25,7 +25,18 @@ If a Google Drive/Slides connector or API credentials are available in the sessi
 conversion: `files.create` with `mimeType: application/vnd.google-apps.presentation` and the PPTX as
 media. Only do this with the user's connected account; don't handle raw credentials.
 
+## Capabilities
+What this format does with each blueprint feature (layouts, charts, quizzes, polls, reveals, sources,
+fonts, RTL) and its fallbacks: **`skills/presentation-studio/references/format-capabilities.md`** — the
+single matrix for all builders. Read the row for this format before telling the user what they'll get.
+
+## Validate first
+```bash
+python shared/validate_blueprint.py blueprint.json [assets_dir]
+```
+
 ## What survives, what to tell the user
+- **Verify in the target environment:** this repo can't open Keynote or a Google account; check charts, links (quiz → answer slides, sources), and mixed Hebrew/English alignment after import.
 - **Survives:** layout, text, tables, images, charts (often re-rendered as Google charts or images),
   speaker notes.
 - **Degrades:** **Morph** → Google Slides has no Morph; transitions simplify to fades. **Zoom**

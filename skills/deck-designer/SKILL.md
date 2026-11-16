@@ -1,17 +1,26 @@
 ---
 name: deck-designer
-description: "Method for choosing a presentation's visual system — a content-informed palette, a distinctive type pairing, one repeated motif, and a dark/light slide rhythm — and writing it into blueprint.json. Use after structure is set, to make a deck read as one designed system instead of a template. Pairs with references/design-systems.md."
+description: "Method for choosing a presentation's visual direction — a design system whose tokens change composition, typography and rhythm, a per-slide layout (statement, split, full-exhibit, big-number), a dark/light rhythm, and licensed, credited images/icons — and writing it into blueprint.json. Use after structure is set, to make a deck read as one designed system instead of a template, or to restyle an existing deck. Pairs with references/design-systems.md."
 ---
 
 # deck-designer — one system, committed
 
-You own `design` and each slide's `background`/`dark`. See `references/design-systems.md` for ready
-systems and the reference libraries. Method:
+You own `design`, each slide's `layout`/`background`/`dark`, and the visual `assets[]` (with provider,
+licence, credit). Method below.
+
+## References — open when
+- `references/design-systems.md` — step 1 (systems, directions, tokens) and step 2 (Hebrew typography).
+- `references/layout-patterns.md` — step 3, choosing a layout per slide; read only the patterns you use.
+- `references/design-gallery.md` — when composing a custom direction or when the user asks for "something
+  like X": find entries by tag (audience, slide role, format) and borrow the principle, never the asset.
+- `references/asset-sources.md` — step 5, before adding any image or icon you didn't get from the user.
 
 ## 1. Read the topic, pick a direction
-Design for *this* content. Security report ≠ a wellness workshop ≠ an investor pitch. Pick one of the
-ready systems in `references/design-systems.md` (Signal, Cobalt-Grid, Swiss, Editorial, Mono) or
-compose a custom one — but commit to a thesis: a dominant colour (60–70% of the visual weight), 1–2
+Design for *this* content and audience. Security report ≠ a wellness workshop ≠ an investor pitch. Pick
+a preset (`signal`, `cobalt-grid`, `swiss`, `editorial`, `mono`) or a direction built on one
+(`editorial-report`, `product-demo`, `executive-data-briefing`, `classroom-workshop`, `keynote`,
+`technical-case`), or compose `custom` + `design.tokens`. The system sets type scale, alignment, motif,
+exhibit frame and margins in both renderers. Commit to a thesis: a dominant colour (60–70% of the visual weight), 1–2
 supporting tones, one sharp accent for emphasis, and a second warm accent reserved for the single
 "payoff" moment per section.
 
@@ -27,17 +36,30 @@ A faint graph grid; big section numbers (01/02/03); framed screenshot cards; a c
 treatment. Repeat it on every slide. **Not** an accent stripe/bar and **not** a line under the title —
 those read as AI filler. Record it in `design.motif`.
 
+## 3b. Layout per slide (composition)
+Set `slide.layout` where the content job calls for it (layout-patterns.md): `big-number` for one
+decisive figure, `full-exhibit` for an exhibit that must be read, `split` for a product screen or photo
+plus meaning, `statement` for a single sentence or question. Leave it empty to use the role default.
+Vary the rhythm deliberately; repeat a layout when the job repeats. One content job per slide.
+
 ## 4. Dark/light rhythm + backgrounds
 Default sandwich: **dark** cover, section dividers, stakes, close; **light** content. Set each slide's
 `dark` and `background.kind`:
 - `grid` — light content slides (the motif grid).
 - `navy`/`solid` — dark statement slides.
-- `photo` — a dark slide with an atmospheric image behind a navy scrim (set `background.photo`,
-  `background.scrim:true`). Source photos only when they add depth and never on content slides.
-  Free sources: Unsplash (credit the photographer in the blueprint `assets[].credit` and on the close
-  slide). Mute and scrim them so text stays readable (builders apply the scrim).
+- `photo` — a dark slide with an atmospheric image behind a navy scrim (set `background.assetRef` to
+  an `assets[]` id — or legacy `background.photo` path — and `background.scrim:true`). Use photos only
+  when they add depth and never as filler on content slides. Builders crop to fill and apply the scrim,
+  and print the credit on that slide and on the sources page.
 
-## 5. Hand off
-Write back `design` + per-slide `background`/`dark`. State your system, palette hexes, fonts, and motif
-in one short summary. Don't change titles, bullets, exhibits or animation. If the user gave brand
-guidelines or a font, apply them exactly and skip the defaults.
+## 5. Assets
+Follow asset-sources.md: user material first; then a provider whose licence you record. Every image gets
+an `assets[]` entry with `provider`, `sourceUrl`, `creator`, `license`, `licenseUrl`, `credit`, `alt`, and
+a PNG `fallbackPath` for any SVG (PPTX can't place SVG). One icon family per deck (Tabler by default).
+Keep files local with stable names so the deck works offline.
+
+## 6. Hand off
+Write back `design` + per-slide `layout`/`background`/`dark` + `assets[]`. State your system/direction,
+palette hexes, fonts, motif, and the layout rhythm in one short summary. Don't change titles, bullets,
+exhibit data, citations or animation. If the user gave brand guidelines or a font, apply them exactly
+and skip the defaults. When only the style changes, you re-run alone (then animator and builders).

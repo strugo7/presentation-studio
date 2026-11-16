@@ -1,6 +1,6 @@
 ---
 name: build-pptx
-description: "Render a finished blueprint.json into a native editable PowerPoint (.pptx): roles, action titles, one-exhibit slides, native charts/tables, generated grid/photo backgrounds, RTL-correct Hebrew (sets complex-script font + language on every run), Morph transitions, and Sections + a map slide for Zoom navigation. Use when the user wants a PPTX / PowerPoint file."
+description: "Render a finished blueprint.json into a native editable PowerPoint (.pptx): roles and layouts, design-system tokens, native editable charts (column/bar/line/scatter with units), tables, diagram shapes, quiz options linked to answer slides, citations + generated sources slides with links, alt text, RTL-correct Hebrew (complex-script font + language on every run), Morph transitions, and Sections + a map slide for Zoom navigation. Use when the user wants a PPTX / PowerPoint file."
 ---
 
 # build-pptx
@@ -22,11 +22,28 @@ python <pptx-skill>/scripts/office/validate.py out.pptx
 - **RTL / Hebrew:** sets `<a:cs>` (complex-script) typeface + `lang` on every run, and rewrites the
   theme fonts to the deck font — the reliable fix for the "boxes" bug. Reverses table column order and
   right-aligns for RTL.
-- **Exhibits:** chart→native pptx chart (bar/column/line), table→native table, diagram→shape chain,
-  image/screenshot→picture, code→mono box.
+- **Exhibits:** chart→native, editable pptx chart (column/bar/line/scatter; number format, unit, axis
+  titles from the same spec as HTML; unsupported kinds → table), table→native table, diagram→shapes
+  (chain, timeline, sequence with arrows), image/screenshot→picture with alt text (SVG uses its PNG
+  `fallbackPath`, else a labelled placeholder + warning), code→mono box.
+- **Layouts & tokens:** `statement`, `split`, `full-exhibit`, `big-number`; the design system sets title
+  size/weight, margins, frame style and motif (grid, running head, section numerals).
+- **Quizzes:** options hyperlink to a generated answer slide (`answerPlacement`), which links back;
+  `presenterCue` goes into the notes.
+- **Sources:** a citation footer on each slide and generated "Sources & credits" slides with hyperlinks.
 - **Backgrounds:** generated grid (light) / navy (dark); a photo asset gets a navy scrim.
 - **Motion:** `animation.transition:"morph"` and, when `navigation.mode=="zoom"`, Morph on every slide
   + **Sections** + a map slide, named objects so Morph only matches what it should.
+
+## Capabilities
+What this format does with each blueprint feature (layouts, charts, quizzes, polls, reveals, sources,
+fonts, RTL) and its fallbacks: **`skills/presentation-studio/references/format-capabilities.md`** — the
+single matrix for all builders. Read the row for this format before telling the user what they'll get.
+
+## Validate first
+```bash
+python shared/validate_blueprint.py blueprint.json [assets_dir]
+```
 
 ## The Zoom caveat (tell the user)
 PowerPoint **Zoom objects cannot be created by any script.** This builder pre-makes the Sections and

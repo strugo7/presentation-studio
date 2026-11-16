@@ -1,14 +1,19 @@
 ---
 name: deck-animator
-description: "Method for planning presentation motion — staged reveals, Morph transitions, and Zoom navigation — as format-agnostic intent in blueprint.json, with a technique library distilled from expert PowerPoint tutorials. Use after structure and design are set. Pairs with references/techniques.md."
+description: "Method for planning presentation motion and interaction — staged reveals, Morph transitions, Zoom/hub navigation, and how quizzes, polls, activities and demos behave in each format (with static fallbacks and reduced motion) — as format-agnostic intent in blueprint.json. Use after structure and design are set. Pairs with references/techniques.md and references/interaction-patterns.md."
 ---
 
 # deck-animator — motion that serves the argument
 
 Motion has two legitimate jobs: **segmenting** (reveal one idea at a time so the room isn't reading
 ahead) and **continuity** (carry the eye between related moments). Anything else is distraction. You
-write `animation` per slide and `navigation` for the deck. See `references/techniques.md` for the
-concrete recipes and how each maps to PPTX vs HTML.
+write `animation` per slide and `navigation` for the deck, and check each `engagement` has a working path
+in every requested format.
+
+## References — open when
+- `references/techniques.md` — for reveals, Morph, Section Zoom, living backgrounds (the recipes).
+- `references/interaction-patterns.md` — whenever a slide has `engagement`, the deck has a hub, or the
+  brief mentions accessibility / reduced motion; read only the pattern sections you need.
 
 ## 1. Reveals (every content slide with >1 idea)
 Stage the slide so bullets/exhibit appear in step order via `animation.reveals`. One idea per click.
@@ -43,3 +48,12 @@ a warm-accent reveal — so the rhythm has peaks. Don't animate everything equal
 - **Keynote / Google Slides:** come from the PPTX; Morph→"Magic Move"/transitions survive import
   imperfectly; Zoom does not. Note this.
 Keep `reduce-motion` sane: never rely on motion to convey meaning that isn't also in the static slide.
+The HTML engine honours `prefers-reduced-motion` and `meta.accessibility.reducedMotion` (no camera
+flight, fade-only reveals; `R` toggles). Set `meta.accessibility.reducedMotion:true` when the brief asks.
+
+## 6. Interaction behaviour (interaction-patterns.md)
+- Quiz: confirm `answerPlacement` per format (live → `next-slide`, `self-read` → `inline`); add a reveal
+  step so the question lands before the options.
+- Poll: HTML tallies locally on one device; a real class poll needs an external tool — say so.
+- Demo: a screenshot fallback always; a link if live.
+- Flag anything a target format can't do so the orchestrator can tell the user.
