@@ -139,8 +139,8 @@ assertion-evidence (Alley), and Mayer/Gagné multimedia-learning research. Anima
 distilled from **One Skill PPT** (youtube.com/@oneskill_ppt). Design references draw on
 `zarazhangrui/frontend-slides` and the curated skill list at tosea.ai; writing rules adapt the
 `Gabberflast/academic-pptx-skill`. Chart choice follows the FT Visual Vocabulary and Datawrapper's
-guidance; design references are catalogued with links (not copies) in
-`skills/deck-designer/references/design-gallery.md`. Each reference file names its sources. Font:
+guidance; design references are catalogued with links (not copies) and an honest verification status in
+`skills/deck-designer/references/design-gallery.md` (none verified yet: the build environment blocked those sites). Each reference file names its sources. Font:
 Assistant, © The Assistant Project Authors, SIL Open Font License 1.1 (`shared/fonts/OFL.txt`).
 
 MIT licensed.

@@ -72,7 +72,7 @@ has a working path. The full matrix lives in presentation-studio/references/form
   describe them in `animation.notes` for the presenter to add. Keep them subtle.
 - **PDF** captures every reveal step and every answer as static content.
 
-## 7. Patterns from practice (see design-gallery.md for sources)
+## 7. Patterns from practice (candidate sources in design-gallery.md, not yet verified)
 - **Show what changes, not that something moves.** Animate the one element that changes between two
   states (a bar growing, a step being added). A technical or process explanation should build up one
   step at a time, the way a presenter would draw it.

@@ -5,7 +5,7 @@ beats, why they're in that order, which `layout` and exhibit each beat usually t
 example. Pick one; don't merge two. The ghost deck — action titles only, in order — must read as the
 argument even with every body removed.
 
-Load only the playbook you're using. Design references for these sequences (with what each teaches):
+Load only the playbook you're using. Real-world design references for these sequences, with their verification status:
 deck-designer/references/design-gallery.md.
 
 ---
