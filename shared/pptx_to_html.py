@@ -7,8 +7,13 @@ from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.oxml.ns import qn
 from PIL import Image
 
-SRC, OUTDIR = sys.argv[1], sys.argv[2]
-FONT = os.path.expanduser("~/Library/Fonts/Assistant-VariableFont_wght.ttf")
+# Usage: python pptx_to_html.py deck.pptx out_dir [--font=path.ttf]
+# Limits: charts (graphic frames) are not converted; prefer LibreOffice for the pptx->pdf route.
+_args = [a for a in sys.argv[1:] if not a.startswith("--")]
+SRC, OUTDIR = _args[0], _args[1]
+FONT = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--font=")), None)
+if not (FONT and os.path.exists(FONT)):
+    FONT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts", "Assistant[wght].ttf")
 os.makedirs(os.path.join(OUTDIR, "img"), exist_ok=True)
 
 def px(v):
@@ -135,7 +140,7 @@ for si, slide in enumerate(prs.slides, 1):
                 parts.append(frame_html(sh.text_frame, x, y, w, h))
     slides_html.append('<section class="s">%s</section>' % "".join(parts))
 
-b64 = base64.b64encode(open(FONT, "rb").read()).decode()
+b64 = base64.b64encode(open(FONT, "rb").read()).decode() if os.path.exists(FONT) else ""
 doc = """<!DOCTYPE html><html lang="he"><head><meta charset="utf-8"><style>
 @font-face{font-family:"Assistant";src:url(data:font/ttf;base64,%s) format("truetype");font-weight:200 800}
 @page{size:%.0fpx %.0fpx;margin:0}

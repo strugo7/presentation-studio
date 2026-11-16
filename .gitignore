@@ -9,3 +9,5 @@ out/
 chrome_profile*/
 venv/
 .venv/
+# build outputs of the example decks
+examples/**/build/

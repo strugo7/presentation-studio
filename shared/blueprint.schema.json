@@ -2,59 +2,196 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "presentation-studio blueprint",
   "type": "object",
-  "required": ["meta", "slides"],
+  "required": [
+    "meta",
+    "slides"
+  ],
   "additionalProperties": true,
   "properties": {
     "meta": {
       "type": "object",
-      "required": ["title"],
+      "required": [
+        "title"
+      ],
       "properties": {
-        "title": { "type": "string" },
-        "subtitle": { "type": "string" },
-        "authors": { "type": "array", "items": { "type": "string" } },
-        "event": { "type": "string" },
-        "date": { "type": "string" },
-        "language": { "type": "string", "default": "en" },
-        "rtl": { "type": "boolean", "default": false },
-        "aspect": { "type": "string", "enum": ["16:9", "4:3"], "default": "16:9" },
-        "durationMinutes": { "type": "number" },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "event": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string",
+          "default": "en"
+        },
+        "rtl": {
+          "type": "boolean",
+          "default": false
+        },
+        "aspect": {
+          "type": "string",
+          "enum": [
+            "16:9",
+            "4:3"
+          ],
+          "default": "16:9"
+        },
+        "durationMinutes": {
+          "type": "number"
+        },
         "audience": {
           "type": "object",
           "properties": {
-            "who": { "type": "string" },
-            "expertise": { "type": "string", "enum": ["expert", "informed", "lay"] },
-            "goal": { "type": "string", "enum": ["decide", "learn", "buy-in", "inspire"] }
+            "who": {
+              "type": "string"
+            },
+            "expertise": {
+              "type": "string",
+              "enum": [
+                "expert",
+                "informed",
+                "lay"
+              ]
+            },
+            "goal": {
+              "type": "string",
+              "enum": [
+                "decide",
+                "learn",
+                "buy-in",
+                "inspire"
+              ]
+            },
+            "profile": {
+              "type": "string",
+              "description": "free-text audience profile; defaults to who"
+            },
+            "priorKnowledge": {
+              "type": "string"
+            },
+            "motivation": {
+              "type": "string"
+            },
+            "convincingEvidence": {
+              "type": "string"
+            }
           }
+        },
+        "deliveryMode": {
+          "type": "string",
+          "enum": [
+            "live-talk",
+            "pitch",
+            "demo",
+            "workshop",
+            "exec-briefing",
+            "research",
+            "self-read"
+          ]
+        },
+        "tone": {
+          "type": "string"
+        },
+        "accessibility": {
+          "type": "object",
+          "properties": {
+            "reducedMotion": {
+              "type": "boolean"
+            },
+            "highContrast": {
+              "type": "boolean"
+            },
+            "minFontPt": {
+              "type": "number"
+            }
+          }
+        },
+        "autoSources": {
+          "type": "boolean",
+          "default": true,
+          "description": "append generated sources/credits slides"
+        },
+        "sourcesPerSlide": {
+          "type": "integer",
+          "minimum": 2
         }
       }
     },
     "narrative": {
       "type": "object",
       "properties": {
-        "scaffold": { "type": "string" },
-        "throughline": { "type": "string" },
-        "ask": { "type": "string" }
+        "scaffold": {
+          "type": "string"
+        },
+        "throughline": {
+          "type": "string"
+        },
+        "ask": {
+          "type": "string"
+        }
       }
     },
     "design": {
       "type": "object",
       "properties": {
-        "system": { "type": "string" },
-        "palette": { "type": "object" },
-        "fonts": { "type": "object" },
-        "motif": { "type": "string" },
-        "gridBackground": { "type": "boolean" }
+        "system": {
+          "type": "string"
+        },
+        "palette": {
+          "type": "object"
+        },
+        "fonts": {
+          "type": "object"
+        },
+        "motif": {
+          "type": "string"
+        },
+        "gridBackground": {
+          "type": "boolean"
+        },
+        "variant": {
+          "type": "string",
+          "description": "free-text note on how this deck departs from its preset"
+        },
+        "tokens": {
+          "type": "object",
+          "description": "per-deck overrides of the system tokens (titleScale, motif, frame, ...)"
+        }
       }
     },
     "sections": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "title"],
+        "required": [
+          "id",
+          "title"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "title": { "type": "string" },
-          "slideIds": { "type": "array", "items": { "type": "string" } }
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "slideIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -62,98 +199,441 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "role"],
+        "required": [
+          "id",
+          "role"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "section": { "type": "string" },
+          "id": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string"
+          },
           "role": {
             "type": "string",
-            "enum": ["cover", "stakes", "agenda", "divider", "concept", "evidence",
-                     "process", "comparison", "quote", "close", "references", "appendix"]
+            "enum": [
+              "cover",
+              "stakes",
+              "agenda",
+              "divider",
+              "concept",
+              "evidence",
+              "process",
+              "comparison",
+              "quote",
+              "close",
+              "references",
+              "appendix"
+            ]
           },
-          "dark": { "type": "boolean" },
-          "kicker": { "type": "string" },
-          "actionTitle": { "type": "string" },
+          "dark": {
+            "type": "boolean"
+          },
+          "kicker": {
+            "type": "string"
+          },
+          "actionTitle": {
+            "type": "string"
+          },
           "bullets": {
             "type": "array",
             "maxItems": 4,
             "items": {
               "type": "object",
-              "required": ["text"],
+              "required": [
+                "text"
+              ],
               "properties": {
-                "text": { "type": "string" },
-                "lead": { "type": "string" },
-                "mono": { "type": "boolean" },
-                "warm": { "type": "boolean" }
+                "text": {
+                  "type": "string"
+                },
+                "lead": {
+                  "type": "string"
+                },
+                "mono": {
+                  "type": "boolean"
+                },
+                "warm": {
+                  "type": "boolean"
+                }
               }
             }
           },
           "exhibit": {
             "type": "object",
             "properties": {
-              "type": { "type": "string", "enum": ["screenshot", "image", "chart", "diagram", "table", "code"] },
-              "ref": { "type": "string" },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "screenshot",
+                  "image",
+                  "chart",
+                  "diagram",
+                  "table",
+                  "code"
+                ]
+              },
+              "ref": {
+                "type": "string"
+              },
               "data": {},
-              "caption": { "type": "string" },
-              "annotate": { "type": "string" },
-              "side": { "type": "string", "enum": ["left", "right"] }
+              "caption": {
+                "type": "string"
+              },
+              "annotate": {
+                "type": "string"
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "right"
+                ]
+              },
+              "alt": {
+                "type": "string"
+              },
+              "assetRefs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "assets embedded inside a diagram/composite"
+              },
+              "bigNumber": {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "context": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           },
           "background": {
             "type": "object",
             "properties": {
-              "kind": { "type": "string", "enum": ["grid", "solid", "navy", "photo"] },
-              "photo": { "type": "string" },
-              "scrim": { "type": "boolean" }
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "grid",
+                  "solid",
+                  "navy",
+                  "photo"
+                ]
+              },
+              "photo": {
+                "type": "string"
+              },
+              "scrim": {
+                "type": "boolean"
+              },
+              "assetRef": {
+                "type": "string"
+              }
             }
           },
           "engagement": {
             "type": "object",
             "properties": {
-              "type": { "type": "string", "enum": ["none", "question", "poll", "activity", "demo", "quiz"] },
-              "prompt": { "type": "string" }
+              "type": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "question",
+                  "poll",
+                  "activity",
+                  "demo",
+                  "quiz"
+                ]
+              },
+              "prompt": {
+                "type": "string"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "text"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "correctOptionId": {
+                "type": "string"
+              },
+              "feedback": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "presenterCue": {
+                "type": "string"
+              },
+              "answerPlacement": {
+                "type": "string",
+                "enum": [
+                  "next-slide",
+                  "appendix",
+                  "inline"
+                ]
+              },
+              "url": {
+                "type": "string"
+              },
+              "assetRef": {
+                "type": "string"
+              }
             }
           },
           "animation": {
             "type": "object",
             "properties": {
-              "transition": { "type": "string", "enum": ["none", "fade", "morph", "push"] },
+              "transition": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "fade",
+                  "morph",
+                  "push"
+                ]
+              },
               "reveals": {
                 "type": "array",
                 "items": {
                   "type": "object",
                   "properties": {
-                    "step": { "type": "number" },
-                    "show": { "type": "array", "items": { "type": "string" } },
-                    "zoom": { "type": "string" }
+                    "step": {
+                      "type": "number"
+                    },
+                    "show": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "zoom": {
+                      "type": "string"
+                    }
                   }
                 }
               },
-              "notes": { "type": "string" }
+              "notes": {
+                "type": "string"
+              }
             }
           },
-          "speakerNotes": { "type": "string" }
+          "speakerNotes": {
+            "type": "string"
+          },
+          "layout": {
+            "type": "string",
+            "enum": [
+              "statement",
+              "split",
+              "full-exhibit",
+              "big-number"
+            ]
+          },
+          "citations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "sourceId"
+              ],
+              "properties": {
+                "sourceId": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "string"
+                },
+                "claim": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "fact",
+                    "derived",
+                    "disputed"
+                  ]
+                }
+              }
+            }
+          }
         }
       }
     },
     "navigation": {
       "type": "object",
       "properties": {
-        "mode": { "type": "string", "enum": ["linear", "zoom"] },
-        "hubSlideId": { "type": "string" },
-        "zoomTargets": { "type": "array", "items": { "type": "string" } }
+        "mode": {
+          "type": "string",
+          "enum": [
+            "linear",
+            "zoom"
+          ]
+        },
+        "hubSlideId": {
+          "type": "string"
+        },
+        "zoomTargets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "assets": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "path": { "type": "string" },
-          "kind": { "type": "string" },
-          "credit": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "credit": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "sourceUrl": {
+            "type": "string"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "licenseUrl": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "fallbackPath": {
+            "type": "string"
+          },
+          "usedIn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "shortTitle": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "text",
+              "markdown",
+              "pdf",
+              "docx",
+              "pptx",
+              "sheet",
+              "csv",
+              "image",
+              "web",
+              "transcript",
+              "dataset",
+              "other"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "file": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "creator": {
+            "type": "string"
+          },
+          "publishedAt": {
+            "type": "string"
+          },
+          "accessedAt": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "licenseUrl": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
         }
       }
     }
