@@ -232,12 +232,18 @@ click or type) and the observed result (what appears on screen).
 | Beat | Layout / exhibit | Engagement |
 |---|---|---|
 | The user's job (who, what they're trying to get done) | `statement` | — |
-| Task → action → result (one per slide, 2–4 total) | `split` screenshot; title = the result ("The invoice matches itself to the payment") | `engagement.type:"demo"` + `assetRef` screenshot + `url` |
+| Task → action → result (one per slide, 2–4 total) | `split`, screenshot in a device frame (`exhibit.device`: `phone` / `laptop` / `browser`); title = the result ("The invoice matches itself to the payment"); `exhibit.loupe` on the detail the title names | `engagement.type:"demo"` + `url`; the framed screenshot is the fallback |
+| Same product on several surfaces | `full-exhibit`, `exhibit.devices`: iOS + Android as a `row`, or laptop + phone as an `overlap` | — |
 | What changed (before vs. after on their task) | `big-number` or `comparison` | — |
 | Try it | `statement` close with link | — |
 
-Every demo slide carries a screenshot fallback (`engagement.type:"demo"` + `assetRef`), so a dead
-network never kills the talk.
+Every demo slide carries a screenshot fallback (the framed exhibit, or `engagement.assetRef`), so a
+dead network never kills the talk.
+
+**Device frames** (layout-patterns.md §11; licences in asset-sources.md §5b): use the built-in generic
+frames, straight on, never mirrored. Pick the device the user actually uses for that task. Show
+**the same content on two devices** only to prove a handoff or an integration
+(design-gallery.md #24, #27).
 
 **Live vs. read:**
 - Live: the product is on screen, and the slide only frames the task.
@@ -345,10 +351,12 @@ can repeat → How to get it.
 
 | Beat | Layout / exhibit |
 |---|---|
-| What's new (one line) | cover or `statement` |
+| Setup (live only): the problem or principle in a few words, just before the name | `statement`, dark (design-gallery.md #20) |
+| What's new: kicker ("חדש" / "מכריזים") + name + one descriptor | cover or `statement`; type alone when there's no hero screen (#21, #30) |
 | For whom (a specific user in a specific situation) | `split` with a photo that plays a story role; short title (Zappos pattern, design-gallery.md #15) |
 | Why it matters | `statement` pair: what is → what could be |
-| The product | `split` with the product image; ≤ 2 bullets name its parts in reading order (Thermo Fisher pattern, #16) |
+| The product | software: `split` with the screen in a device frame, `loupe` on the detail; hardware: `split` with the product image, ≤ 2 bullets naming its parts in reading order (Thermo Fisher pattern, #16) |
+| Where it runs | `exhibit.devices` (`overlap` for desktop + phone, `row` for platforms); availability as text, never store badges |
 | Proof | `full-exhibit` `column` with two bars on a shared zero baseline, values visible, `highlight` the leader (#17) |
 | Availability, price, date | `statement` close |
 
@@ -361,7 +369,11 @@ Ghost deck:
 6. *Available 1 March; free migration for 90 days*
 
 **Evidence:** a before/after on the customer's own task, one comparison chart with its conditions,
-and a customer quote used with permission.
+and a customer quote used with permission. A proof figure keeps its source line even on a show
+slide (#24).
+
+For a series of parallel products, reuse one slide template and change only content and one accent
+(#24–25).
 
 **Live vs. read:**
 - Live: few words, the product visible, the proof as one chart.

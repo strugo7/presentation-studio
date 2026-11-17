@@ -13,7 +13,7 @@ Every entry records its **unit of checking**, because the unit limits what the e
 - **Page text (#1–13).** On 2026-11-17 each page was opened with a plain HTTP fetch and its text was
   read. The slides weren't looked at. "Visual decision" there records only what the page *says*
   about the visuals. Where the page says nothing about a field, it is marked "not stated".
-- **Slide screenshot (#14–19).** On 2026-11-17 the published image of **one slide** was downloaded and
+- **Slide screenshot (#14–33).** On 2026-11-17 the published image of **one slide** was downloaded and
   looked at. These entries describe that slide's composition and density, and nothing about the rest of
   the deck or its order.
 
@@ -29,6 +29,9 @@ Sites that block automated readers were not worked around; they are listed under
 | #17 Thermo Fisher, comparison | proof / evidence | `product-demo`, `executive-data-briefing` | `full-exhibit` `column` + `highlight` |
 | #18 Cobalt Grid, index of six | overview / agenda | `cobalt-grid` | role `agenda` (≤ 4 sections) or a `table`; no 2×3 grid layout yet |
 | #19 Blue Professional, ranking | ranking evidence | `cobalt-grid`, `signal` | `full-exhibit` `bar`, sorted |
+| #20–21, #30 keynote setup and reveal | setup → reveal | `keynote`, `product-demo` | `statement` |
+| #24, #27 device pair / overlap | cross-platform, integration | `product-demo` | `exhibit.devices` (+ `arrangement`) |
+| #26 loupe | one detail of a dense screen | `product-demo` | `exhibit.loupe` |
 
 ---
 
@@ -311,6 +314,57 @@ different design from the template called "Signal" here.
     are.
 - **RTL / format:** labels are Hebrew text; the bar geometry stays LTR in both formats (as all our
   charts). Check long labels: they're why `bar` beats `column` here.
+
+---
+
+## Keynote product slides: software companies (one slide image each, 2026-11-17)
+
+Source of the images: Duarte's published case studies of keynotes it designed. They are clean slide
+exports, not photos of a stage screen, so they show composition but not how the slides read in the
+hall. Pages (all under duarte.com/approach/case-studies/):
+- **E** = salesforce-bringing-einstein-to-life/ (Dreamforce; the page gives no year; the slides' UI
+  dates and "since DF15" point to 2016, which is our inference);
+- **D** = creating-an-immersive-3d-keynote-experience-for-salesforces-biggest-stage/ (Dreamforce 2023);
+- **M** = driving-market-leadership-with-innovation-stories/ (a Microsoft conference and customer-event
+  deck; not stated to be Build or Ignite);
+- **H** = crafting-an-unforgettable-keynote-for-hubspots-inbound/ (INBOUND 2022).
+
+All 14 images were viewed by a research pass. #24 and #27 were re-checked when this was written.
+Links are for analysis only: no logos, mascots, product photos or screenshots are copied.
+
+**Apple, Google and Sony: not verified yet.** This environment's network policy refuses apple.com,
+blog.google, storage.googleapis.com, blog.playstation.com, sony.com and the other newsrooms (proxy 403).
+Duarte's Apple page says it works on Apple launches but "can't show much", and its only image is an
+interview still. To add those entries, allow the hosts in the environment's network settings and
+re-run the research. Record each slide in this format.
+
+| # | Slide (page) | Role | What it shows | What to translate here |
+|---|---|---|---|---|
+| 20 | Einstein: "Einstein taught us…" (E) | setup before the reveal | ~8 words on a dark sky, one formula, an illustration | `statement` right before the reveal: one idea, dark field. Live only; in a read cut, fold it into the reveal's subtitle |
+| 21 | "Introducing Salesforce Einstein" (E) | product reveal | small "Introducing" kicker → large light product name → one-line descriptor; quote and benefits crowd the rest | reveal = kicker ("חדש") + name + one descriptor (`statement`). Move benefits to the next slide |
+| 22 | "How it works" (E) | mechanism | three labelled stages with arrows; a person-with-phone cut-out | `full-exhibit` + 3-step `chain`, last card = outcome. Drop the mood cut-out on an explanation slide |
+| 23 | "Everyone's data scientist" (E) | ecosystem | five identical phones straight on, each captioned; "30+" with a small label beside them | a device **row** says "everywhere"; the captions carry meaning, the screens are texture. ≤ 3 devices here; the number on its own `big-number` slide |
+| 24 | "Sales Cloud Einstein" (E) | feature + customer + proof | laptop straight on, **phone overlapping its front corner**, customer cut-out, "+25%" sign, **source footnote** (survey years, n) | `arrangement: "overlap"`; split the proof figure onto a `big-number` with its source in the footer; name the customer in the caption |
+| 25 | "Service Cloud Einstein" (E) | next product in a series | the same composition as #24; only content and one accent change | parallel products → reuse one layout exactly (§ "Choosing per slide") |
+| 26 | Quip (E) | new feature + availability | desktop + phone; a **round magnifier** enlarges one UI panel; store badges for availability | `exhibit.loupe`; availability as text ("iOS · Android · Web"), never badges |
+| 27 | LiveMessage (E) | integration | phone with an SMS thread on one side, laptop console on the other, **the same conversation on both**, loupe on the laptop, a label under each | `devices` row with the same content on both screens + labels ("לקוח" / "נציג"); source device at the reading start (right in RTL) |
+| 28 | Commerce Cloud (E) | feature + customers | three phones in a shallow overlapping fan, front one legible | "front = hero, back = many". **Not built**: candidate `arrangement: "stack"` |
+| 29 | "True to the Core" (E) | numbers + breadth | "750K" and "500+" with side labels; a wall of feature names, most dimmed, a few white | one figure per `big-number`; "a lot, and these matter" → put the 3 highlights in the caption. The dimmed wall isn't a layout here |
+| 30 | "Announcing Einstein 1 Platform" (D; a wide crop, not the full frame) | reveal with no UI | pill kicker, very heavy two-line name, one descriptor, five one-word attributes | when there's no hero screen, reveal with type alone (`statement`). Compared with #21, seven years later: heavier name, no quote |
+| 31 | "$12 BILLION" (M) | big number | a light-weight figure across the slide, one context line, nothing else | `big-number`; weight can be light when size carries it. In Hebrew keep "$12B" as one LTR run, or write "12 מיליארד $" |
+| 32 | Xbox Adaptive Controller evolution (M) | product story | three dated milestones over a flat-lay photo of sketches and parts | `timeline` for origin stories, with imagery as a strip, not a device frame. Our timeline needs a date on every event |
+| 33 | "You belong." (H) | emotional peak | two words in one shape on a dark field; the talk's single motif | `statement` at its purest, once or twice per talk; one motif through the deck (`design.motif`) |
+
+**Patterns across #20–33** (software companies only; re-test once Apple/Google/Sony are viewed):
+1. Live launches go **setup → reveal**. The reveal is kicker + name + one line, with no proof on the same slide.
+2. Devices are **straight on, no hands, no tilt** in 9 of 10 device slides (one slightly angled laptop).
+   Our frames are straight on by design.
+3. **Laptop + phone overlapping** = cross-platform. **Same content on two devices** = integration.
+4. A **row** of devices shows breadth. A **fan** shows volume. Neither is evidence.
+5. A **loupe** keeps the screenshot honest (whole) and makes the point legible.
+6. A proof figure travels with its **source line**, even on a show slide (#24–25).
+7. Parallel products share **one template**.
+8. Scenery and mascots are brand IP and add density. Don't translate them; keep one visual world instead.
 
 ---
 

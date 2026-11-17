@@ -92,6 +92,9 @@ one idea each), and the `exhibit` **plan** — type + which asset + where to dra
   screenshots and explanatory diagrams apart.
 - **Exhibit role, not look.** You set `exhibit.type`, data and what it must show; the designer chooses
   `layout` and frame.
+- **Several screens on one slide** (iOS + Android, desktop + phone, the same conversation on both
+  sides): list them in `exhibit.devices` (`device`, `ref`, `label`) and say why they belong together;
+  the designer picks single-screen frames (`exhibit.device`). See deck-playbooks.md #6 and #9.
 
 ## Step 6 — Place engagement deliberately
 From `references/pedagogy.md`: pick 1–3 engagement moments and attach them to specific slides via

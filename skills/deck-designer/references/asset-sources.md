@@ -99,6 +99,35 @@ a sceptic would need.
 
 Don't mix providers' icon styles in one diagram unless the architecture really spans them.
 
+## 5b. Device mockups (laptop, phone, tablet, browser) — checked 2026-11-17
+**Default: the built-in generic frames** (`exhibit.device` / `exhibit.devices`, layout-patterns.md §11).
+They're original drawings in `shared/blueprint_lib.py`, with no logos, no notch/island/Home-button
+shapes, no brand colours and neutral browser dots. So they need no licence and imply no endorsement.
+The user's screenshot is placed inside, uncropped.
+
+Apple's own guidelines expect this approach. Generic device illustrations must not "include details
+that are unique to Apple products, such as the iPhone Home button, sensor housing, Ring/Silent switch,
+or volume controls" (App Store marketing guidelines, **read**).
+
+| Source | What it is | Terms (status) | Use in a shipped deck? |
+|---|---|---|---|
+| Built-in generic frames | phone, tablet, laptop, browser; side by side or overlapping | this repo, MIT | **Yes**, the default |
+| Apple Product Bezels (developer.apple.com/design/resources) | real iPhone/iPad/Mac bezels | App Store Marketing Artwork License: only for **your own App Store app**, only while in the Apple Developer Program; use "as is" (no tilt, crop, shadow, flip, animation), no competitor devices beside them, no blank or Home screens (**read**) | Only when the user markets their own App Store app and accepts those rules. Never as a default, never mirrored for RTL |
+| Android device art generator (developer.android.com) | wraps screenshots in device art | page content CC BY 2.5, but Google trademarks and brand features are excluded. Pixel hardware images need written permission (**read**; the permission rule is **search**) | Not by default. Generic frames instead |
+| Meta "Devices" (Design at Meta) | real-device mockups | commercial use needs written permission (**search**, site blocked) | **No** |
+| MIT/ISC CSS device kits (marvelapp/devices.css, picturepan2/devices.css) | CSS drawings of real iPhones, Pixels, Galaxies, MacBooks | code MIT (**read**), but the drawings imitate real products' trade dress | Technique reference only. Don't ship the branded look-alikes |
+| html5-device-mockups (pixelsign) | PNG frames of real devices | code MIT, but the PNGs come from third-party freebies with unknown terms (**read**: CREDITS.txt) | **No** |
+| Figma Community mockup files | many kits | licence comes from the creator. Free files reportedly default to CC BY 4.0 (**search**); paid files allow no redistribution (**read**) | Free CC BY files with **generic** devices, with credit ("Device frame: {creator}, CC BY 4.0"). A file showing real iPhones/MacBooks has the Apple problem whatever its licence |
+| Mockup tools (Mockuuups, Shots.so, Rotato, Previewed) | photo-real scenes and 3D renders | free tiers: personal use and/or credit; paid tiers commercial (**search**, sites blocked) | The user's own exports on a paid plan. Record as `provider: "user"` with their plan noted. Not bundled |
+| Unsplash / Pexels "device in hand" photos | photos to composite a screen onto | licence allows modification (**read**), but trademarks and logos in the photo aren't cleared (**search**) | Only photos where no logo or distinctive branded device shows. Never cover or edit out a logo |
+
+Rules that follow:
+- Never mirror a device frame or a screenshot for RTL. Only the order of devices flips.
+- In copy, don't call the generic phone "iPhone". If the deck names a platform, write it as text
+  ("iOS · Android · Web"), never as a store badge or logo.
+- A frame is decoration around evidence. The screenshot inside still gets its own `assets[]` entry,
+  `alt` and credit.
+
 ## 6. Inspiration vs. embedding
 Figma Community, Dribbble, Pinterest, Behance and designer portfolios are for **design research
 only**. Take principles from them (hierarchy, rhythm, relative scale, grid) and turn them into our

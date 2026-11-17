@@ -29,9 +29,13 @@ def chrome():
         if c and os.path.exists(c): return c
     raise SystemExit("Chrome/Chromium not found — install it, or use the pptx route with LibreOffice.")
 
-def chrome_print(index_html, out_pdf):
+def chrome_print(index_html, final_pdf):
     """Print with headless Chrome. First try an isolated throw-away profile (safe next to a running
-    Chrome); some sandboxes stall on a fresh profile, so fall back to the default profile."""
+    Chrome); some sandboxes stall on a fresh profile, so fall back to the default profile.
+    Chrome prints into a fresh temporary file that is moved into place only on success, so a PDF left
+    over from an earlier build can never be mistaken for this run's output."""
+    out_dir = tempfile.mkdtemp(prefix="pspdfout_")
+    out_pdf = os.path.join(out_dir, "deck.pdf")
     sandbox = ["--no-sandbox"] if hasattr(os, "geteuid") and os.geteuid() == 0 else []  # Chrome refuses to run as root otherwise
     base = [chrome(), "--headless=new", "--disable-gpu", "--no-pdf-header-footer", "--no-first-run",
             "--run-all-compositor-stages-before-draw", "--print-to-pdf=" + out_pdf] + sandbox
@@ -44,9 +48,11 @@ def chrome_print(index_html, out_pdf):
             except subprocess.TimeoutExpired:
                 pass
             if os.path.exists(out_pdf) and os.path.getsize(out_pdf) > 0:
+                shutil.move(out_pdf, final_pdf)
                 return
     finally:
         shutil.rmtree(prof, ignore_errors=True)
+        shutil.rmtree(out_dir, ignore_errors=True)
     raise SystemExit("Chrome did not produce a PDF.")
 
 tmp = tempfile.mkdtemp(prefix="pspdf_")

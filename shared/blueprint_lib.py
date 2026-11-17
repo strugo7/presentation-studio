@@ -22,6 +22,7 @@ DEFAULT_PALETTE = {"bg": "FFFFFF", "bgAlt": "F6F7F9", "ink": "1A2230", "mute": "
                    "accent": "2C5F7C", "accent2": "B4722E", "hair": "E2E5EA", "dark": "1C2A3A"}
 
 LAYOUTS = ("statement", "split", "full-exhibit", "big-number")
+DEVICES = ("laptop", "phone", "tablet", "browser")
 CHART_KINDS = ("column", "bar", "line", "scatter")
 DIAGRAM_KINDS = ("chain", "timeline", "sequence")
 RTL_LANGS = ("he", "ar", "fa", "ur", "yi")
@@ -127,6 +128,152 @@ def chart_colors(pal):
     hl = str(pal["accent2"]).upper().lstrip("#")
     base = ser[1] if ser[0] == hl else ser[0]
     return ser[:4], hl, base
+
+
+# ---------------------------------------------------------------------------------------------
+# Device frames: one geometry for both renderers (HTML draws it as SVG, PPTX as shapes).
+# Generic, original drawings: no brand shapes (no notch/island replica, no logos, no traffic-light
+# colours), so they carry no trademark or licence. The screen takes the screenshot's own aspect
+# (within a range per device), so a screenshot is never cropped; outside the range it is letterboxed.
+# Units: screen width = 1 for phone/tablet/laptop/browser; callers scale the result into a box.
+# ---------------------------------------------------------------------------------------------
+DEVICE_COLORS = {"body": "1B1D22", "edge": "3A3F47", "screen": "000000", "camera": "2E3238",
+                 "base": "C9CDD3", "notch": "A9AEB6", "chrome": "E9ECEF", "dot": "C3C7CD",
+                 "pill": "FFFFFF", "web": "FFFFFF"}
+DEVICE_AR = {"phone": (0.42, 0.62), "tablet": (0.62, 1.6), "laptop": (1.3, 1.8), "browser": (0.5, 3.2)}
+DEVICE_ROW_HEIGHT = {"laptop": 1.0, "browser": 1.0, "tablet": 0.86, "phone": 0.74}
+
+
+def device_geometry(device, img_ar):
+    """Parts of a device frame for an image of aspect img_ar (w/h). Returns
+    {"W", "H", "parts": [{"kind", "x", "y", "w", "h", "r", ...}], "screen": part}."""
+    lo, hi = DEVICE_AR.get(device, (0.5, 3.2))
+    a = min(hi, max(lo, img_ar or 1.0))
+    P = []
+    if device in ("phone", "tablet"):
+        sw, sh = 1.0, 1.0 / a
+        b = 0.05 if device == "phone" else 0.045 * min(sw, sh)
+        W, H = sw + 2 * b, sh + 2 * b
+        rb = (0.15 if device == "phone" else 0.06) * min(W, H)
+        P.append({"kind": "body", "x": 0, "y": 0, "w": W, "h": H, "r": rb})
+        scr = {"kind": "screen", "x": b, "y": b, "w": sw, "h": sh, "r": max(0.0, rb - b * 0.9)}
+        P.append(scr)
+        cr = 0.022 if device == "phone" else 0.012
+        cy = b + 0.035 if device == "phone" else b / 2
+        P.append({"kind": "camera", "x": W / 2 - cr, "y": cy - cr, "w": 2 * cr, "h": 2 * cr, "r": cr})
+    elif device == "laptop":
+        sw, sh = 1.0, 1.0 / a
+        b, bt = 0.028, 0.042
+        lw, lh = sw + 2 * b, sh + b + bt
+        bw, bh = lw * 1.16, 0.034
+        W, H = bw, lh + bh
+        lx = (W - lw) / 2
+        P.append({"kind": "body", "x": lx, "y": 0, "w": lw, "h": lh, "r": 0.03})
+        scr = {"kind": "screen", "x": lx + b, "y": bt, "w": sw, "h": sh, "r": 0.004}
+        P.append(scr)
+        P.append({"kind": "camera", "x": W / 2 - 0.006, "y": bt / 2 - 0.006, "w": 0.012, "h": 0.012, "r": 0.006})
+        P.append({"kind": "base", "x": 0, "y": lh, "w": bw, "h": bh, "r": 0.016})
+        P.append({"kind": "notch", "x": W / 2 - 0.08, "y": lh, "w": 0.16, "h": bh * 0.38, "r": 0.008})
+    else:  # browser
+        bar = 0.062
+        W, H = 1.0, bar + 1.0 / a
+        P.append({"kind": "chrome", "x": 0, "y": 0, "w": W, "h": H, "r": 0.016})
+        for i in range(3):
+            P.append({"kind": "dot", "x": 0.022 + i * 0.022 - 0.0065, "y": bar / 2 - 0.0065, "w": 0.013, "h": 0.013, "r": 0.0065})
+        P.append({"kind": "pill", "x": 0.25, "y": bar * 0.22, "w": 0.5, "h": bar * 0.56, "r": bar * 0.28})
+        scr = {"kind": "screen", "x": 0, "y": bar, "w": 1.0, "h": 1.0 / a, "r": 0.0}
+        P.append(scr)
+    return {"W": W, "H": H, "parts": P, "screen": scr, "device": device}
+
+
+def device_row(items, rtl=False, gap=0.06, arrangement="row"):
+    """Lay out up to three device frames side by side on one baseline.
+    items: [{"device", "ar", ...}] -> (W, H, [(item, geometry, x, y, scale)]) in row units.
+    Heights follow a rough real-world ratio (a phone is smaller than a laptop); the first item sits
+    at the reading start (right in RTL)."""
+    if arrangement == "overlap" and len(items) == 2:
+        # Hero device (first) with the second overlapping its bottom start corner (left in LTR,
+        # right in RTL): the "same product on desktop and phone" composition seen in launch keynotes.
+        ga, gb = (device_geometry(it.get("device", "phone"), it.get("ar")) for it in items)
+        sa = DEVICE_ROW_HEIGHT.get(ga["device"], 1.0) / ga["H"]
+        sb = 0.8 * DEVICE_ROW_HEIGHT.get(gb["device"], 1.0) / gb["H"]
+        wa, wb = ga["W"] * sa, gb["W"] * sb
+        H = max(ga["H"] * sa, gb["H"] * sb * 1.06)
+        if rtl:
+            xa, xb = 0.0, wa - wb * 0.55
+        else:
+            xa, xb = wb * 0.55, 0.0
+        W = max(xa + wa, xb + wb)
+        return W, H, [(items[0], ga, xa, H - ga["H"] * sa, sa), (items[1], gb, xb, H - gb["H"] * sb, sb)]
+    placed, x = [], 0.0
+    seq = list(reversed(items)) if rtl else list(items)
+    for it in seq:
+        g = device_geometry(it.get("device", "phone"), it.get("ar"))
+        sc = DEVICE_ROW_HEIGHT.get(g["device"], 1.0) / g["H"]
+        placed.append([it, g, x, 0.0, sc])
+        x += g["W"] * sc + gap
+    W = max(0.0, x - gap)
+    H = max((g["H"] * sc for _, g, _, _, sc in placed), default=1.0)
+    for p in placed:
+        p[3] = H - p[1]["H"] * p[4]  # bottom-align
+    return W, H, [tuple(p) for p in placed]
+
+
+def loupe_geometry(screen, img_ar, region, mag=2.2):
+    """A round magnifier over one region of the screenshot (the static twin of a region zoom).
+    screen: the device's screen part; region: {"x","y","w","h"} as fractions of the screenshot.
+    Returns {"cx","cy","d", "img": (x, y, w, h) of the magnified image, "crop": (l, t, r, b) fractions}
+    in screen units, or None."""
+    if not region:
+        return None
+    sx, sy, sw, sh = screen["x"], screen["y"], screen["w"], screen["h"]
+    ar = img_ar or (sw / sh)
+    iw, ih = (sw, sw / ar) if ar > sw / sh else (sh * ar, sh)          # contain, as the renderers draw it
+    ix, iy = sx + (sw - iw) / 2, sy + (sh - ih) / 2
+    rx, ry = float(region.get("x", 0.4)), float(region.get("y", 0.4))
+    rw, rh = float(region.get("w", 0.2)), float(region.get("h", 0.2))
+    side = max(rw * iw, rh * ih)                                        # square window onto the image
+    d = min(side * mag, 0.62 * min(sw, sh))
+    m = d / side
+    rcx, rcy = ix + (rx + rw / 2) * iw, iy + (ry + rh / 2) * ih
+    half = side / 2
+    rcx = min(max(rcx, ix + half), ix + iw - half)                      # keep the window inside the image
+    rcy = min(max(rcy, iy + half), iy + ih - half)
+    cx = min(max(rcx, sx + d / 2), sx + sw - d / 2)                     # keep the lens on the screen
+    cy = min(max(rcy, sy + d / 2), sy + sh - d / 2)
+    img = (cx - (rcx - ix) * m, cy - (rcy - iy) * m, iw * m, ih * m)
+    crop = ((rcx - half - ix) / iw, (rcy - half - iy) / ih, (ix + iw - rcx - half) / iw, (iy + ih - rcy - half) / ih)
+    return {"cx": cx, "cy": cy, "d": d, "img": img, "crop": crop}
+
+
+def image_ar(path):
+    """Width/height of an image file (raster via Pillow, SVG via its viewBox/width/height); None if unknown."""
+    if not path or not os.path.exists(path):
+        return None
+    try:
+        if path.lower().endswith(".svg"):
+            with open(path, encoding="utf-8", errors="ignore") as f:
+                head = f.read(4000)
+            m = re.search(r'viewBox="\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)', head)
+            if m and float(m.group(2)):
+                return float(m.group(1)) / float(m.group(2))
+            return None
+        from PIL import Image
+        with Image.open(path) as im:
+            return im.size[0] / float(im.size[1])
+    except Exception:
+        return None
+
+
+def exhibit_devices(ex):
+    """Normalise exhibit.device / exhibit.devices into [{"device", "ref", "label", "alt"}] (empty if none)."""
+    ex = ex or {}
+    if ex.get("devices"):
+        return [d for d in ex["devices"] if d.get("device") in DEVICES and d.get("ref")][:3]
+    if ex.get("device") in DEVICES and ex.get("ref") and ex.get("type") in ("screenshot", "image"):
+        return [{"device": ex["device"], "ref": ex["ref"], "label": "", "alt": ex.get("alt", ""),
+                 "loupe": ex.get("loupe")}]
+    return []
 
 
 # ---------------------------------------------------------------------------------------------
@@ -237,8 +384,14 @@ def validate(bp, assets_dir=None):
             if c.get("sourceId") not in srcs:
                 errors.append("%s: citation sourceId '%s' does not resolve to sources[]" % (w, c.get("sourceId")))
         ex = s.get("exhibit") or {}
-        if ex.get("type") in ("image", "screenshot"):
+        if ex.get("type") in ("image", "screenshot") and not ex.get("devices"):
             asset_ref_ok(ex.get("ref"), w + " exhibit.ref")
+        for k, dv in enumerate(ex.get("devices") or []):
+            asset_ref_ok(dv.get("ref"), w + " exhibit.devices[%d].ref" % k)
+        if (ex.get("device") not in (None, "none") or ex.get("devices")) and ex.get("type") not in ("screenshot", "image"):
+            warnings.append("%s: exhibit.device/devices only frame screenshots or images (type is '%s')" % (w, ex.get("type")))
+        if len(ex.get("devices") or []) > 3:
+            warnings.append("%s: more than 3 devices in one exhibit; only the first 3 are drawn" % w)
         bg = s.get("background") or {}
         asset_ref_ok(bg.get("assetRef"), w + " background.assetRef")
         if ex.get("type") == "chart":
@@ -412,6 +565,9 @@ def slide_asset_ids(slide):
     ex = slide.get("exhibit") or {}
     if ex.get("ref"):
         ids.append(ex["ref"])
+    for dv in (ex.get("devices") or []):
+        if dv.get("ref") and dv["ref"] not in ids:
+            ids.append(dv["ref"])
     for r in (ex.get("assetRefs") or []):
         ids.append(r)
     bg = slide.get("background") or {}
@@ -648,7 +804,7 @@ def title_scale_for(text):
 # ---------------------------------------------------------------------------------------------
 OWNERSHIP = {
     "designer": {"top": ["design"], "slide": ["layout", "background", "dark"],
-                 "assets": "upsert"},
+                 "exhibit": ["device"], "assets": "upsert"},
     "writer": {"meta": ["title", "subtitle"], "slide": ["actionTitle", "kicker", "bullets", "speakerNotes"],
                "exhibit": ["caption"], "engagement": ["prompt", "feedback", "presenterCue"],
                "assetFields": ["alt"]},

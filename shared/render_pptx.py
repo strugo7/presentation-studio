@@ -360,8 +360,80 @@ def ex_code(slide, text, x, y, w, h, caption):
         p = para(t, ln, 15, WHITE, font=FM, align=PP_ALIGN.LEFT, sa=2, first=(t.paragraphs[0].runs == []))
         p._p.get_or_add_pPr().set('rtl', '0')   # code is LTR even in RTL decks
 
+def ex_devices(slide, ex, x, y, w, h):
+    """Generic device frames (blueprint_lib.device_geometry): editable shapes + the screenshot inside."""
+    D = bl.DEVICE_COLORS
+    items = []
+    for d in bl.exhibit_devices(ex):
+        path = A.file_for(d["ref"], raster_only=True)
+        items.append({**d, "path": path, "ar": bl.image_ar(path),
+                      "alt": d.get("alt") or ex.get("alt") or A.alt(d["ref"], ex.get("caption", ""))})
+    W, H, placed = bl.device_row(items, RTL, arrangement=ex.get("arrangement", "row"))
+    cap = ex.get("caption", ""); ch = 0.34 if cap else 0
+    LH = 0.13 if any(it.get("label") for it in items) else 0.0
+    k = min(w / W, (h - ch) / (H + LH))
+    ox = x + (w - W * k) / 2; oy = y + (h - ch - (H + LH) * k) / 2
+    def shape(kind, X, Y, Ww, Hh, r, fill, line=None):
+        if kind == "oval":
+            sp = slide.shapes.add_shape(MSO_SHAPE.OVAL, Inches(X), Inches(Y), Inches(Ww), Inches(Hh))
+            sp.fill.solid(); sp.fill.fore_color.rgb = RGB(fill); sp.line.fill.background(); sp.shadow.inherit = False
+            return sp
+        sp = rrect(slide, X, Y, Ww, Hh, RGB(fill), RGB(line) if line else None, rad=min(0.5, r / max(1e-6, min(Ww, Hh))) or 0.0001, shadow=False)
+        return sp
+    for it, g, px, py, sc in placed:
+        f = lambda v: v * sc * k
+        for pt in g["parts"]:
+            X, Y = ox + (px + pt["x"] * sc) * k, oy + (py + pt["y"] * sc) * k
+            Ww, Hh, r = f(pt["w"]), f(pt["h"]), f(pt["r"])
+            kd = pt["kind"]
+            if kd in ("camera", "dot"):
+                shape("oval", X, Y, Ww, Hh, r, D[kd])
+            elif kd == "screen":
+                shape("rect", X, Y, Ww, Hh, r, D["web"] if g["device"] == "browser" else D["screen"])
+                if it["path"]:
+                    pic = fitted(slide, it["path"], X, Y, Ww, Hh, it["alt"])
+                    if r > 0.001 and abs(pic.width - Inches(Ww)) < Inches(0.02) and abs(pic.height - Inches(Hh)) < Inches(0.02):
+                        geom = pic._element.spPr.find(qn("a:prstGeom"))
+                        if geom is not None:
+                            geom.set("prst", "roundRect")
+                            for c in list(geom): geom.remove(c)
+                            geom.append(parse_xml('<a:avLst %s><a:gd name="adj" fmla="val %d"/></a:avLst>'
+                                                  % (nsdecls("a"), int(100000 * min(0.5, r / min(Ww, Hh))))))
+                else:
+                    para(tb(slide, X, Y, Ww, Hh, MSO_ANCHOR.MIDDLE), "[%s]" % it["ref"], 11, C("mute"), align=PP_ALIGN.CENTER, first=True)
+            elif kd == "body":
+                shape("rect", X, Y, Ww, Hh, r, D["body"], D["edge"])
+            elif kd == "pill":
+                shape("rect", X, Y, Ww, Hh, r, D["pill"])
+                if ex.get("url"):
+                    t = tb(slide, X, Y, Ww, Hh, MSO_ANCHOR.MIDDLE)
+                    pp = para(t, ex["url"], max(6, Hh * 72 * 0.45), C("mute"), align=PP_ALIGN.CENTER, first=True, sa=0)
+                    pp._p.get_or_add_pPr().set("rtl", "0")
+            elif kd == "chrome":
+                shape("rect", X, Y, Ww, Hh, r, D["chrome"], D["dot"])
+            else:
+                shape("rect", X, Y, Ww, Hh, r, D.get(kd, D["body"]))
+        lp = bl.loupe_geometry(g["screen"], it["ar"], it.get("loupe")) if it["path"] else None
+        if lp:
+            d = f(lp["d"]); LX = ox + (px + (lp["cx"] - lp["d"] / 2) * sc) * k; LY = oy + (py + (lp["cy"] - lp["d"] / 2) * sc) * k
+            ring = slide.shapes.add_shape(MSO_SHAPE.OVAL, Inches(LX - d * 0.03), Inches(LY - d * 0.03), Inches(d * 1.06), Inches(d * 1.06))
+            ring.line.fill.background(); ring.shadow.inherit = False; alpha_fill(ring, "000000", 18)
+            pic = slide.shapes.add_picture(it["path"], Inches(LX), Inches(LY), Inches(d), Inches(d))
+            pic.crop_left, pic.crop_top, pic.crop_right, pic.crop_bottom = lp["crop"]
+            geom = pic._element.spPr.find(qn("a:prstGeom"))
+            if geom is not None: geom.set("prst", "ellipse")
+            pic.line.color.rgb = WHITE; pic.line.width = Pt(2.25)
+            set_alt(pic, (it["alt"] + " — " if it["alt"] else "") + "detail")
+        if it.get("label"):
+            cx = ox + (px + g["W"] * sc / 2) * k
+            para(tb(slide, cx - 1.2, oy + H * k + 0.02, 2.4, LH * k, MSO_ANCHOR.TOP), it["label"], max(10, LH * k * 72 * 0.45),
+                 C("mute"), True, PP_ALIGN.CENTER, first=True, sa=0)
+    if cap:
+        para(tb(slide, x, y + h - ch, w, ch, MSO_ANCHOR.MIDDLE), cap, 10.5, C("mute"), align=AL_MAIN, sa=0, first=True)
+
 def place_exhibit(slide, ex, box, bleed=False):
     x, y, w, h = box; t = ex.get("type"); cap = ex.get("caption", "")
+    if bl.exhibit_devices(ex): ex_devices(slide, ex, x, y, w, h); return
     if t in ("screenshot", "image"): ex_image(slide, ex.get("ref"), x, y, w, h, cap, ex.get("alt", ""), bleed)
     elif t == "chart": ex_chart(slide, ex.get("data", {}), x, y, w, h - (0.35 if cap else 0)); cap and para(tb(slide, x, y+h-0.32, w, 0.3), cap, 10.5, C("mute"), first=True, sa=0)
     elif t == "table": ex_table(slide, ex.get("data", {}), x, y, w, min(h, 0.5 * (len(ex.get("data", {}).get("rows", [])) + 1)))
@@ -471,7 +543,7 @@ def render(sl, n):
         half = 13.333 / 2
         vx = 0 if side == "left" else half; txx = (half + 0.55) if side == "left" else MG
         tw = half - 0.55 - MG
-        photo = ex and ex.get("type") == "image"
+        photo = ex and ex.get("type") == "image" and not bl.exhibit_devices(ex)
         if not photo:
             panel = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(vx), 0, Inches(half), SH)
             panel.fill.solid(); panel.fill.fore_color.rgb = C("bgAlt"); panel.line.fill.background(); panel.shadow.inherit = False

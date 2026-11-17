@@ -197,10 +197,62 @@ def svg_sequence(data):
                  f'<text x="{(x1+x2)/2:.0f}" y="{y-14}" text-anchor="middle" font-size="30" fill="#{pal["ink"]}">{E(mm.get("label",""))}</text>')
     return f'<svg class="seq-svg" viewBox="0 0 {W} {H}" role="img" aria-label="sequence diagram" style="width:100%;height:auto">' + "".join(o) + '</svg>'
 
+_DEV_N = [0]
+def device_svg(ex):
+    """Generic device frame(s) around screenshots, from blueprint_lib.device_geometry (same as PPTX)."""
+    items = []
+    for d in bl.exhibit_devices(ex):
+        cands = A.candidates(d["ref"])
+        src = asset_src(d["ref"])
+        items.append({**d, "src": src, "ar": bl.image_ar(cands[0]) if cands else None,
+                      "alt": d.get("alt") or ex.get("alt") or A.alt(d["ref"], ex.get("caption", ""))})
+    W, H, placed = bl.device_row(items, RTL, arrangement=ex.get("arrangement", "row"))
+    lab = any(it.get("label") for it in items)
+    LH = 0.13 if lab else 0.0
+    U = 1000.0; C = bl.DEVICE_COLORS
+    o = []
+    for it, g, x, y, sc in placed:
+        _DEV_N[0] += 1; cid = "dv%d" % _DEV_N[0]
+        o.append(f'<g transform="translate({x*U:.1f} {y*U:.1f}) scale({sc*U:.3f})">')
+        for pt in g["parts"]:
+            k = pt["kind"]; geo = f'x="{pt["x"]:.4f}" y="{pt["y"]:.4f}" width="{pt["w"]:.4f}" height="{pt["h"]:.4f}" rx="{pt["r"]:.4f}"'
+            if k == "screen":
+                bgc = C["web"] if g["device"] == "browser" else C["screen"]
+                o.append(f'<clipPath id="{cid}"><rect {geo}/></clipPath><rect {geo} fill="#{bgc}"/>')
+                if it["src"]:
+                    o.append(f'<image href="{it["src"]}" {geo.split(" rx=")[0]} preserveAspectRatio="xMidYMid meet" clip-path="url(#{cid})"/>')
+            elif k == "body":
+                o.append(f'<rect {geo} fill="#{C["body"]}" stroke="#{C["edge"]}" stroke-width="0.006"/>')
+            elif k == "pill":
+                o.append(f'<rect {geo} fill="#{C["pill"]}"/>')
+                if ex.get("url"):
+                    o.append(f'<text x="{pt["x"]+pt["w"]/2:.4f}" y="{pt["y"]+pt["h"]*0.68:.4f}" font-size="{pt["h"]*0.52:.4f}" text-anchor="middle" fill="#{pal["mute"]}" direction="ltr">{E(ex["url"])}</text>')
+            elif k == "chrome":
+                o.append(f'<rect {geo} fill="#{C["chrome"]}" stroke="#{C["dot"]}" stroke-width="0.003"/>')
+            else:
+                o.append(f'<rect {geo} fill="#{C.get(k, C["body"])}"/>')
+        lp = bl.loupe_geometry(g["screen"], it["ar"], it.get("loupe")) if it["src"] else None
+        if lp:
+            lx, ly, lw, lh = lp["img"]; r = lp["d"] / 2
+            o.append(f'<clipPath id="{cid}l"><circle cx="{lp["cx"]:.4f}" cy="{lp["cy"]:.4f}" r="{r:.4f}"/></clipPath>'
+                     f'<circle cx="{lp["cx"]:.4f}" cy="{lp["cy"]:.4f}" r="{r + 0.012:.4f}" fill="#000" fill-opacity=".18"/>'
+                     f'<image href="{it["src"]}" x="{lx:.4f}" y="{ly:.4f}" width="{lw:.4f}" height="{lh:.4f}" preserveAspectRatio="none" clip-path="url(#{cid}l)"/>'
+                     f'<circle cx="{lp["cx"]:.4f}" cy="{lp["cy"]:.4f}" r="{r:.4f}" fill="none" stroke="#fff" stroke-width="0.012" class="loupe"/>')
+        o.append('</g>')
+        if it.get("label"):
+            cx = (x + g["W"] * sc / 2) * U
+            o.append(f'<text x="{cx:.1f}" y="{(H + LH*0.72)*U:.1f}" font-size="{LH*0.55*U:.1f}" font-weight="700" text-anchor="middle" fill="#{pal["mute"]}" class="dv-l">{E(it["label"])}</text>')
+    alt = " · ".join(it["alt"] for it in items if it.get("alt"))
+    return (f'<svg class="device-svg" viewBox="0 0 {W*U:.1f} {(H+LH)*U:.1f}" role="img" aria-label="{E(alt)}" '
+            f'preserveAspectRatio="xMidYMid meet">' + "".join(o) + '</svg>')
+
 def exhibit_html(ex, bleed=False):
     if not ex: return ""
     t = ex.get("type"); cap = ex.get("caption", "")
     inner = ""
+    if bl.exhibit_devices(ex):
+        capdiv = f'<figcaption>{E(cap)}</figcaption>' if cap else ""
+        return f'<figure class="shot device">{device_svg(ex)}{capdiv}</figure>'
     if t in ("image", "screenshot"):
         src = asset_src(ex.get("ref"))
         alt = ex.get("alt") or A.alt(ex.get("ref"), cap)
@@ -308,7 +360,7 @@ def slide_section(sl):
                 f'<h2 class="bn-t" data-rk="title">{title}</h2>{bullets_html(sl.get("bullets"))}{eng}</div></div>')
     elif lay == "split":
         side = (ex or {}).get("side", "left")
-        img = ex and ex.get("type") == "image"
+        img = ex and ex.get("type") == "image" and not bl.exhibit_devices(ex)
         vis = f'<div class="sp-vis{" fill" if img else ""}" data-rk="exhibit">{exhibit_html(ex, bleed=bool(img))}</div>'
         txt = f'<div class="sp-txt">{kicker_html(sl, kicker)}<h2 class="title" data-rk="title" style="--ls:{bl.title_scale_for(sl.get("actionTitle",""))*0.82:.2f}">{title}</h2>{bullets_html(sl.get("bullets"))}{eng}</div>'
         body = f'<div class="split side-{side}">{vis + txt if side == "left" else txt + vis}</div>'
@@ -454,6 +506,10 @@ pre.code{color:#cfe;font-family:var(--mono);font-size:22px;padding:24px;text-ali
 .sp-vis{background:var(--bgAlt);display:flex;align-items:center;justify-content:center;padding:70px;overflow:hidden}
 .sp-vis.fill{padding:0}.sp-vis.fill .shot,.sp-vis.fill .frame{width:100%;height:100%;border-radius:0;border:0;padding:0;box-shadow:none;background:none}
 .sp-vis.fill img{width:100%;height:100%;max-height:none;object-fit:cover}.sp-vis.fill figcaption{position:absolute;bottom:0;padding:14px 24px;background:rgba(255,255,255,.88)}
+.shot.device{background:none;box-shadow:none;border:0;padding:0;display:flex;flex-direction:column;align-items:center}
+.device-svg{display:block;width:100%;height:600px;filter:drop-shadow(0 22px 34px rgba(10,16,24,.22));color:var(--mute)}
+.sp-vis .device-svg{height:800px}.full .device-svg{height:620px!important}.two .device-svg{height:640px}
+.sp-vis:has(.device){padding:48px}.lay-full-exhibit.dark .device-svg,.slide.dark .two .device-svg{filter:drop-shadow(0 22px 40px rgba(0,0,0,.5))}.shot.device figcaption{margin-top:14px}
 .sp-vis>*{width:100%}.sp-vis .shot img{max-height:760px;margin:0 auto}.sp-vis{position:relative}
 .sp-txt{padding:120px var(--m);display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}.sp-txt .title{margin-bottom:46px}
 .stack{position:absolute;top:74px;bottom:120px;right:var(--m);left:var(--m);display:flex;flex-direction:column;z-index:2}.motif-rule .stack{top:96px}

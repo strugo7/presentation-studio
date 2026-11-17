@@ -34,6 +34,7 @@ field is accepted and validated but no builder acts on it yet. Don't promise it 
 | **Fonts** | Bundled OFL Assistant embedded (no CDN; opens offline); `--font=` embeds another | Font *named*; user embeds via File → Options → Save → Embed fonts | Embedded | Install the font, or Keynote/Slides substitute; choose a Google Font for Slides |
 | **RTL** | `dir="rtl"`; charts keep LTR axes with RTL labels; tables mirror column order | `rtl` + `cs` font + `lang` on every run; tables mirror | Same as the source route | Keynote good; Slides: check alignment of mixed Hebrew/English lines |
 | **Speaker notes** | `N` key panel | Notes pane | Not printed | Kept |
+| **Device frames** (`exhibit.device`, `devices`, `arrangement`, `loupe`) | Inline SVG: generic phone/tablet/laptop/browser, screenshot uncropped inside; row or overlap; round loupe | Editable shapes + picture (rounded screen corners); loupe = elliptical cropped picture | Same as source route | Shapes survive; check the screen corners |
 | **Photo / living background** | Photo behind a scrim, **static** (no video, no pan) | Photo + scrim; video: insert manually | Still frame | — |
 
 ## Which export loses the least

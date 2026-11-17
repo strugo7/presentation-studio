@@ -1,0 +1,5 @@
+@font-face{font-family:A;src:url(../../../shared/fonts/Assistant%5Bwght%5D.ttf)}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:A,sans-serif;direction:rtl;background:#F5F7F8;color:#16202B}
+.top{display:flex;justify-content:space-between;align-items:center}.muted{color:#5B6472}.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-weight:700}
+.ok{background:#E3F4EC;color:#1F6F5C}.warn{background:#FCEFE3;color:#B4561E}.card{background:#fff;border-radius:18px;box-shadow:0 1px 3px #0001;padding:18px}
+.num{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}

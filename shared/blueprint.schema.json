@@ -320,6 +320,113 @@
                     "type": "string"
                   }
                 }
+              },
+              "device": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "laptop",
+                  "phone",
+                  "tablet",
+                  "browser"
+                ],
+                "description": "Draw a generic device frame around the screenshot/image (designer's choice)."
+              },
+              "devices": {
+                "type": "array",
+                "maxItems": 3,
+                "description": "Two or three screens side by side, each in its own frame (e.g. iOS + Android, laptop + phone).",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "device",
+                    "ref"
+                  ],
+                  "properties": {
+                    "device": {
+                      "type": "string",
+                      "enum": [
+                        "laptop",
+                        "phone",
+                        "tablet",
+                        "browser"
+                      ]
+                    },
+                    "ref": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "alt": {
+                      "type": "string"
+                    },
+                    "loupe": {
+                      "type": "object",
+                      "description": "Round magnifier over one region of the screenshot (fractions of its width/height).",
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "w": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "h": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "url": {
+                "type": "string",
+                "description": "Address shown in a browser frame's bar (display only)."
+              },
+              "arrangement": {
+                "type": "string",
+                "enum": [
+                  "row",
+                  "overlap"
+                ],
+                "description": "How exhibit.devices are composed: side by side, or the second overlapping the first's front start corner (2 devices)."
+              },
+              "loupe": {
+                "type": "object",
+                "description": "Round magnifier over one region of the screenshot (fractions of its width/height).",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "y": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "w": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "h": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                }
               }
             }
           },

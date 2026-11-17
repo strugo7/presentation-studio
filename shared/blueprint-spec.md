@@ -119,6 +119,12 @@ It checks: every `citations[].sourceId` resolves to one `sources[]` entry; every
     "side": "left",                       // figure side; text goes opposite
     "alt": "text alternative",            // optional; else assets[].alt
     "assetRefs": ["iconA"],               // optional: assets embedded inside a diagram (credit still tracked)
+    "device": "laptop|phone|tablet|browser|none",   // optional: generic device frame around the screenshot (designer)
+    "devices": [ { "device": "phone", "ref": "ios", "label": "iOS" },
+                 { "device": "phone", "ref": "android", "label": "Android" } ],   // optional: ≤ 3 screens, each framed
+    "arrangement": "row|overlap",         // devices side by side, or the 2nd over the 1st's front start corner
+    "loupe": { "x": 0.6, "y": 0.1, "w": 0.2, "h": 0.15 },   // optional: round magnifier over a region (fractions)
+    "url": "app.example.com",             // optional: text in a browser frame's address bar (display only)
     "bigNumber": { "value": "−46.5%", "unit": "", "context": "what, where, when" }   // for layout big-number
   },
 

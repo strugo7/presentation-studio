@@ -1,0 +1,269 @@
+{
+  "meta": {
+    "title": "פנקס: סגירת חודש בצהריים אחד",
+    "subtitle": "השקת מוצר",
+    "authors": [
+      "צוות המוצר"
+    ],
+    "language": "he",
+    "rtl": true,
+    "deliveryMode": "demo",
+    "audience": {
+      "who": "צוותי כספים בארגונים של 5–50 עובדים",
+      "expertise": "informed",
+      "goal": "buy-in"
+    },
+    "tone": "ישיר, בלי הייפ",
+    "durationMinutes": 8
+  },
+  "design": {
+    "system": "product-demo",
+    "fonts": {
+      "display": "Assistant",
+      "body": "Assistant"
+    },
+    "variant": "keynote-like dark statements around light device slides"
+  },
+  "sources": [
+    {
+      "id": "beta",
+      "title": "פנקס — סיכום בטא לקראת השקה (חומר דוגמה)",
+      "kind": "markdown",
+      "path": "sources/notes.md",
+      "author": "צוות המוצר (חומר דוגמה)",
+      "accessed": "2026-11-17"
+    }
+  ],
+  "assets": [
+    {
+      "id": "laptop",
+      "path": "assets/laptop-close.png",
+      "alt": "מסך סגירת החודש במחשב: 92% התאמות אוטומטיות, 18 פריטים לבדיקה, גרף ימים עד סגירה",
+      "provider": "original",
+      "creator": "presentation-studio (sample)",
+      "license": "MIT",
+      "credit": "צילום מסך מקורי של אפליקציית הדוגמה",
+      "kind": "screenshot"
+    },
+    {
+      "id": "phone",
+      "path": "assets/phone-home.png",
+      "alt": "מסך הבית בטלפון: 212 מתוך 230 התאמות נסגרו, כפתור לבדיקת 18 פריטים",
+      "provider": "original",
+      "creator": "presentation-studio (sample)",
+      "license": "MIT",
+      "credit": "צילום מסך מקורי של אפליקציית הדוגמה",
+      "kind": "screenshot"
+    },
+    {
+      "id": "phone_alt",
+      "path": "assets/phone-home-alt.png",
+      "alt": "אותו מסך בית בגרסת הפלטפורמה השנייה",
+      "provider": "original",
+      "creator": "presentation-studio (sample)",
+      "license": "MIT",
+      "credit": "צילום מסך מקורי של אפליקציית הדוגמה",
+      "kind": "screenshot"
+    }
+  ],
+  "slides": [
+    {
+      "id": "cover",
+      "role": "cover",
+      "kicker": "השקה · נובמבר 2026",
+      "actionTitle": "פנקס: סוגרים את החודש בצהריים אחד"
+    },
+    {
+      "id": "today",
+      "role": "stakes",
+      "layout": "statement",
+      "dark": true,
+      "actionTitle": "היום סגירת חודש לוקחת שישה ימים של העתק־הדבק",
+      "citations": [
+        {
+          "sourceId": "beta",
+          "locator": "§ הבעיה",
+          "kind": "fact"
+        }
+      ],
+      "speakerNotes": "צוותי כספים קטנים סוגרים חודש בגיליונות, וזה לוקח בממוצע שישה ימי עבודה. רוב הזמן הולך על העתקה והתאמה ידנית. אז מה אם ההתאמה הייתה קורית כבר כשהתנועה נרשמת?"
+    },
+    {
+      "id": "laptop",
+      "role": "evidence",
+      "layout": "split",
+      "actionTitle": "כל תנועה מותאמת ברגע שהיא נרשמת, לא בסוף החודש",
+      "bullets": [
+        {
+          "lead": "92%",
+          "text": "מההתאמות בנובמבר נסגרו לבד"
+        },
+        {
+          "text": "מה שלא הותאם מחכה ברשימה אחת"
+        }
+      ],
+      "exhibit": {
+        "type": "screenshot",
+        "ref": "laptop",
+        "device": "laptop",
+        "side": "right",
+        "caption": "מסך סגירת החודש, נובמבר",
+        "loupe": {
+          "x": 0.57,
+          "y": 0.1,
+          "w": 0.24,
+          "h": 0.14
+        }
+      },
+      "citations": [
+        {
+          "sourceId": "beta",
+          "locator": "§ מה עשינו; § תוצאות הבטא",
+          "kind": "fact"
+        }
+      ],
+      "speakerNotes": "זה מסך סגירת החודש. שימו לב למספר למעלה: תשעים ושניים אחוז מההתאמות נסגרו בלי שאף אחד נגע בהן. ומה עם שמונה האחוזים שנשארו? הם מגיעים לטלפון."
+    },
+    {
+      "id": "phone",
+      "role": "evidence",
+      "layout": "split",
+      "actionTitle": "בטלפון רואים מה נשאר, ומאשרים בהקשה",
+      "bullets": [
+        {
+          "text": "18 פריטים לבדיקה, לא 230"
+        }
+      ],
+      "exhibit": {
+        "type": "screenshot",
+        "ref": "phone",
+        "device": "phone",
+        "side": "right",
+        "caption": "מסך הבית בטלפון"
+      },
+      "engagement": {
+        "type": "demo",
+        "prompt": "הדגמה חיה: אישור פריט מהרשימה",
+        "url": "https://example.com/pinkas-demo",
+        "presenterCue": "אם הרשת נופלת, נשארים על השקף: המסך כבר בטלפון שעל המסך."
+      },
+      "citations": [
+        {
+          "sourceId": "beta",
+          "locator": "§ מה עשינו; § תוצאות הבטא",
+          "kind": "fact"
+        }
+      ],
+      "speakerNotes": "עכשיו בטלפון. נועה רואה שמונה־עשר פריטים, לא מאתיים שלושים. הקשה אחת מאשרת התאמה. וזה עובד אותו דבר בשתי הפלטפורמות."
+    },
+    {
+      "id": "pair",
+      "role": "evidence",
+      "layout": "full-exhibit",
+      "actionTitle": "אותה רשימה ואותם אישורים, ב־iOS וב־Android",
+      "exhibit": {
+        "type": "screenshot",
+        "devices": [
+          {
+            "device": "phone",
+            "ref": "phone",
+            "label": "iOS"
+          },
+          {
+            "device": "phone",
+            "ref": "phone_alt",
+            "label": "Android"
+          }
+        ],
+        "caption": "מסך הבית בשתי הפלטפורמות"
+      },
+      "citations": [
+        {
+          "sourceId": "beta",
+          "locator": "§ מה עשינו",
+          "kind": "fact"
+        }
+      ],
+      "speakerNotes": "שני הטלפונים מציגים את אותם נתונים ואת אותה פעולה. הצוות לא צריך לבחור מכשיר. והמחשב והטלפון עובדים יחד."
+    },
+    {
+      "id": "together",
+      "role": "evidence",
+      "layout": "full-exhibit",
+      "actionTitle": "מתחילים במחשב וממשיכים בטלפון, מאותה נקודה",
+      "exhibit": {
+        "type": "screenshot",
+        "devices": [
+          {
+            "device": "laptop",
+            "ref": "laptop",
+            "label": "במשרד"
+          },
+          {
+            "device": "phone",
+            "ref": "phone",
+            "label": "בדרך"
+          }
+        ],
+        "arrangement": "overlap"
+      },
+      "citations": [
+        {
+          "sourceId": "beta",
+          "locator": "§ מה עשינו",
+          "kind": "fact"
+        }
+      ],
+      "speakerNotes": "מה שנשאר פתוח במחשב מחכה בטלפון באותו מצב. ועכשיו התוצאה שבגללה אנחנו כאן."
+    },
+    {
+      "id": "result",
+      "role": "evidence",
+      "layout": "big-number",
+      "dark": true,
+      "actionTitle": "בבטא, הסגירה ירדה משישה ימים ליום וחצי",
+      "exhibit": {
+        "type": "chart",
+        "bigNumber": {
+          "value": "1.5",
+          "unit": "ימים",
+          "context": "זמן ממוצע עד סגירה · 12 צוותים · ספטמבר–נובמבר 2026 (נתוני דוגמה)"
+        }
+      },
+      "citations": [
+        {
+          "sourceId": "beta",
+          "locator": "§ תוצאות הבטא",
+          "kind": "fact"
+        }
+      ],
+      "speakerNotes": "יום וחצי, במקום שישה. זה ממוצע של שנים־עשר צוותים בשלושה חודשים. אז איך מתחילים?"
+    },
+    {
+      "id": "try",
+      "role": "close",
+      "layout": "split",
+      "actionTitle": "זמין מ־1 בדצמבר, עם העברת נתונים חינם ל־90 יום",
+      "bullets": [
+        {
+          "text": "נכנסים מהדפדפן, בלי התקנה"
+        }
+      ],
+      "exhibit": {
+        "type": "screenshot",
+        "ref": "laptop",
+        "device": "browser",
+        "url": "app.pinkas.example/close",
+        "side": "right"
+      },
+      "citations": [
+        {
+          "sourceId": "beta",
+          "locator": "§ השקה",
+          "kind": "fact"
+        }
+      ],
+      "speakerNotes": "פנקס זמין מהראשון בדצמבר. מי שעובר בתשעים הימים הראשונים מקבל העברת נתונים חינם. תודה."
+    }
+  ]
+}

@@ -78,7 +78,8 @@ python shared/render_html.py examples/features-blueprint.json /tmp/feat_html exa
 python shared/render_pdf.py  examples/features-blueprint.json /tmp/feat.pdf examples
 ```
 `examples/mixed-sources/` holds two Hebrew decks built from one mixed source set (students vs.
-management) — see its README.
+management) — see its README. `examples/product-demo/` is a Hebrew launch/demo deck with generic device
+frames (laptop, phone, iOS/Android pair, laptop + phone overlap, browser, loupe): `examples/product-demo/build.sh`.
 
 See 2–3 visual directions of the same content side by side before building the whole deck:
 ```bash
@@ -123,6 +124,7 @@ order, and lay out right-to-left.
 - `examples/sample-blueprint.json` — the original 6-slide deck (kept working unchanged).
 - `examples/features-blueprint.json` — a Hebrew fixture exercising every newer field.
 - `examples/mixed-sources/` — one mixed source set → two decks for two audiences.
+- `examples/product-demo/` — a product demo with device frames (original sample screenshots).
 
 ## Tests
 ```bash

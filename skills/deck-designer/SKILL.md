@@ -15,7 +15,8 @@ licence, credit). Method below.
 - `references/design-gallery.md` — when composing a custom direction, preparing direction previews, or when
   the user asks for "something like X". Start from its quick map (reference → preset → layout), find entries
   by tag (audience, slide role, format), and borrow the principle, never the asset.
-- `references/asset-sources.md` — step 5, before adding any image or icon you didn't get from the user.
+- `references/asset-sources.md` — step 5, before adding any image or icon you didn't get from the user;
+  §5b before any device mockup.
 
 ## 1. Read the topic, pick a direction
 Design for *this* content and audience. Security report ≠ a wellness workshop ≠ an investor pitch. Pick
@@ -68,6 +69,15 @@ Set `slide.layout` where the content job calls for it (layout-patterns.md): `big
 decisive figure, `full-exhibit` for an exhibit that must be read, `split` for a product screen or photo
 plus meaning, `statement` for a single sentence or question. Leave it empty to use the role default.
 Vary the rhythm deliberately; repeat a layout when the job repeats. One content job per slide.
+
+## 3c. Device frames (product, demo, launch decks)
+For a screenshot of software, choose `exhibit.device` (`phone` / `laptop` / `tablet` / `browser`),
+following layout-patterns.md §11. You own that field. The engineer owns `exhibit.devices` (which
+screens appear together). `arrangement` and `loupe` are set together with the engineer, because they
+change what the slide proves.
+
+Frames are the built-in generic drawings: no brand bezels, no logos, never mirrored. See
+asset-sources.md §5b for why, and for the narrow case where Apple's official bezels are allowed.
 
 ## 4. Dark/light rhythm + backgrounds
 Default sandwich: **dark** cover, section dividers, stakes, close; **light** content. Set each slide's

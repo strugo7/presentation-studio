@@ -1,6 +1,6 @@
 # Layout patterns — original specs, one content job per slide
 
-Nine patterns, plus a table of reference compositions (§10). Each one maps onto what the renderers actually implement: four `layout` values
+Nine patterns, a table of reference compositions (§10) and device frames (§11). Each one maps onto what the renderers actually implement: four `layout` values
 (`statement`, `split`, `full-exhibit`, `big-number`), the role defaults, and the diagram kinds. Every
 pattern lists:
 
@@ -123,6 +123,50 @@ Slides viewed for design-gallery.md #14–19, translated into what the renderers
 **Check at display size.** A detail that reads on a laptop disappears on a projector. Small caps
 metadata, axis labels and footers must hold at the room's distance. Look at the rendered slide full screen
 (or the direction preview's full-size view) before hand-off, in RTL as well as LTR.
+
+### 11. Device frames — `exhibit.device` / `exhibit.devices`
+- **Fit:** product demos, launches and sales decks where *where* the product runs matters (desktop,
+  phone, web), or where a bare screenshot would read as a document scan.
+- **Don't frame:**
+  - dense evidence that must be read cell by cell (use `full-exhibit` without a frame, or a table);
+  - a UI that is the hero and fills the slide (show the screen alone, no frame);
+  - a mood photo.
+- **Which device:**
+
+  | The screenshot is… | Frame |
+  |---|---|
+  | a mobile app | `phone` |
+  | a desktop app or a dashboard | `laptop` |
+  | a web app the audience will open | `browser` (+ `exhibit.url`, display only) |
+  | an iPad-style app | `tablet` |
+- **Several devices:** `exhibit.devices` takes up to 3 screens, each `{device, ref, label}`.
+  - `arrangement: "row"` (default): side by side on one baseline. Phones are drawn smaller than
+    laptops, as in life. Use it for the same app on iOS and Android, or one capability across
+    products. Keep labels short ("iOS", "Android").
+  - `arrangement: "overlap"` (2 devices): the second sits over the first's front **start** corner
+    (bottom-right in RTL). Use it for "same product on desktop and phone".
+  - Put the **same content** on both screens to prove an integration or a handoff. Different
+    content on two screens is two slides.
+- **Loupe:** `exhibit.loupe` (or `devices[i].loupe`) = `{x, y, w, h}` as fractions of the screenshot.
+  It draws a round magnifier over that region, so the one detail the title names is legible at
+  projection distance while the screenshot stays whole. One loupe per slide. It also serves as the
+  static twin of a region zoom (which isn't built).
+- **Grid:** in `split`, the frame fills the visual half on the `bgAlt` panel. In `full-exhibit`, the
+  row is centred under the title, with the caption below.
+- **Hierarchy:** device (seen first) → the loupe detail → title.
+- **Long text:** frames take ≤ 2 bullets in `split`. Feature lists go to notes or the next slide.
+- **Static fallback:** identical in HTML, PPTX (editable shapes + picture) and PDF.
+- **RTL check:**
+  - The order of devices flips: the first device sits at the reading start (right).
+  - **The device art and the screenshots are never mirrored.**
+  - The loupe stays on the region it magnifies.
+  - `exhibit.url` stays LTR.
+- **Screenshots:**
+  - Use fictional data.
+  - No blank screens.
+  - Export phones at 2× (e.g. 780×1688 for a 390×844 design) so text survives projection.
+  - The screen takes the screenshot's own aspect ratio (within a sensible range per device), so it's
+    never cropped.
 
 ---
 
