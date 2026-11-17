@@ -5,6 +5,10 @@ description: "Method for planning a presentation's pedagogical structure — ana
 
 # presentation-engineer — structure before slides
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 Structure is the deck. Colour and motion amplify a sound structure and can't rescue a broken one.
 Produce the structural half of `blueprint.json`.
 
@@ -114,7 +118,7 @@ Zoom/Morph navigation.
 
 ## Step 8 — Draft speaker notes & validate
 Draft natural 2–4 sentence `speakerNotes` per slide (the writer will polish). Copy `sources[]` into the
-blueprint. Validate: `python shared/validate_blueprint.py blueprint.json` (schema + every citation,
+blueprint. Validate: `python3 "${CLAUDE_PLUGIN_ROOT}/shared/validate_blueprint.py" blueprint.json` (schema + every citation,
 asset, section and quiz answer resolves). Hand off with: the chosen scaffold/playbook, the ghost-deck
 title list, the slide count vs. time budget, open `missing` facts, and any gaps you had to assume. Do
 not touch `design`/`layout`/`animation`/final prose.

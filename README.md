@@ -26,12 +26,28 @@ Everything flows through **one contract**, `shared/blueprint-spec.md` + `bluepri
 blueprint renders to every format and any stage can be re-run without redoing the others.
 
 ## Install (Claude Code)
-Add this repo as a plugin marketplace, then enable the plugin:
+**For you, in every project on your computer (user scope):**
 ```
-/plugin marketplace add <path-or-git-url-to-this-repo>
-/plugin install presentation-studio
+/plugin install presentation-studio --marketplace strugo7/presentation-studio
 ```
-Or drop the `skills/`, `agents/`, and `commands/` folders into a project's `.claude/`.
+On Claude Code older than 2.1.275, use two steps:
+```
+/plugin marketplace add strugo7/presentation-studio
+/plugin install presentation-studio@presentation-studio      # choose "Install for you (user scope)"
+```
+From a terminal instead: `claude plugin marketplace add strugo7/presentation-studio` then
+`claude plugin install presentation-studio@presentation-studio --scope user`.
+
+- **Updates:** `/plugin marketplace update presentation-studio`, then update the plugin from `/plugin` →
+  Installed (or turn on auto-update in `/plugin` → Marketplaces). Run `/reload-plugins` or start a new
+  session afterwards.
+- **Requirements:** HTML needs only `python3`. PPTX needs `python3 -m pip install python-pptx Pillow`;
+  PDF also needs Chrome or Chromium.
+- **Invoking:** commands and skills are namespaced: `/presentation-studio:new-deck`,
+  `/presentation-studio:grill-me` (the bare `/new-deck` also works when nothing else uses the name).
+- **Claude Code on the web (cloud sessions)** doesn't load plugins installed on your computer or in user
+  settings. There, copy `skills/`, `agents/`, `commands/` and `shared/` into the repo you're working on, or
+  have an organization Owner enable the plugin in managed settings.
 
 ## Use
 - `/new-deck <what you want + point me at the source files>` — runs the whole pipeline.

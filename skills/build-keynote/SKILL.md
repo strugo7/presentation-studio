@@ -5,6 +5,10 @@ description: "Produce an Apple Keynote (.key) version of a deck. Keynote has no 
 
 # build-keynote
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 **Honest constraint:** `.key` is a proprietary, undocumented bundle. Nothing can generate it headlessly
 and no library writes it. The reliable path is **PPTX → open in Keynote → save as Keynote**. Keynote
 imports `.pptx` with high fidelity (layouts, text, tables, images, charts). This is the standard route,
@@ -13,11 +17,11 @@ not a workaround.
 ## Build
 1. Make the PPTX first (see build-pptx):
    ```bash
-   python shared/render_pptx.py blueprint.json out.pptx [assets_dir]
+   python3 "${CLAUDE_PLUGIN_ROOT}/shared/render_pptx.py" blueprint.json out.pptx [assets_dir]
    ```
 2. **macOS, automated** (requires Keynote installed; the first run asks for Automation permission):
    ```bash
-   osascript shared/pptx_to_keynote.applescript /abs/path/out.pptx /abs/path/out.key
+   osascript "${CLAUDE_PLUGIN_ROOT}/shared/pptx_to_keynote.applescript" /abs/path/out.pptx /abs/path/out.key
    ```
    It opens the PPTX in Keynote and exports a `.key`.
 3. **Any OS, by hand:** open `out.pptx` in Keynote → File → Save (keeps it as a Keynote document), or
@@ -25,12 +29,12 @@ not a workaround.
 
 ## Capabilities
 What this format does with each blueprint feature (layouts, charts, quizzes, polls, reveals, sources,
-fonts, RTL) and its fallbacks: **`skills/presentation-studio/references/format-capabilities.md`** — the
+fonts, RTL) and its fallbacks: **`${CLAUDE_PLUGIN_ROOT}/skills/presentation-studio/references/format-capabilities.md`** — the
 single matrix for all builders. Read the row for this format before telling the user what they'll get.
 
 ## Validate first
 ```bash
-python shared/validate_blueprint.py blueprint.json [assets_dir]
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/validate_blueprint.py" blueprint.json [assets_dir]
 ```
 
 ## What survives the import

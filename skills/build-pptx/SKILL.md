@@ -5,12 +5,16 @@ description: "Render a finished blueprint.json into a native editable PowerPoint
 
 # build-pptx
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 Produces a genuinely editable PowerPoint from the blueprint — native charts (not images), real tables,
 and the RTL fixes that stop Hebrew rendering as tofu boxes.
 
 ## Build
 ```bash
-python shared/render_pptx.py blueprint.json out.pptx [assets_dir]
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/render_pptx.py" blueprint.json out.pptx [assets_dir]
 ```
 Then always validate:
 ```bash
@@ -37,12 +41,12 @@ python <pptx-skill>/scripts/office/validate.py out.pptx
 
 ## Capabilities
 What this format does with each blueprint feature (layouts, charts, quizzes, polls, reveals, sources,
-fonts, RTL) and its fallbacks: **`skills/presentation-studio/references/format-capabilities.md`** — the
+fonts, RTL) and its fallbacks: **`${CLAUDE_PLUGIN_ROOT}/skills/presentation-studio/references/format-capabilities.md`** — the
 single matrix for all builders. Read the row for this format before telling the user what they'll get.
 
 ## Validate first
 ```bash
-python shared/validate_blueprint.py blueprint.json [assets_dir]
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/validate_blueprint.py" blueprint.json [assets_dir]
 ```
 
 ## The Zoom caveat (tell the user)

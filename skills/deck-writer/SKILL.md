@@ -5,6 +5,10 @@ description: "Method for writing on-slide copy and speaker notes — action titl
 
 # deck-writer — words for the mouth, not the page
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 Slide copy is spoken (or, in `self-read` decks, read without a narrator). You own the wording of titles,
 kickers, bullets, captions, speaker notes, `engagement.prompt`/`feedback`/`presenterCue`, and
 `assets[].alt`.

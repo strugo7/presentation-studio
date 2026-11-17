@@ -1,12 +1,15 @@
 {
   "name": "presentation-studio",
-  "owner": { "name": "Ofek, Uri, Noam" },
+  "owner": {
+    "name": "Ofek, Uri, Noam"
+  },
+  "description": "presentation-studio: plan, design and build presentations (HTML, PPTX, PDF) from your material, with Hebrew/RTL support.",
   "plugins": [
     {
       "name": "presentation-studio",
       "source": "./",
       "description": "Orchestrated, multi-agent presentation builder (HTML / PPTX / PDF / Keynote / Google Slides) with a pedagogy-first planning engine and a Socratic topic-sharpening skill.",
-      "version": "0.1.0"
+      "version": "0.2.0"
     }
   ]
 }

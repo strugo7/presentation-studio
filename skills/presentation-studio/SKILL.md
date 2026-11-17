@@ -5,9 +5,20 @@ description: "Orchestrates a full presentation build from source material to fin
 
 # presentation-studio — the conductor
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 You coordinate specialists; you don't do their jobs. Everything flows through one **`blueprint.json`**
-(contract: `shared/blueprint-spec.md`, schema: `shared/blueprint.schema.json`). Each stage reads the
+(contract: `${CLAUDE_PLUGIN_ROOT}/shared/blueprint-spec.md`, schema: `${CLAUDE_PLUGIN_ROOT}/shared/blueprint.schema.json`). Each stage reads the
 whole blueprint and writes back only its own fields.
+
+## Requirements (check once, before step 5)
+- **HTML:** `python3` only (standard library; the Hebrew font ships with the plugin).
+- **PPTX:** `python3 -m pip install python-pptx Pillow`. **PDF:** also Google Chrome or Chromium.
+  Optional: `jsonschema` for full schema checks, LibreOffice for the pptx→pdf route, Node + Playwright
+  for PNG direction previews.
+If a module is missing, say which format needs it and offer the HTML build, which needs nothing.
 
 ## References — open when
 - `references/source-intake.md` — **always at step 0 when the user gives material** (files, links,
@@ -61,14 +72,14 @@ whole blueprint and writes back only its own fields.
 
 3. **Design + Write in parallel.** Spawn **deck-designer** and **deck-writer** together on copies of the
    blueprint. Combine with `blueprint_lib.merge(base, {"designer": d, "writer": w})` (each stage's
-   fields only), then `python shared/validate_blueprint.py blueprint.json`.
+   fields only), then `python3 "${CLAUDE_PLUGIN_ROOT}/shared/validate_blueprint.py" blueprint.json`.
 
    **Optional visual choice (3b).** Run it when the user asked to see directions, or when the designer
    reports that the brief leaves a visual decision open that changes the result. The designer returns 2–3
    systems and the slide ids that show them (deck-designer SKILL §1b). Render them from the merged
    blueprint:
    ```bash
-   python shared/preview_directions.py blueprint.json previews/ --systems=a,b,c --slides=<typical-id> --png
+   python3 "${CLAUDE_PLUGIN_ROOT}/shared/preview_directions.py" blueprint.json previews/ --systems=a,b,c --slides=<typical-id> --png
    ```
    Show `previews/index.html` (and send the PNGs where the host can display files). Each row is one
    direction: the cover and the typical slide, from the user's real content, with the token differences
@@ -100,9 +111,11 @@ A student deck and an executive deck from one source set differ in order, depth,
 two visual directions differ in composition, typography and rhythm (layouts + tokens), not just colour.
 
 ## Running the agents
-In Claude Code, spawn each agent by name with the Task/Agent tool (`presentation-engineer`,
-`deck-designer`, `deck-writer`, `deck-animator`). Give each: the path to `blueprint.json`, the paths to
-`shared/` and its own skill, the fact sheet and the sources. Agents run in subagents so their file reads
+In Claude Code, spawn each agent by name with the Task/Agent tool. Installed as a plugin they are
+namespaced: `presentation-studio:presentation-engineer`, `presentation-studio:deck-designer`,
+`presentation-studio:deck-writer`, `presentation-studio:deck-animator` (in a plain checkout of the repo:
+the bare names). Give each: the path to `blueprint.json`, the paths to
+`${CLAUDE_PLUGIN_ROOT}/shared/` and its own skill, the fact sheet and the sources. Agents run in subagents so their file reads
 stay out of your context. If subagents aren't available, run each stage inline by reading that agent's
 `.md` and following it — the pipeline is identical.
 

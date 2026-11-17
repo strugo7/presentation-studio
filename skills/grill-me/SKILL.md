@@ -5,6 +5,10 @@ description: "Socratic topic-sharpening for a presentation. Use BEFORE building 
 
 # grill-me — interrogate the idea until it's sharp
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 ## References — open when
 - `references/brief-and-audience.md` — when you fill `audience` / `deliveryMode` / `tone`, when two
   audiences compete, or when deciding whether to offer directions. Read:

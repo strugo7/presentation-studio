@@ -5,12 +5,16 @@ description: "Produce a Google Slides version of a deck. Google Slides has no of
 
 # build-google-slides
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 **Honest constraint:** a Google Slides deck lives in the user's Google account, not as a local file.
 Two real routes; both start from the PPTX this studio builds (Google Slides imports `.pptx`).
 
 ## Build
 ```bash
-python shared/render_pptx.py blueprint.json out.pptx [assets_dir]
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/render_pptx.py" blueprint.json out.pptx [assets_dir]
 ```
 
 ### Route A — upload & convert (no credentials, recommended)
@@ -27,12 +31,12 @@ media. Only do this with the user's connected account; don't handle raw credenti
 
 ## Capabilities
 What this format does with each blueprint feature (layouts, charts, quizzes, polls, reveals, sources,
-fonts, RTL) and its fallbacks: **`skills/presentation-studio/references/format-capabilities.md`** — the
+fonts, RTL) and its fallbacks: **`${CLAUDE_PLUGIN_ROOT}/skills/presentation-studio/references/format-capabilities.md`** — the
 single matrix for all builders. Read the row for this format before telling the user what they'll get.
 
 ## Validate first
 ```bash
-python shared/validate_blueprint.py blueprint.json [assets_dir]
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/validate_blueprint.py" blueprint.json [assets_dir]
 ```
 
 ## What survives, what to tell the user

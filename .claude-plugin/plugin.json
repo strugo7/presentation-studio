@@ -1,8 +1,22 @@
 {
   "name": "presentation-studio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A full presentation pipeline: an orchestrator that plans a pedagogically sound deck from your source material, then dispatches specialist sub-agents (engineer, designer, animator, writer) that collaborate through one shared blueprint, and builders that emit HTML, PPTX, PDF, Keynote and Google Slides. Includes grill-me, a Socratic skill for sharpening the topic before any slide exists.",
-  "keywords": ["presentation", "slides", "pptx", "html", "keynote", "google-slides", "pedagogy", "morph", "zoom", "rtl"],
-  "author": { "name": "Ofek, Uri, Noam" },
-  "license": "MIT"
+  "keywords": [
+    "presentation",
+    "slides",
+    "pptx",
+    "html",
+    "keynote",
+    "google-slides",
+    "pedagogy",
+    "morph",
+    "zoom",
+    "rtl"
+  ],
+  "author": {
+    "name": "Ofek, Uri, Noam"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/strugo7/presentation-studio"
 }

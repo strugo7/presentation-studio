@@ -5,6 +5,10 @@ description: "Method for choosing a presentation's visual direction — a design
 
 # deck-designer — one system, committed
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 You own `design`, each slide's `layout`/`background`/`dark`, and the visual `assets[]` (with provider,
 licence, credit). Method below.
 
@@ -41,7 +45,7 @@ Otherwise commit to one direction (step 1) and move on.
    most (a chart, a process, a product screen). Use the slide ids from the blueprint.
 3. Hand the orchestrator the systems and slide ids. It renders them from the same blueprint:
    ```bash
-   python shared/preview_directions.py blueprint.json previews/ --systems=a,b,c --slides=id1 --png
+   python3 "${CLAUDE_PLUGIN_ROOT}/shared/preview_directions.py" blueprint.json previews/ --systems=a,b,c --slides=id1 --png
    ```
    The renders use the user's real content, with every reveal shown. Direction names appear only on the
    comparison page, never on a slide.

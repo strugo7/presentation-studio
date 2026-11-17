@@ -5,6 +5,10 @@ description: "Method for planning presentation motion and interaction — staged
 
 # deck-animator — motion that serves the argument
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 Motion has two legitimate jobs: **segmenting** (reveal one idea at a time so the room isn't reading
 ahead) and **continuity** (carry the eye between related moments). Anything else is distraction. You
 write `animation` per slide and `navigation` for the deck, and check each `engagement` has a working path
@@ -66,7 +70,7 @@ Each section usually has one "payoff" slide (the result/root/ask). Give it a tou
 a warm-accent reveal — so the rhythm has peaks. Don't animate everything equally; uneven is good.
 
 ## 5. Format reality (write it into your hand-off)
-Checked against `shared/render_html.py` and `shared/render_pptx.py`. The single source is
+Checked against `${CLAUDE_PLUGIN_ROOT}/shared/render_html.py` and `${CLAUDE_PLUGIN_ROOT}/shared/render_pptx.py`. The single source is
 presentation-studio/references/format-capabilities.md.
 - **HTML engine.** Built:
   - camera-flight navigation between all slides (a smooth zoom-out/zoom-in arc);

@@ -5,6 +5,10 @@ description: "Render a finished blueprint.json into a self-contained, animated H
 
 # build-html
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 HTML is the native home for this studio's motion: camera-flight navigation between slides (hub
 tiles fly into their section), click-stepped reveals, local quiz feedback and reduced motion all run
 in the browser with no dependencies.
@@ -15,10 +19,10 @@ backgrounds (photo backgrounds are static). See format-capabilities.md.
 
 ## Build
 ```bash
-python shared/render_html.py blueprint.json OUT_DIR [assets_dir] [--font=path.ttf]
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/render_html.py" blueprint.json OUT_DIR [assets_dir] [--font=path.ttf]
 ```
 - Produces `OUT_DIR/index.html` (self-contained: CSS + JS inline) and `OUT_DIR/assets/` (copied images).
-- The bundled OFL font (`shared/fonts/Assistant[wght].ttf`) is embedded automatically, so the deck opens
+- The bundled OFL font (`${CLAUDE_PLUGIN_ROOT}/shared/fonts/Assistant[wght].ttf`) is embedded automatically, so the deck opens
   offline and Hebrew never falls back; there is no CDN request. `--font=path.ttf` embeds a different font
   under the deck's display-font name; `--no-embed-font` skips embedding (system fonts only).
 - Reads `design` (system tokens), per-slide `layout`, `navigation`, `animation.reveals`, `engagement`,
@@ -27,12 +31,12 @@ python shared/render_html.py blueprint.json OUT_DIR [assets_dir] [--font=path.tt
 
 ## Capabilities
 What this format does with each blueprint feature (layouts, charts, quizzes, polls, reveals, sources,
-fonts, RTL) and its fallbacks: **`skills/presentation-studio/references/format-capabilities.md`** — the
+fonts, RTL) and its fallbacks: **`${CLAUDE_PLUGIN_ROOT}/skills/presentation-studio/references/format-capabilities.md`** — the
 single matrix for all builders. Read the row for this format before telling the user what they'll get.
 
 ## Validate first
 ```bash
-python shared/validate_blueprint.py blueprint.json [assets_dir]
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/validate_blueprint.py" blueprint.json [assets_dir]
 ```
 
 ## Deliver

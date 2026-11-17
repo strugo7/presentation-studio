@@ -5,9 +5,13 @@ description: "Render a blueprint.json into a static PDF (one 16:9 page per slide
 
 # build-pdf
 
+> **Paths.** This skill ships in the presentation-studio plugin. `shared/…` and `skills/…` paths are under
+> `${CLAUDE_PLUGIN_ROOT}/` (in a plain checkout of the repo, the repo root); `references/…` is this skill's own
+> folder. Write blueprints and builds in the user's project, never inside the plugin folder.
+
 ```bash
-python shared/render_pdf.py blueprint.json out.pdf [assets_dir] --from=html --font=path.ttf   # clean, matches HTML deck
-python shared/render_pdf.py blueprint.json out.pdf [assets_dir] --from=pptx                    # matches the PPTX deck
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/render_pdf.py" blueprint.json out.pdf [assets_dir] --from=html --font=path.ttf   # clean, matches HTML deck
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/render_pdf.py" blueprint.json out.pdf [assets_dir] --from=pptx                    # matches the PPTX deck
 ```
 
 - **`--from=html`** (default): blueprint → print HTML → headless Chrome `--print-to-pdf`. Fonts are
@@ -21,12 +25,12 @@ python shared/render_pdf.py blueprint.json out.pdf [assets_dir] --from=pptx     
 
 ## Capabilities
 What this format does with each blueprint feature (layouts, charts, quizzes, polls, reveals, sources,
-fonts, RTL) and its fallbacks: **`skills/presentation-studio/references/format-capabilities.md`** — the
+fonts, RTL) and its fallbacks: **`${CLAUDE_PLUGIN_ROOT}/skills/presentation-studio/references/format-capabilities.md`** — the
 single matrix for all builders. Read the row for this format before telling the user what they'll get.
 
 ## Validate first
 ```bash
-python shared/validate_blueprint.py blueprint.json [assets_dir]
+python3 "${CLAUDE_PLUGIN_ROOT}/shared/validate_blueprint.py" blueprint.json [assets_dir]
 ```
 
 ## Dependencies
