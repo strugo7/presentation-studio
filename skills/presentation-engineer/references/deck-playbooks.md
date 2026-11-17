@@ -5,7 +5,7 @@ beats, why they're in that order, which `layout` and exhibit each beat usually t
 example. Pick one; don't merge two. The ghost deck — action titles only, in order — must read as the
 argument even with every body removed.
 
-Load only the playbook you're using. Real-world design references for these sequences, with their verification status:
+Load only the playbook you're using. Real-world references for these sequences (verified, with what each teaches):
 deck-designer/references/design-gallery.md.
 
 ---
@@ -14,7 +14,9 @@ deck-designer/references/design-gallery.md.
 **Beats:** Decision → Evidence → Alternatives & risks → Next step.
 **Why:** executives allocate attention by decision; give the answer first (Minto), then only the
 evidence that would change their mind. Alternatives show you considered them; owning the risk earns
-trust. Method and detail live in the appendix, reachable but not presented.
+trust. Method and detail live in the appendix, reachable but not presented. When the brief is a
+strategy rather than a single decision, run audit → gap → decision → playbook as the evidence beats
+(design-gallery.md #6).
 
 | Beat | Layout / exhibit | Engagement |
 |---|---|---|
@@ -76,6 +78,8 @@ Titles are assertions (Alley's assertion–evidence): a full-sentence claim, a v
 **Beats:** Summary → sections with headline + evidence → method appendix.
 **Why:** nobody is talking, so each page must stand alone (Duarte's slidedocs): headlines that summarise
 the page, captions that explain the exhibit without a narrator, and method/definitions in the appendix.
+The live version of the same content goes the other way: deliberately incomplete slides that the
+presenter finishes out loud (design-gallery.md #7–8). Re-cut rather than reuse.
 Text density can be higher, but structured: headline, 2–3 short paragraphs or bullets, one exhibit,
 caption with source. Quiz answers are inline (`answerPlacement:"inline"` is the default).
 

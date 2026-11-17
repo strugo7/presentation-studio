@@ -72,12 +72,18 @@ has a working path. The full matrix lives in presentation-studio/references/form
   describe them in `animation.notes` for the presenter to add. Keep them subtle.
 - **PDF** captures every reveal step and every answer as static content.
 
-## 7. Patterns from practice (candidate sources in design-gallery.md, not yet verified)
+## 7. Patterns from practice (sources: design-gallery.md #4, #7, #8, #12, #13)
 - **Show what changes, not that something moves.** Animate the one element that changes between two
   states (a bar growing, a step being added). A technical or process explanation should build up one
   step at a time, the way a presenter would draw it.
 - **One payoff motion per section.** Everything else stays quiet.
 - **Self-read decks have no reveals.** The reader can't click through steps; show the final state.
+- **One map, revisited.** Show the whole framework once, then come back to it with one part
+  emphasised for each section; the audience stays oriented (gallery #12, a hub with `zoom` navigation).
+- **Same story, two deliveries.** Animated for the meeting, static for the leave-behind (gallery #13). Build
+  once and export twice: HTML/PPTX with reveals, then PDF with every step and answer shown.
+- **A live vote needs a live tool.** Team alignment votes need many devices (gallery #4). Our poll is
+  local, so name the tool in `presenterCue`.
 
 ## 8. Checklist before hand-off
 - [ ] every quiz has `correctOptionId`, per-option `feedback` and an `answerPlacement` that suits the format

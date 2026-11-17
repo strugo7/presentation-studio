@@ -120,3 +120,8 @@ Margins come from the design-system token `margin` (110–150 px). "Start" means
 Vary the rhythm. Three `full-exhibit` slides in a row read like a report; insert a `statement` or
 `big-number` beat. Don't give every slide a different layout either. Repeat a layout when the content
 job repeats.
+
+**Live vs. read density** (design-gallery.md #7–9). In a `live-talk` or `pitch`, a slide that explains
+everything competes with the speaker: prefer `statement` / `big-number` and put the explanation in the
+notes. In `self-read`, the slide must carry the explanation: fuller captions and `full-exhibit`/`split`.
+Pick images that work without on-image text, so a language re-cut doesn't need new art.

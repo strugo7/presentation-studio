@@ -85,7 +85,7 @@ Use the preset directly when no direction fits; compose `custom` + `tokens` for 
 
 ## Reference libraries to pull looks from (research these when composing a custom system)
 
-- **`design-gallery.md`** (this folder) — real-world references (links only) with verification status; unverified entries are leads, not evidence.
+- **`design-gallery.md`** (this folder) — 13 real-world references, each opened and checked (links only), with what each teaches and how it maps to our layouts.
 - **`zarazhangrui/frontend-slides`** — 12 presets + ~34 bold templates. Mine it for composition and
   type pairings. Fitting picks for serious/academic work: Swiss Modern, Cobalt Grid, Blue Professional,
   Signal, Monochrome, Electric Studio. **Avoid** its hacker/neon templates (Terminal Green, Neon Cyber,
