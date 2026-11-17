@@ -11,9 +11,14 @@ kickers, bullets, captions, speaker notes, `engagement.prompt`/`feedback`/`prese
 
 ## References — open when
 - `references/writing-rules.md` — always: titles, bullets, notes, voice, AI tells.
-- `references/audience-voice-and-citations.md` — when writing for a specific audience register (§1), writing
-  speaker notes (§2), wording claims against their citations (§3–4), or mixing Hebrew with Latin terms,
-  units, code and numbers (§5); and for any re-write for a new audience (§6).
+- `references/audience-voice-and-citations.md` — open the section you need:
+  - §1: writing for a specific audience register;
+  - §2: speaker notes and the bridge sentence;
+  - §2b: deciding what goes on the slide vs. in the notes for a live or a read cut, and checking a
+    talk that replaces a recorded lecture;
+  - §3–4: wording claims against their citations;
+  - §5: mixing Hebrew with Latin terms, units, code and numbers;
+  - §6: any re-write for a new audience.
 
 Method:
 
@@ -30,7 +35,8 @@ Method:
 
 4. **Speaker notes.** 2–4 natural sentences per slide — what the presenter actually says, the *why*
    behind the slide, not a re-read of the bullets. Conversational. Include the oral attribution for any
-   cited source ("Smith and colleagues found in 2022…").
+   cited source ("Smith and colleagues found in 2022…"). End with a bridge sentence to the next slide.
+   In a `self-read` cut, move that explanation into the caption instead (audience-voice-and-citations.md §2b).
 
 5. **Voice + language.** Write in `meta.language`, in `meta.tone`, at the register of
    `meta.audience` (audience-voice-and-citations.md §1). For RTL keep Latin tokens (tool/command names)

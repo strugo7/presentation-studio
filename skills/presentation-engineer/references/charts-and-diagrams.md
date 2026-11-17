@@ -6,12 +6,24 @@ charts by relationship: deviation, correlation, ranking, distribution, change ov
 part-to-whole, spatial, flow) and **Datawrapper Academy**'s chart-type guidance
 (academy.datawrapper.de). This file turns them into rules our renderers support.
 
+## 0. Write the question before you pick the chart
+The same data can need different charts for different takeaways
+([Storytelling with Data, "Different takeaway, different graph"](https://www.storytellingwithdata.com/blog/different-takeaway-different-graph)).
+So, in this order:
+
+1. Write the question the slide answers ("Which teams report least?").
+2. Write the takeaway as the action title ("Finance and Sales report least of all teams").
+3. Only then pick the exhibit from the table below.
+
+A chart chosen before the question tends to show everything and say nothing.
+
 ## 1. Decision rule
 
 | What the slide must show | Exhibit | Blueprint |
 |---|---|---|
 | Change over time (trend, before/after across periods) | **Line** | `chart`, `kind:"line"` |
 | Compare categories (magnitude, ranking) | **Column** (few, short labels) or **bar** (long labels, many items, ranking) | `kind:"column"` / `"bar"` |
+| Rank categories (which is biggest, in order) | **Horizontal bar**, sorted largest first, label at the start of each bar, value at its end | `kind:"bar"`, categories pre-sorted, `highlight` the one the title names |
 | Relationship between two measures | **Scatter**, only with enough points (≳ 10) | `kind:"scatter"`, `points` |
 | One unambiguous number that carries the slide | **Big number** with unit, context, source | `layout:"big-number"`, `exhibit.bigNumber` |
 | Exact values the audience must read or compare cell by cell | **Table** | `table` |
@@ -37,8 +49,31 @@ point index) and `annotate`.
 - **Correlation dressed as cause** in the title. "X rose as Y fell" ≠ "X cut Y" without design that shows cause.
 - **Scatter with five points.** Use a table.
 
+## 2b. Sample size, uncertainty and limits
+The schema has **no error bars, intervals or confidence bands**, and none of the renderers draws them.
+When uncertainty changes how the result should be read, show it another way:
+
+- **Caption.** Give n and the interval in words: "n = 412; 95% CI 61–74%".
+- **Table.** Add `low` / `high` columns next to the estimate, when exact bounds matter.
+- **Separate series.** Draw an estimate or projection as its own series, named "estimate", with
+  `kind:"derived"` on the citation.
+- **Limits slide.** Use one when exclusions or a small sample change what the result means
+  (deck-playbooks.md #7).
+
+If a field needs real interval graphics, export the chart as an image from the analysis tool
+(with `alt` and a PNG `fallbackPath`). Note the gap in the hand-off.
+
 ## 3. Data hygiene the renderers rely on
 - Every chart carries `unit` (and `yLabel` when the unit alone isn't clear) and a citation on the slide.
+- **Unit, period, baseline.** The title or caption says what is measured, over which period, compared
+  with what ("vs. Q1", "vs. the old method"). A number without a baseline can't be judged.
+- **Respect the axis range.** Bars and columns start at zero. A line's range is stated when it doesn't
+  start at zero.
+- **Let the reader check the source.** The citation `locator` points to the cells (`results.csv!C2:C7`).
+  In `self-read` decks, also put the chart's numbers in an appendix table.
+- **`highlight` is drawn; `annotate` is not.** The renderers colour the `highlight` bar or point in
+  `accent2`. `annotate` is a planning note for the writer and designer. Put the words it implies into the
+  caption or a bullet.
 - Series lengths equal category counts (validation errors otherwise).
 - Category labels short; long ones → `bar`.
 - HTML and PPTX read the same spec (`blueprint_lib.chart_spec`): values, units, categories, series names
@@ -59,6 +94,21 @@ point index) and `annotate`.
 - **Mermaid** is optional: if a Mermaid CLI (`mmdc`) is available, you may export complex flows to SVG +
   a PNG `fallbackPath`, add the file as an asset with `alt`, and reference it as an `image` exhibit. Without
   it, use the native `diagram` kinds above — they render in HTML and PPTX with no extra tools.
+
+## 4b. Architecture and procedures: choose the level first
+- **Architecture (C4).** Pick the level the question needs ([c4model.com/diagrams](https://c4model.com/diagrams)):
+  - **context**: the system, its users and the external systems;
+  - **containers**: apps, services and stores;
+  - **components**: inside one container, and only where the decision is.
+
+  Start at context and go one level deeper per slide. There is no native box-and-arrow diagram, so
+  export complex C4 or Mermaid views as an image (§4). Use a `chain` when the parts form a pipeline.
+- **Interaction order.** Use `sequence` when the question is who calls whom, in what order. Mark the
+  message the slide is about with `emphasis`.
+- **Procedures.** A tutorial step is a screenshot or a code block, with a caption that says what the
+  reader should see
+  ([Google Technical Writing, illustrations](https://developers.google.com/tech-writing/two/illustrations)).
+  Keep a `chain` for the overview of all the steps.
 
 ## 5. Documentary image vs. explanatory diagram
 Keep them apart and say which is which:

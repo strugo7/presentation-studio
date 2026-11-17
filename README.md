@@ -80,10 +80,16 @@ python shared/render_pdf.py  examples/features-blueprint.json /tmp/feat.pdf exam
 `examples/mixed-sources/` holds two Hebrew decks built from one mixed source set (students vs.
 management) — see its README.
 
+See 2–3 visual directions of the same content side by side before building the whole deck:
+```bash
+python shared/preview_directions.py examples/mixed-sources/exec-he.blueprint.json /tmp/directions \
+       --systems=executive-data-briefing,swiss,editorial-report --png    # open /tmp/directions/index.html
+```
+
 ## What each format gives you
 | Format | Native? | Interaction & motion | Best for |
 |---|---|---|---|
-| **HTML** | yes (self-contained, offline) | camera zoom, reveals, live quiz feedback, local poll, reduced motion | browser-presented talks, sharing a link |
+| **HTML** | yes (self-contained, offline) | camera-flight navigation, reveals, live quiz feedback, local poll, reduced motion (no per-slide transitions or region zoom) | browser-presented talks, sharing a link |
 | **PPTX** | yes (editable, native charts) | Morph; quiz → linked answer slides; Zoom = 2-click manual finish | PowerPoint users, editing, projector |
 | **PDF** | yes (static, fonts embedded) | every reveal + answers printed | email / print / submission |
 | **Keynote** | via PPTX import | Morph→Magic Move (imperfect); no Zoom | Mac/Keynote users |
@@ -112,7 +118,8 @@ order, and lay out right-to-left.
 - `shared/` — the blueprint contract (`blueprint-spec.md`, `blueprint.schema.json`), the shared library
   (`blueprint_lib.py`: validation, assets, sources, tokens, charts, merge), `validate_blueprint.py`, the
   renderers (`render_html.py`, `render_pptx.py`, `render_pdf.py`, `pptx_to_html.py`,
-  `pptx_to_keynote.applescript`) and `fonts/` (Assistant, SIL OFL).
+  `pptx_to_keynote.applescript`), `preview_directions.py` (side-by-side direction previews) and `fonts/`
+  (Assistant, SIL OFL).
 - `examples/sample-blueprint.json` — the original 6-slide deck (kept working unchanged).
 - `examples/features-blueprint.json` — a Hebrew fixture exercising every newer field.
 - `examples/mixed-sources/` — one mixed source set → two decks for two audiences.
@@ -130,14 +137,17 @@ present, the PDF is checked for reveal text, answers and sources. Missing tools 
 `python-pptx`, `Pillow` (PPTX); Google Chrome/Chromium (PDF; optional LibreOffice for the pptx→pdf
 route); `jsonschema` (optional, schema validation). The Assistant font ships in `shared/fonts/` and is
 embedded in HTML automatically; install it (or another Hebrew font) on machines that open the PPTX.
-Node + Playwright are only used by the optional interaction test. See `requirements.txt`.
+Node + Playwright are only used by the optional interaction test and the `--png` option of `preview_directions.py`. See `requirements.txt`.
 
 ## Credits & sources
 Structure/pedagogy synthesised from Figma's *60 presentation ideas*, NIU's *Effective Presentation
-Skills Tutorial*, the Minto Pyramid/SCQA, Monroe's Motivated Sequence, Duarte's sparkline,
+Skills Tutorial*, the Minto Pyramid/SCQA, Duarte (audience-first writing, Slidedocs, the sparkline), Storytelling
+with Data, C4, Google Technical Writing, Sequoia and YC pitch guidance, Monroe's Motivated Sequence,
 assertion-evidence (Alley), and Mayer/Gagné multimedia-learning research. Animation technique library
 distilled from **One Skill PPT** (youtube.com/@oneskill_ppt). Design references draw on
-`zarazhangrui/frontend-slides` and the curated skill list at tosea.ai; writing rules adapt the
+`zarazhangrui/frontend-slides` (its show-don't-tell style selection inspired the direction previews),
+`zarazhangrui/beautiful-html-templates` (MIT; single slides viewed and described, not copied) and the
+curated skill list at tosea.ai; writing rules adapt the
 `Gabberflast/academic-pptx-skill`. Chart choice follows the FT Visual Vocabulary and Datawrapper's
 guidance; design references are catalogued with links (not copies) in
 `skills/deck-designer/references/design-gallery.md` (each entry opened and checked; unreachable items listed separately). Each reference file names its sources. Font:

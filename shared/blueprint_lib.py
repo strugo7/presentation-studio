@@ -104,6 +104,31 @@ def palette(design):
     return {**DEFAULT_PALETTE, **tok["palette"], **((design or {}).get("palette") or {})}
 
 
+def _mix(a, b, t):
+    """Blend hex colour a toward b by t (0..1)."""
+    a, b = a.lstrip("#"), b.lstrip("#")
+    return "".join("%02X" % round(int(a[i:i + 2], 16) * (1 - t) + int(b[i:i + 2], 16) * t) for i in (0, 2, 4))
+
+
+def chart_colors(pal):
+    """(series colours, highlight colour, single-series base colour) for both renderers.
+
+    Series colours are always distinct, even in systems where accent == accent2 (swiss, mono), and
+    a single-series highlight always differs from the other bars."""
+    ser = []
+    for k in ("accent", "accent2", "mute", "ink", "dark"):
+        v = str(pal[k]).upper().lstrip("#")
+        if v not in ser:
+            ser.append(v)
+    for t in (0.45, 0.7):  # lighter tints of the accent when the palette has too few distinct inks
+        if len(ser) >= 4:
+            break
+        ser.append(_mix(ser[0], "FFFFFF", t))
+    hl = str(pal["accent2"]).upper().lstrip("#")
+    base = ser[1] if ser[0] == hl else ser[0]
+    return ser[:4], hl, base
+
+
 # ---------------------------------------------------------------------------------------------
 # Localised UI strings the renderers print (sources pages, quiz controls, credits).
 # ---------------------------------------------------------------------------------------------

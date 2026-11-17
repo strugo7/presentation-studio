@@ -149,7 +149,10 @@ It checks: every `citations[].sourceId` resolves to one `sources[]` entry; every
 
 ### Reveal tokens (used by `animation.reveals[].show`)
 `bullet:N` · `exhibit` · `title` · `kicker` · `block:ID` (any element given an id). `zoom` on a
-reveal step names a region to zoom the exhibit to (builders that support it honor it; others ignore).
+reveal step names a region to zoom the exhibit to. It is reserved: **no builder reads it yet**, so
+use `exhibit.data.highlight` or a second, cropped slide instead. `transition` is honoured by the PPTX
+builder (`morph` → Morph with fade fallback; `fade`/`push` → fade). The HTML builder ignores it and uses
+its camera flight for every slide change.
 
 ### Chart and diagram data (`exhibit.data`)
 ```jsonc

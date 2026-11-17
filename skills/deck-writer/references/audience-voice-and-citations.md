@@ -23,11 +23,48 @@ ask. Hebrew versions follow the same pattern (see §5 for mixed text).
 
 ## 2. Speaker notes that sound like a person
 - 2–4 sentences, in the order you'd say them: the point → the why → the bridge to the next slide.
+- **The last sentence is the bridge**: it hands over to the next slide's title. Example: "So the drop is
+  real. The question is whether it lasts, and that's the next chart." If no bridge can be written, the
+  two slides are in the wrong order or one is missing. Tell the engineer.
 - Oral attribution before the citation appears: "Rescorla's spec puts it plainly…", "In our lab data…".
 - Mark what to *do*: "[pause]", "[ask the room]", "[click: reveal the second line]". Presenter cues for
   quizzes go in `engagement.presenterCue`; the PPTX builder appends them to the notes.
 - Write numbers the way you'd say them: "almost twice as fast", with the exact figure on the slide.
-- `self-read` decks: no notes needed; the caption and headline must carry the slide.
+- `self-read` decks: no notes needed; the caption and headline must carry the slide (§2b).
+
+## 2b. Live vs. read: move the explanation, don't delete it
+The same explanation has to live somewhere. Where depends on the cut
+([Duarte, Slidedocs](https://www.duarte.com/resources/books/slidedocs/);
+[Reynolds, signal vs. noise](https://presentationzen.com/blog/the-signal-to-noise-ratio-activity)).
+
+| Content | Live cut | Read cut (`self-read`) |
+|---|---|---|
+| The claim | action title | action title |
+| Why it's true / how to read the exhibit | speaker notes | caption ("What to notice: …") |
+| Definition of a term or metric | said aloud at first use; notes hold the wording | on the slide at first use, or a definitions slide |
+| Where a number comes from (unit, period, baseline) | footer citation; notes give the oral attribution | caption + footer citation |
+| Interpretation and its hedge ("suggests") | notes | caption or a short body line |
+| Method details | backup slide, reachable not presented | appendix |
+| Transition to the next slide | the bridge sentence in notes | the next headline must follow without it |
+
+Two cuts share titles where they can, and always share facts and citations. When a slide changes between
+cuts, change the caption and the notes. Don't change the number.
+
+**Check, read cut:** cover the notes. Can a reader who wasn't there follow from the headlines,
+exhibits and captions alone?
+**Check, live cut:** cover the slide body. Do the notes plus the title carry the point and the bridge?
+
+### When the talk replaces a video or recorded lecture
+The audience starts from zero and the presenter is the only explanation they get
+(`audience.priorKnowledge` says so). Check:
+
+- [ ] The ghost deck has no jumps: every term is introduced before a slide depends on it.
+- [ ] Each slide's notes contain the full explanation the presenter will say, not a reminder: the
+  definition, the example, the "why". A presenter who has never seen the video can deliver it.
+- [ ] Each note ends with a bridge to the next slide.
+- [ ] Each worked example is spelled out step by step in notes or reveals, not summarised.
+- [ ] Every 8–10 minutes there's a check of understanding (a quiz or posed question), with feedback.
+- [ ] A cue says where to pause for questions ("[pause: ask if the term is clear]").
 
 ## 3. Citations in the copy
 - The slide footer is generated from `citations[]` (number + short title + locator). Don't type
@@ -67,3 +104,4 @@ ask. Hebrew versions follow the same pattern (see §5 for mixed text).
 - [ ] evidence phrasing matches its new type (worked example / decisive number / mechanism)
 - [ ] no new numbers; every figure still has its citation
 - [ ] the ask fits what this audience can actually do
+- [ ] the cut is right: live (explanation in notes, bridges) or read (explanation in captions) — §2b

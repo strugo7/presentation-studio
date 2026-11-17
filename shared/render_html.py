@@ -61,7 +61,7 @@ def link(text, url):
     return E(text)
 
 # ---------- charts (inline SVG, same spec as the PPTX builder) ----------
-SER = [pal["accent"], pal["accent2"], pal["mute"], pal["ink"]]
+SER, HL, BASE1 = bl.chart_colors(pal)   # distinct series inks; highlight always differs from the base
 
 def _legend(sp, W, y):
     if len(sp["series"]) < 2: return ""
@@ -75,6 +75,13 @@ def _legend(sp, W, y):
 def _axis_labels(sp, W, H, L, B):
     o = ""
     yl = sp["yLabel"] or sp["unit"]
+    if sp["kind"] == "bar":
+        # Horizontal bars: the value axis runs along the bottom and the category labels fill the
+        # start column, so a rotated label at x=22 would sit on top of them. An explicit yLabel goes
+        # under the bars (the unit alone is already printed on every value), xLabel above the labels.
+        if sp["yLabel"]: o += f'<text x="{(L + W - 100) / 2:.0f}" y="{H - B + 46}" font-size="26" fill="#{pal["mute"]}" text-anchor="middle" class="ax-v">{E(yl)}</text>'
+        if sp["xLabel"]: o += f'<text x="{L - 16}" y="{(70 if len(sp["series"]) > 1 else 40) - 12}" font-size="24" fill="#{pal["mute"]}" text-anchor="end" class="ax-c">{E(sp["xLabel"])}</text>'
+        return o
     if yl: o += f'<text x="22" y="{(H-B)/2+20:.0f}" font-size="26" fill="#{pal["mute"]}" text-anchor="middle" transform="rotate(-90 22 {(H-B)/2+20:.0f})">{E(yl)}</text>'
     if sp["xLabel"]: o += f'<text x="{(W+L)/2:.0f}" y="{H-12}" font-size="26" fill="#{pal["mute"]}" text-anchor="middle">{E(sp["xLabel"])}</text>'
     return o
@@ -118,7 +125,7 @@ def svg_chart(data):
                 bh = band * 0.7 / m
                 for si, s in enumerate(sp["series"]):
                     v = s["values"][i]; y = yc - band*0.35 + si*bh
-                    col = pal["accent2"] if (m == 1 and sp["highlight"] == i) else SER[si % 4]
+                    col = (HL if sp["highlight"] == i else (BASE1 if sp["highlight"] is not None else SER[0])) if m == 1 else SER[si % 4]
                     x0, x1 = X(0), X(v)
                     body.append(f'<rect x="{min(x0,x1):.0f}" y="{y:.0f}" width="{abs(x1-x0):.0f}" height="{bh-6:.0f}" rx="4" fill="#{col}"/>'
                                 f'<text x="{max(x0,x1)+10:.0f}" y="{y+bh/2+10:.0f}" font-size="30" font-weight="800" fill="#{pal["ink"]}">{E(bl.fmt_num(v, dec, unit))}</text>')
@@ -137,7 +144,7 @@ def svg_chart(data):
                 for si, s in enumerate(sp["series"]):
                     for i, v in enumerate(s["values"]):
                         x = L + band*i + (band-gw)/2 + si*bw
-                        col = pal["accent2"] if (m == 1 and sp["highlight"] == i) else SER[si % 4]
+                        col = (HL if sp["highlight"] == i else (BASE1 if sp["highlight"] is not None else SER[0])) if m == 1 else SER[si % 4]
                         y0, y1 = Y(0), Y(v)
                         body.append(f'<rect x="{x+3:.0f}" y="{min(y0,y1):.0f}" width="{bw-6:.0f}" height="{abs(y1-y0):.0f}" rx="6" fill="#{col}"/>'
                                     f'<text x="{x+bw/2:.0f}" y="{min(y0,y1)-12:.0f}" text-anchor="middle" font-size="{32 if m==1 else 26}" font-weight="800" fill="#{pal["ink"]}">{E(bl.fmt_num(v, dec, unit))}</text>')
@@ -458,7 +465,7 @@ pre.code{color:#cfe;font-family:var(--mono);font-size:22px;padding:24px;text-ali
 .tiles{display:flex;gap:40px;height:100%;align-items:center}.tile{flex:1;height:460px;border-radius:24px;padding:40px;cursor:pointer;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.16);transition:transform .4s,border-color .3s;font:inherit;text-align:inherit;display:block}
 .slide.light .tile{background:#fff;border-color:var(--hair)}.tile:hover,.tile:focus-visible{transform:translateY(-10px);border-color:var(--accent2)}.tile .tn{display:block;font-size:90px;font-weight:800;color:var(--accent2)}.tile .ts{display:block;font-size:48px;font-weight:800;color:#fff;margin-top:14px}.slide.light .tile .ts{color:var(--ink)}
 .runhead{position:absolute;top:30px;right:var(--m);left:var(--m);display:flex;justify-content:space-between;font-size:20px;letter-spacing:.06em;color:var(--mute);padding-bottom:12px;border-bottom:1px solid var(--hair);z-index:2}
-.motif-rule .hd{top:96px}
+.motif-rule .hd{top:96px}.motif-numbers .slide.light .hd{padding-inline-end:250px}
 .secnum{position:absolute;top:10px;''' + END + r''':50px;font-size:230px;font-weight:800;line-height:1;color:var(--hair);opacity:.7;z-index:0;font-variant-numeric:tabular-nums}
 .foot{position:absolute;bottom:44px;right:var(--m);left:var(--m);font-size:19px;line-height:1.35;color:var(--mute);z-index:3}.foot cite{font-style:normal}
 .slide.dark .foot{color:#9aa6b2}
@@ -488,7 +495,7 @@ body.overview .slide{cursor:pointer}body.overview .ov{display:block;position:abs
 body.pdf [data-step]{opacity:1;transform:none}
 </style></head><body class="''' + BODYCLS + r'''">
 <div class="vp"><div class="stage" id="stage"><div class="world" id="world">''' + SECTIONS_HTML + r'''</div></div></div>
-<div class="hud"><div class="box"><span id="count"></span><button type="button" data-a="map">Map</button><button type="button" data-a="ov">Overview</button><button type="button" data-a="n">Notes</button><button type="button" data-a="rm" aria-pressed="false">Motion</button><button type="button" data-a="f">Full</button></div></div>
+<div class="hud"><div class="box"><span id="count" dir="ltr"></span><button type="button" data-a="map">Map</button><button type="button" data-a="ov">Overview</button><button type="button" data-a="n">Notes</button><button type="button" data-a="rm" aria-pressed="false">Motion</button><button type="button" data-a="f">Full</button></div></div>
 <div id="notes" aria-live="off"></div>
 <script>
 const ROWS=''' + json.dumps(ROWS) + r''', ORDER=''' + json.dumps(ORDER) + r''', ZOOM=''' + ("true" if ZOOM else "false") + r''', RTL=''' + ("true" if RTL else "false") + r''';

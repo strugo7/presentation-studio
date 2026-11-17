@@ -1,20 +1,34 @@
 # Design gallery: real-world references (links only) and what each one teaches
 
-Open this when you are composing a custom direction, or when the user says "something like X". Find
+Open this when you are composing a custom direction, when the user says "something like X", or when
+you prepare direction previews (deck-designer SKILL §1b). Find
 entries by tag and borrow the **principle** (sequence, hierarchy, how evidence is staged, live vs.
 read), never the asset. No images, templates or fonts from these sources are stored in this repo (see
 asset-sources.md §6). Every entry is **link for analysis only**: none of these pages grants reuse of
 its slides.
 
 ## How these were checked
-**2026-11-17:** each page below was opened with a plain HTTP fetch and its **text** was read. Two
-limits follow from that:
+Every entry records its **unit of checking**, because the unit limits what the entry can claim:
 
-- **The slides themselves weren't looked at.** "Visual decision" records only what the page says
-  about the visuals; it is not a description of the slides.
-- **Gaps are marked "not stated"** wherever the page says nothing about a field.
+- **Page text (#1–13).** On 2026-11-17 each page was opened with a plain HTTP fetch and its text was
+  read. The slides weren't looked at. "Visual decision" there records only what the page *says*
+  about the visuals. Where the page says nothing about a field, it is marked "not stated".
+- **Slide screenshot (#14–19).** On 2026-11-17 the published image of **one slide** was downloaded and
+  looked at. These entries describe that slide's composition and density, and nothing about the rest of
+  the deck or its order.
 
 Sites that block automated readers were not worked around; they are listed under "Not verified".
+
+**Quick map: reference → what to use here**
+
+| Reference | Slide role | Local preset / direction | Layout or exhibit |
+|---|---|---|---|
+| #14 Signal, cover | cover | `signal`, `executive-data-briefing` | role `cover` |
+| #15 Zappos, statement + photo | statement with a story image | `keynote` | `split` (photo bleeds) |
+| #16 Thermo Fisher, product + notes | product explanation | `product-demo` | `split` (image + ≤ 2 bullets) |
+| #17 Thermo Fisher, comparison | proof / evidence | `product-demo`, `executive-data-briefing` | `full-exhibit` `column` + `highlight` |
+| #18 Cobalt Grid, index of six | overview / agenda | `cobalt-grid` | role `agenda` (≤ 4 sections) or a `table`; no 2×3 grid layout yet |
+| #19 Blue Professional, ranking | ranking evidence | `cobalt-grid`, `signal` | `full-exhibit` `bar`, sorted |
 
 ---
 
@@ -118,7 +132,7 @@ Sites that block automated readers were not worked around; they are listed under
 - **Scope:** a case-study page about one reusable keynote deck, presented worldwide and later refreshed.
 - **Structural decision:** one deck that works for diverse audiences, carrying the speaker's point of view.
 - **Visual decision:** simple **statement slides** combined with visuals that communicate "without requiring a shared language". The brand is described as bright, vibrant and quirky.
-- **Our mapping:** the `keynote` direction; `statement` slides; image-led meaning. Also a reason to keep text out of images, so a Hebrew or English re-cut doesn't need new art.
+- **Our mapping:** the `keynote` direction; `statement` slides; image-led meaning. Also a reason to keep text out of images, so a Hebrew or English re-cut doesn't need new art. One slide from this case was viewed: #15.
 
 ### 10. Duarte case study: VMware ESG report as a data story · tags: report, data, self-read
 - **Source:** duarte.com/approach/case-studies/reimagining-vmwares-high-stakes-industry-report-as-a-stunning-data-story/.
@@ -136,7 +150,7 @@ Sites that block automated readers were not worked around; they are listed under
 - **Structural decision:** the content team first pulled the most important messages out of complex charts. The design then showed how the product outperforms competitors.
 - **Visual decision:** bold text, bright colours, **simple charts**, and 3D product renders with animation.
 - **Result (company-reported):** sales beat projections several times over, and the visuals were reused across the website and collateral.
-- **Our mapping:** charts-and-diagrams.md (one message per chart, highlight the comparison); the `product-demo` direction.
+- **Our mapping:** charts-and-diagrams.md (one message per chart, highlight the comparison); the `product-demo` direction. Two slides from this case were viewed: #16–17.
 
 ### 12. BrightCarbon portfolio: Aegis AI partnership presentation · tags: technical, partnership / framework diagram, animation
 - **Source:** brightcarbon.com/portfolio/aeigs-ai-partnership-presentation/ (sic: the URL slug reads "aeigs").
@@ -159,6 +173,155 @@ Sites that block automated readers were not worked around; they are listed under
 
 ---
 
+## Slide screenshots viewed (one slide each, 2026-11-17)
+
+These are compositions to translate, not assets. Images aren't stored in this repo. The template
+screenshots (#14, #18, #19) come from `zarazhangrui/beautiful-html-templates` (MIT), a library of
+34 HTML slide templates. It is a sibling of Frontend Slides, not the same thing: Frontend Slides'
+own `STYLE_PRESETS.md` has a preset called "Bold Signal" (charcoal and orange, Archivo Black). That is a
+different design from the template called "Signal" here.
+
+### 14. Signal, slide 1 (cover) · tags: executive, report, research / cover / live and read
+- **Source:** [signal-1.png](https://raw.githubusercontent.com/zarazhangrui/beautiful-html-templates/main/screenshots/signal-1.png).
+  The library describes the template as "deep navy canvas with bone paper and a single muted-gold
+  accent; institutional with quiet weight".
+- **Unit checked:** one cover screenshot, 1920×1080.
+- **What the slide shows:**
+  - A very large serif title, set at the start edge in the lower half, two lines.
+  - A wide empty field above it.
+  - A faint square grid over a deep navy canvas.
+  - A monospace caps metadata line above the title (period · audience · deck type), with a short gold
+    rule between the two.
+  - A muted serif subtitle under the title.
+  - A hairline footer rule with author on one side and version/status on the other.
+- **Role:** cover; sets an institutional, unhurried tone.
+- **What to translate:**
+  - Generous empty space above a start-aligned title. Our cover already anchors to the start edge
+    (`coverAlign: start`).
+  - The grid as an *optional* anchor. In our `signal` it's a light-slide motif (`motif: grid` in
+    `cobalt-grid`); the dark cover stays plain.
+  - Use a Hebrew font (Assistant, or Frank Ruhl Libre for a serif feel), never a Latin serif for Hebrew
+    text.
+  - Enlarge secondary details if they matter: the metadata line is tiny at projection distance.
+    In our cover it's the `kicker`/eyebrow and `meta.authors`, at readable sizes.
+- **Differs from our `signal`:** ours uses Assistant (sans), a steel-blue accent (`2C5F7C`) and amber
+  for the payoff, and has no grid on the cover. The shared idea is the navy canvas, the restraint and
+  the start alignment.
+- **RTL / format:** in RTL the title block anchors right. The short rule above the title is a
+  decorative bar, which design-systems.md's "don'ts" exclude, so skip it. Identical in HTML, PPTX, PDF.
+
+### 15. Duarte, Zappos walking deck: statement with photo · tags: keynote, brand, marketing / statement / live
+- **Source:** [Zappos block image 2](https://www.duarte.com/wp-content/uploads/2024/05/Duarte-Case-study-zappos-Block-image-2-1.jpg), from #9.
+- **Unit checked:** one slide image, 1000×563.
+- **What the slide shows:** a cut-out photo of a person looking at a phone fills one half. A short claim
+  in two lines of spaced caps sits on the other half, on a deep blue field. The first word is in a
+  contrasting colour (pink), so the eye lands on the key word first. Hand-drawn line accents surround
+  the person.
+- **Role:** a statement slide where the image plays a story role (the consumer); the claim is short.
+- **What to translate:**
+  - `split` in a marketing or keynote deck: a photo that bleeds on one half and a title of ≤ 6 words on
+    the other.
+  - Emphasis by colour on one word isn't something our renderers do per word. Put the key word first,
+    and let weight and size carry it.
+  - On an **evidence** slide, prefer an illustration that explains the claim over a mood photo.
+- **RTL / format:** in RTL put the photo with `exhibit.side:"left"` so the text starts on the right; or
+  `"right"` when the image should be read first (layout-patterns.md §2). Keep text out of the photo so
+  a language re-cut doesn't need new art.
+
+### 16. Duarte, Thermo Fisher launch: product with nearby notes · tags: product, launch, technical → customers / explanation
+- **Source:** [Thermo Fisher block image 1](https://www.duarte.com/wp-content/uploads/2024/07/Duarte-Case-study-ThermoFisher-block-image-1-1.jpg), from #11.
+- **Unit checked:** one slide image, 1000×563.
+- **What the slide shows:**
+  - A 3D render of the instrument fills most of the slide.
+  - Two short labelled notes sit right next to the components they describe: a bold name, then 2–4
+    short lines, joined to the part by a thin leader line.
+  - The slide title sits in a corner, in large white type.
+- **Role:** explaining a component: where it is and what it does.
+- **What to translate:** a **pair of slide roles**: this one (component + notes close to it), followed
+  by a comparison-evidence slide (#17). This is a reading of two slides, not the order of the original
+  deck.
+- **How to build it here:**
+  - Our renderers can't place call-outs on an image. Use `split` with the image, and ≤ 2 bullets on the
+    text half, each starting with the part's name, in the image's reading order (`bullet.lead` for the
+    name).
+  - If the call-outs must sit on the image, bake them into the image asset. Its `alt` then names the
+    parts, and a Hebrew cut needs its own image.
+- **RTL / format:** the bullet order follows reading order (right to left). Identical in all formats.
+
+### 17. Duarte, Thermo Fisher launch: two-bar comparison · tags: product, data, launch / evidence
+- **Source:** [Thermo Fisher block image 3](https://www.duarte.com/wp-content/uploads/2024/07/Duarte-Case-study-ThermoFisher-block-image-3-1.jpg), from #11.
+- **Unit checked:** one slide image, 1000×563.
+- **What the slide shows:**
+  - Two columns on a shared baseline: grey for current methods, a saturated gradient for the product.
+  - The value is printed on top of each column.
+  - A dashed line carries the shorter column's height across to the taller one. A bracket marks the
+    difference, labelled with the gain.
+  - Each column has a large text statement beside it, the leading side in the accent colour.
+  - In the image the column heights look proportional to the values, read from a zero baseline.
+- **Role:** proof: one comparison, one message.
+- **What to translate:** `full-exhibit` with `chart.kind:"column"`, two categories, `highlight` on the
+  leader. Our renderers print values and colour the highlight in `accent2`, with bars from zero.
+  - The dashed reference line and bracket aren't drawn by our renderers. State the gain in the title
+    ("40% deeper coverage in the same hour") and in the caption.
+  - Keep the claim's conditions (same time, same sample) in the caption.
+- **RTL / format:** column charts keep LTR geometry. Put the baseline category first (left) and the
+  leader second, so time and "better" read left → right as the axis does. Native editable chart in
+  PPTX.
+
+### 18. Cobalt Grid, slide 3: an index in six entries · tags: overview, agenda, editorial / index
+- **Source:** [cobalt-grid-3.png](https://raw.githubusercontent.com/zarazhangrui/beautiful-html-templates/main/screenshots/cobalt-grid-3.png).
+  The library describes the template as "electric cobalt italic serifs on a graph-paper canvas,
+  anchored by stair-stepped pixel-glitch decorations and slim hairline rules".
+- **Unit checked:** one content slide, 1920×1080.
+- **What the slide shows:**
+  - Six items in two columns × three rows, separated by hairline rules.
+  - Each item has a small monospace number (01.–06.), a short serif heading and one explanatory line.
+  - Everything is in one cobalt ink on a warm paper canvas. No graph-paper grid shows on this slide at
+    this size.
+  - The large title sits at the top, with a small tracked caps label at the opposite end.
+- **Role:** an index or overview of topics.
+- **What to translate:**
+  - Use it for an agenda or a "what's in this report" slide: number + short heading + one line.
+  - **Gap:** our renderers have no 2×3 index layout. The `agenda` role draws one row of tiles per
+    section, which works up to about 4 sections. A `table` (number · heading · line) keeps all six in
+    reading order.
+  - A dedicated index layout is a candidate for a new layout value.
+- **Differs from our `cobalt-grid`:** ours is a sans (Assistant) system on white with a faint graph
+  grid, a steel-blue default accent and rounded cards. The shared ideas are the ledger calm, the hairline
+  rules and a single accent.
+- **RTL / format:** in a Hebrew deck, item 01 starts at the **right** column, top. Check the reading order
+  in the output (a `table` mirrors column order in both HTML and PPTX).
+
+### 19. Blue Professional, slide 6: horizontal ranking · tags: data, executive, report / ranking evidence
+- **Source:** [blue-professional-6.png](https://raw.githubusercontent.com/zarazhangrui/beautiful-html-templates/main/screenshots/blue-professional-6.png).
+  The library describes the template as "cream paper background with electric cobalt blue accents".
+- **Unit checked:** one content slide, 1920×1080.
+- **What the slide shows:**
+  - Seven categories ranked top to bottom, largest first.
+  - The label is at the start of each row and the percentage at its end, in the accent colour.
+  - All bars start from the same baseline, each on a pale full-length track.
+  - A small caps kicker and a topic title above ("Most important … concerns").
+  - A "Ranking" tag at the far end of the header.
+- **Role:** ranking evidence.
+- **What to translate:**
+  - `full-exhibit` with `chart.kind:"bar"`: categories pre-sorted, `unit:"%"`, values printed, and the
+    title stating the takeaway ("Inflation leads investor concerns at 79%"), not the topic.
+  - Use the user's own data with its unit and source citation.
+  - The pale track isn't drawn by our renderers. It isn't needed for honesty: bars from zero already
+    are.
+- **RTL / format:** labels are Hebrew text; the bar geometry stays LTR in both formats (as all our
+  charts). Check long labels: they're why `bar` beats `column` here.
+
+---
+
+## To check next (found, not yet viewed)
+
+| Item | Status 2026-11-17 | What a future entry must record |
+|---|---|---|
+| Arounda, "Pitch Deck for SaaS" (Dribbble) | The research brief reports the project page was found and opened. The slide visuals haven't been viewed, and dribbble.com challenges automated readers. | Open it in a browser. Record whether you saw the project page only, specific slides, or the full sequence. |
+| Figma Slides (figma.com/slides) | Checked as a source of ideas for **live discussion** (polls, alignment scale; #4), not as a finished deck. | If a template is opened, name it and the slides viewed. |
+| Pinterest | Useful for *discovering* examples, never as the reference itself. | After discovering, link the designer's or studio's own page, record the insight in your own words, and add any reusable asset through asset-sources.md. |
+
 ## Not verified (nominated, could not be confirmed)
 
 | Item | Status 2026-11-17 |
@@ -174,11 +337,13 @@ Sites that block automated readers were not worked around; they are listed under
 1. Open the page itself and record the date.
 2. Fill in the template in your own words:
    - source;
+   - **unit checked**: case page text, specific slides (which ones), or the full sequence;
    - scope;
    - audience and purpose;
    - structural decision;
    - visual decision ("not stated" if the page doesn't say);
+   - role (which slide job it serves);
    - RTL / format fit;
-   - our mapping.
+   - our mapping (local preset or direction, layout, exhibit), and how it differs from the reference.
 3. Don't copy images or long quotes.
 4. If the principle maps to nothing we implement, note it: that is a candidate for a new layout or token.

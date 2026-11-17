@@ -1,7 +1,8 @@
 # Narrative scaffolds — pick one, apply it consistently
 
 A scaffold is a starting structure, not a cage. Audience-specific sequences built on these (executive,
-investor, students, technical, self-read, demo) are in deck-playbooks.md; exhibit choice per slide is in
+investor, students, technical, self-read, demo, research, data briefing, marketing/launch, sale,
+architecture, tutorial) are in deck-playbooks.md; exhibit choice per slide is in
 charts-and-diagrams.md. Choose from audience + goal; deviate on purpose, not
 by accident. Each entry: when to use, the ordered beats, the failure mode.
 
@@ -56,14 +57,36 @@ default for technical peers and papers. *Source: Barbara Minto, McKinsey.*
 the after) → Action (the specific ask).** Where answer-first leads with the answer, Monroe spends time
 making the audience *feel* the need first. *Source: Alan Monroe, Purdue, 1930s.*
 
+## Start from the audience and what they must remember (Duarte)
+Before any scaffold, write down who is in the room and the one idea they should leave with
+([Duarte, how to write a great presentation](https://www.duarte.com/blog/how-to-write-a-great-presentation/)).
+Then add what they already know, and the action you are asking for. These are the brief's
+`audience`, `oneSentence` and `ask` (grill-me). The scaffold comes after them.
+
 ## Duarte Sparkline — a moving talk
 Oscillate between **"what is"** and **"what could be"**, building tension and release in waves, and end
-on a **"new bliss."** Not a linear list of facts; a rhythm. *Source: Nancy Duarte, "Resonate."*
+on a **"new bliss."** Not a linear list of facts; a rhythm. *Source: Nancy Duarte, "Resonate";
+[the contrast guide](https://www.duarte.com/blog/ultimate-guide-to-contrast/).*
+**Use it when** the audience has to adopt a change: a launch, a strategy, a new way of working.
+**Don't use it** for a research talk or a data briefing. There, the order comes from the question and
+the evidence (below), and building tension around a result reads as spin.
+
+## Research question → evidence (research talks)
+**Question** (why it matters, the gap) → **definitions** the argument needs → **method** (enough to judge
+the evidence) → **findings**, one assertion–evidence slide each → **limits** and threats to validity →
+**answer** and contribution → next step.
+The order is set by what the audience needs in order to judge the evidence, not by suspense.
+Definition and method slides keep their own form; finding slides carry the claim titles.
+*Source: [assertion-evidence.com](https://www.assertion-evidence.com/) and its
+[model research talks](https://www.assertion-evidence.com/research_models.html).* Playbook:
+deck-playbooks.md #7.
 
 ## Assertion–Evidence — slide-level structure (pairs with any scaffold)
 Every content slide = a **declarative assertion** as the headline (a full sentence, the takeaway) +
 **visual evidence** that supports it (chart/image/diagram), not a bullet list. This is exactly the
 "action title + one exhibit" rule the engineer enforces per slide. *Source: Michael Alley, Penn State.*
+Apply it to **result** slides. An opening question, a definitions slide or a method slide keeps the
+form its job needs (deck-playbooks.md #7).
 
 ---
 

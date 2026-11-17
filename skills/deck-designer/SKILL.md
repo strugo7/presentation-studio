@@ -9,10 +9,12 @@ You own `design`, each slide's `layout`/`background`/`dark`, and the visual `ass
 licence, credit). Method below.
 
 ## References — open when
-- `references/design-systems.md` — step 1 (systems, directions, tokens) and step 2 (Hebrew typography).
+- `references/design-systems.md` — step 1 (systems, directions, tokens), step 1b (direction previews,
+  lineage of the presets) and step 2 (Hebrew typography).
 - `references/layout-patterns.md` — step 3, choosing a layout per slide; read only the patterns you use.
-- `references/design-gallery.md` — when composing a custom direction or when the user asks for "something
-  like X": find entries by tag (audience, slide role, format) and borrow the principle, never the asset.
+- `references/design-gallery.md` — when composing a custom direction, preparing direction previews, or when
+  the user asks for "something like X". Start from its quick map (reference → preset → layout), find entries
+  by tag (audience, slide role, format), and borrow the principle, never the asset.
 - `references/asset-sources.md` — step 5, before adding any image or icon you didn't get from the user.
 
 ## 1. Read the topic, pick a direction
@@ -23,6 +25,31 @@ a preset (`signal`, `cobalt-grid`, `swiss`, `editorial`, `mono`) or a direction 
 exhibit frame and margins in both renderers. Commit to a thesis: a dominant colour (60–70% of the visual weight), 1–2
 supporting tones, one sharp accent for emphasis, and a second warm accent reserved for the single
 "payoff" moment per section.
+
+## 1b. Optional: let the user choose by seeing (direction previews)
+Use this path **only** when:
+- the user asks to see directions or options; or
+- the brief leaves open a visual decision that changes the result: two plausible directions that differ
+  in composition, not just colour, with no brand guidelines to settle it.
+
+Otherwise commit to one direction (step 1) and move on.
+
+1. Pick 2–3 directions that differ in at least `titleScale`/`titleWeight`, `coverAlign` or `motif`, and
+   `frame` (design-systems.md, "Direction previews", for default trios by deck type).
+2. Pick the slides that show the difference: the cover plus one typical slide, the kind this deck has
+   most (a chart, a process, a product screen). Use the slide ids from the blueprint.
+3. Hand the orchestrator the systems and slide ids. It renders them from the same blueprint:
+   ```bash
+   python shared/preview_directions.py blueprint.json previews/ --systems=a,b,c --slides=id1 --png
+   ```
+   The renders use the user's real content, with every reveal shown. Direction names appear only on the
+   comparison page, never on a slide.
+4. The user compares composition, density and title size side by side, and picks one (or "A's cover with
+   B's frame" → `custom` + `design.tokens`).
+5. Write the chosen `design.system` (+ any tokens) into the blueprint and continue with step 2.
+
+No blueprint field changes for this path. Old blueprints are untouched, because the script only sets
+`design.system` on temporary copies.
 
 ## 2. Typography
 Hebrew/RTL or another non-Latin script: choose a font that actually has those glyphs (e.g. **Assistant**,

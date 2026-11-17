@@ -63,6 +63,18 @@ whole blueprint and writes back only its own fields.
    blueprint. Combine with `blueprint_lib.merge(base, {"designer": d, "writer": w})` (each stage's
    fields only), then `python shared/validate_blueprint.py blueprint.json`.
 
+   **Optional visual choice (3b).** Run it when the user asked to see directions, or when the designer
+   reports that the brief leaves a visual decision open that changes the result. The designer returns 2–3
+   systems and the slide ids that show them (deck-designer SKILL §1b). Render them from the merged
+   blueprint:
+   ```bash
+   python shared/preview_directions.py blueprint.json previews/ --systems=a,b,c --slides=<typical-id> --png
+   ```
+   Show `previews/index.html` (and send the PNGs where the host can display files). Each row is one
+   direction: the cover and the typical slide, from the user's real content, with the token differences
+   listed. Ask which one, or which mix. Write the pick into `design` and continue. Skip this step when
+   brand guidelines already fix the look.
+
 4. **Animate.** Spawn **deck-animator** for `animation`, `navigation`, and how each engagement behaves
    per format.
 
@@ -77,7 +89,7 @@ whole blueprint and writes back only its own fields.
 
 | Change | Keep | Re-run |
 |---|---|---|
-| **Visual direction only** ("make it editorial", "try the executive look") | sources, facts, structure, copy | designer → animator → builders |
+| **Visual direction only** ("make it editorial", "try the executive look") | sources, facts, structure, copy | (optional: direction previews, step 3b) → designer → animator → builders |
 | **Audience** (students → executives, lay → technical) | `sources[]`, fact sheet | brief → engineer (sequence, depth, evidence types, ask) → writer → designer → animator → builders |
 | **Duration** | sources, direction | engineer (cut/merge slides) → writer → builders |
 | **Format added** | everything | that builder only |

@@ -7,8 +7,13 @@ description: "Socratic topic-sharpening for a presentation. Use BEFORE building 
 
 ## References — open when
 - `references/brief-and-audience.md` — when you fill `audience` / `deliveryMode` / `tone`, when two
-  audiences compete, or when deciding whether to offer directions. Read §1 for the audience table,
-  §2 for delivery modes, §3 for "ask, infer, or default", §4 for direction cards.
+  audiences compete, or when deciding whether to offer directions. Read:
+  - §1 for the audience table;
+  - §1b to turn goal + prior knowledge + format into a playbook;
+  - §2 for delivery modes;
+  - §2b when the deck may be presented *and* read alone, or replaces a recorded lecture;
+  - §3 for "ask, infer, or default";
+  - §4 for direction cards.
 
 Most weak decks fail before a single slide: no one decided what the talk is *for*. Your job is to
 refuse to let the user start building until three things are nailed: **the one message, the audience,
@@ -91,12 +96,17 @@ lines for confirmation, then write `brief.json`:
   "language": "", "rtl": false, "brandNotes": "", "designPreference": "free text or a design.system id",
   "accessibility": { "reducedMotion": false, "highContrast": false, "minFontPt": 0 },
   "interaction": "none|question|quiz|poll|activity|demo — and whether attendees have devices",
-  "engagement": "", "suggestedScaffold": "case|pitch|keynote|workshop|report|close|SCR|funnel|answer-first"
+  "engagement": "", "suggestedScaffold": "case|pitch|keynote|workshop|report|close|SCR|funnel|answer-first",
+  "playbook": "1-exec|2-pitch|3-students|4-technical|5-self-read|6-demo|7-research|8-data|9-launch|10-sale|11-architecture|12-tutorial",
+  "cuts": ["live", "read"]
 }
 ```
 Every field beyond the original ones is optional — an older brief without them still works. The
 orchestrator copies `audience`, `deliveryMode`, `tone`, `accessibility` into `blueprint.meta`, and
 `sources` into `blueprint.sources`.
+
+`playbook` and `cuts` are optional. `cuts: ["live","read"]` tells the engineer to plan two cuts from the
+same sources (brief-and-audience.md §2b).
 
 Pick `suggestedScaffold` from the audience + goal (see presentation-engineer's framework guide):
 decide/buy-in + senior → `answer-first` or `case`; learn + lay → `keynote` or `workshop`; progress

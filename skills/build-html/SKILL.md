@@ -5,8 +5,13 @@ description: "Render a finished blueprint.json into a self-contained, animated H
 
 # build-html
 
-HTML is the native home for this studio's motion — camera-flight zoom, staged reveals, exhibit
-region-zoom, living backgrounds all run in the browser with no dependencies.
+HTML is the native home for this studio's motion: camera-flight navigation between slides (hub
+tiles fly into their section), click-stepped reveals, local quiz feedback and reduced motion all run
+in the browser with no dependencies.
+
+Not built in HTML: per-slide `animation.transition` (every slide change is the camera flight),
+shared-element Morph, exhibit region zoom (a reveal's `zoom` is ignored), and video or animated
+backgrounds (photo backgrounds are static). See format-capabilities.md.
 
 ## Build
 ```bash

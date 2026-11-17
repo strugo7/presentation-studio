@@ -26,6 +26,31 @@ the **order** (decision first vs. question first), the **depth** (mechanism vs. 
 evidence** (worked example vs. one decisive number vs. diagram + measurement) and the **ask**
 (decide / practise / try / fund).
 
+## 1b. Goal + prior knowledge + format → playbook
+The brief exists so the engineer can pick one playbook (presentation-engineer/references/deck-playbooks.md §0).
+Three answers decide it. Write them first, in this order, following Duarte (start from the audience
+and what they must remember:
+[duarte.com](https://www.duarte.com/blog/how-to-write-a-great-presentation/)):
+
+1. **Goal**: what the audience should do afterwards (`ask`, `audience.goal`).
+2. **Prior knowledge**: what they already know, and what they don't (`audience.priorKnowledge`). This
+   sets the depth, the definitions needed and the order.
+3. **Format**: live, read on their own, or both (`deliveryMode`, `formats`). This sets where the
+   explanation lives.
+
+| Goal | Prior knowledge | Format | Playbook |
+|---|---|---|---|
+| decide | informed | live or pre-read | 1 Executive brief, or 8 Data briefing when it's a metrics read-out |
+| buy-in (fund) | informed | stage + sent deck | 2 Investor pitch, two cuts |
+| learn | lay | live | 3 Beginner students; 12 Tutorial when it's a procedure |
+| learn / evaluate | expert | live | 4 Technical, or 7 Research when it answers a research question |
+| learn / decide | informed–expert | live | 11 Architecture overview (a system and a design decision) |
+| buy-in (adopt / buy) | lay–informed segment | live or sent | 9 Marketing / launch |
+| buy-in (this deal) | informed buyer | meeting + follow-up | 10 Product sale (with a 6 Demo beat) |
+| any | any | read only | the matching playbook, cut as 5 Self-read |
+
+Record the pick as `suggestedScaffold` and, optionally, `playbook` (e.g. `"7-research"`) in `brief.json`.
+
 ## 2. Delivery modes (`meta.deliveryMode`)
 
 | Mode | Shape | Text density | Interaction | Default format |
@@ -37,6 +62,28 @@ evidence** (worked example vs. one decisive number vs. diagram + measurement) an
 | `exec-briefing` | answer first, evidence, options, ask; appendix holds method | medium | none; decision slide stays up | PPTX + PDF |
 | `research` (seminar, defense) | question → method → findings (assertion–evidence) → limits | medium | Q&A slide, backup slides | PPTX / PDF |
 | `self-read` (slidedoc, async) | headlines that summarise, captions that stand alone, method in appendix | high but structured | answers shown inline | PDF / HTML |
+
+## 2b. Live, read, or both: where the explanation lives
+Ask, or infer, whether the deck will be **presented**, **read without the presenter**, or **both**. It
+decides more than the format:
+
+- **Live only.** Slides carry the claim and the evidence. The explanation, the oral attribution and a
+  bridge sentence to the next slide go in `speakerNotes` (deck-writer, audience-voice-and-citations.md §2).
+- **Read only** (`self-read`). Captions and short body text carry what the presenter would have said:
+  - the context;
+  - definitions of terms and metrics;
+  - where each number comes from;
+  - how to read the exhibit.
+
+  The method goes to an appendix.
+- **Both.** Plan **two cuts from the same sources** (`formats` lists both; note "live + read cut" in
+  `sourceMaterial` or `brandNotes`). A PDF export of the live deck is a static copy of the stage version.
+  It is not a read version.
+
+When the user says the talk **replaces a video or recorded lecture** for an audience starting from
+zero, record that in `audience.priorKnowledge` ("none, replaces the recorded lecture"). The writer
+must then check that the sequence and notes give the presenter the full explanation
+(audience-voice-and-citations.md §2b).
 
 ## 3. Ask, infer, or default?
 
@@ -52,7 +99,9 @@ language = the request's language; RTL for Hebrew/Arabic; format = HTML + PDF fo
 - two audiences with opposite needs in one request (investors *and* an intro lecture → which one leads,
   or two cuts from the same sources?);
 - the ask is missing and can't be inferred ("what should they do afterwards?");
-- a format/environment conflict (live quiz requested but PDF-only delivery).
+- a format/environment conflict (live quiz requested but PDF-only delivery);
+- it's unclear whether the deck will be presented, read alone or both, and the material is dense
+  enough that the answer changes what goes on the slides (§2b).
 
 Never run rounds of preference questions about colours, fonts or tone you could choose sensibly.
 

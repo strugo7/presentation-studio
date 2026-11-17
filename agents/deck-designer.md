@@ -9,6 +9,10 @@ system, not a template. Read `shared/blueprint-spec.md`, `skills/deck-designer/S
 `skills/deck-designer/references/design-systems.md`; open `layout-patterns.md`, `design-gallery.md` and
 `asset-sources.md` from the same folder when the SKILL says to.
 
+When the user asks to see options, or the brief leaves a visual decision that changes the result,
+propose 2–3 contrasting directions plus the slide ids that show them (SKILL §1b). The orchestrator
+renders them with `shared/preview_directions.py`, and you write the one the user picks.
+
 You write only `design` (system, palette, fonts, motif, tokens, variant), each slide's `layout`,
 `background` and `dark` flag, and visual `assets[]` entries (with provider, licence, credit, alt). Leave structure, copy and animation to the others. Commit to a dominant colour with a
 sharp accent, a distinctive-but-legible type pairing, one repeated motif, and a deliberate dark/light

@@ -1,6 +1,6 @@
 # Layout patterns — original specs, one content job per slide
 
-Nine patterns. Each one maps onto what the renderers actually implement: four `layout` values
+Nine patterns, plus a table of reference compositions (§10). Each one maps onto what the renderers actually implement: four `layout` values
 (`statement`, `split`, `full-exhibit`, `big-number`), the role defaults, and the diagram kinds. Every
 pattern lists:
 
@@ -106,6 +106,23 @@ Margins come from the design-system token `margin` (110–150 px). "Start" means
 - **Long text:** if it needs more than 3 lines, the argument isn't finished. Go back to the ghost deck.
 - **Static fallback:** identical.
 - **RTL check:** alignment matches the design system (start or centre).
+
+### 10. Reference compositions → our layouts (from the viewed slides)
+Slides viewed for design-gallery.md #14–19, translated into what the renderers can do. Use them as
+**role pairs**: an explanation slide followed by an evidence slide reads better than either alone.
+
+| Composition seen | Use here | What our renderers can't do (and the workaround) |
+|---|---|---|
+| Spacious start-aligned cover over a faint grid (#14) | role `cover`, `coverAlign: start` | no grid on dark slides; the empty space is the point |
+| Photo of a person on one half, ≤ 6-word claim on the other (#15) | `split`, photo bleeds | no per-word colour: put the key word first |
+| Product image filling the slide, short notes next to the parts (#16) | `split`, image + ≤ 2 bullets naming the parts in reading order | no call-outs on the image: bake them into the asset (then `alt` names them; a re-cut needs new art) |
+| Two columns on one baseline, values shown, leader emphasised (#17) | `full-exhibit`, `column`, `highlight` | no dashed reference line or bracket: the gain goes in the title and caption |
+| Six numbered entries in a 2×3 index (#18) | role `agenda` (≤ 4 tiles), or a `table` | **gap**: no index-grid layout; candidate for a new layout value |
+| Ranked horizontal bars, value at the end (#19) | `full-exhibit`, `bar`, categories sorted | no pale track behind bars (not needed) |
+
+**Check at display size.** A detail that reads on a laptop disappears on a projector. Small caps
+metadata, axis labels and footers must hold at the room's distance. Look at the rendered slide full screen
+(or the direction preview's full-size view) before hand-off, in RTL as well as LTR.
 
 ---
 

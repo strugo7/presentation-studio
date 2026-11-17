@@ -62,7 +62,8 @@ Use the preset directly when no direction fits; compose `custom` + `tokens` for 
 
 **Same content, two directions:** render the same blueprint with `executive-data-briefing` and
 `keynote` — title size/weight, alignment, margins, frames and motif all change in both HTML and PPTX
-(the test suite checks that two systems produce different title geometry and typography).
+(the test suite checks that two systems produce different title geometry and typography). To show the
+user the difference before committing, use the direction previews below.
 
 ## Hebrew typography
 
@@ -86,16 +87,67 @@ Use the preset directly when no direction fits; compose `custom` + `tokens` for 
 ## Reference libraries to pull looks from (research these when composing a custom system)
 
 - **`design-gallery.md`** (this folder) — 13 real-world references, each opened and checked (links only), with what each teaches and how it maps to our layouts.
-- **`zarazhangrui/frontend-slides`** — 12 presets + ~34 bold templates. Mine it for composition and
-  type pairings. Fitting picks for serious/academic work: Swiss Modern, Cobalt Grid, Blue Professional,
-  Signal, Monochrome, Electric Studio. **Avoid** its hacker/neon templates (Terminal Green, Neon Cyber,
-  8-Bit Orbit, Studio) — exactly the look to never ship.
+- **`zarazhangrui/frontend-slides`** (Frontend Slides): an HTML-deck skill. Its `STYLE_PRESETS.md` lists 12
+  presets (Bold Signal, Electric Studio, Swiss Modern, Paper & Ink, …), and its skill can draw on a bold
+  template pack. Its style-selection step is the model for our direction previews (below).
+- **`zarazhangrui/beautiful-html-templates`** (MIT): 34 HTML slide templates, each with three published
+  screenshots (cover · mid-deck · later). Signal, Cobalt Grid, Blue Professional and Monochrome are
+  templates here, not Frontend Slides presets. design-gallery.md #14, #18 and #19 describe single slides
+  that were viewed.
+- Fitting picks for serious or academic work: Swiss Modern, Cobalt Grid, Blue Professional, Signal,
+  Monochrome, Electric Studio. **Avoid** the hacker/neon looks (Terminal Green, Neon Cyber, 8-Bit Orbit,
+  Studio): exactly the look to never ship.
 - The curated skill list at `tosea.ai/blog/best-claude-code-skills-powerpoint-2026` names other design
   skills (Office Kit component TSX, template-layout skills, HTML-first builders). Treat as a menu for
   where to borrow technique; the article is a vendor listicle, not a benchmark.
 
 When you borrow, take the **composition** (layout archetype, type scale, grid, motif) — translate it
 into our palette and fonts. Don't copy another deck's content or colours wholesale.
+
+### Lineage: which local preset answers to which reference
+The local presets are **adaptations**, not ports. They share an idea with the reference and differ in
+type, palette and detail. Say "in the spirit of X" when you explain a choice, never "the X template".
+
+| Local id | Reference it adapts | What's shared | What differs here |
+|---|---|---|---|
+| `signal` | beautiful-html-templates **Signal** (gallery #14) | deep navy canvas, institutional restraint, start-aligned cover, one warm accent | Assistant (sans) instead of a serif display + mono metadata; steel-blue accent `2C5F7C` + amber `B4722E` instead of a single muted gold; no grid on the cover; running head (`motif: rule`) on content slides |
+| `cobalt-grid` | beautiful-html-templates **Cobalt Grid** (gallery #18) | ledger calm, hairline rules, one accent, graph-paper motif | sans instead of cobalt italic serifs; white canvas with a faint grid instead of warm paper; steel-blue default accent unless tuned; rounded cards |
+| `swiss` | Frontend Slides preset **Swiss Modern** | white/black + one red, visible structure, asymmetry, large section numerals | red `D52B1E` (theirs `#ff3300`); Assistant instead of Archivo + Nunito; hairline frames |
+| `mono` | beautiful-html-templates **Monochrome** (screenshots not yet viewed) | no colour, words carry the design | Assistant unless `fonts.display` names a serif; ivory `F5F5F2` panels |
+| — | **Blue Professional** (gallery #19) | reference only: cream + electric blue, ranked bars with values at the end | no local preset; its ranking slide maps to `full-exhibit` + `bar` |
+| — | Frontend Slides **Electric Studio** | reference only: split panel, high contrast, one blue | no local preset; compose `custom` + tokens if needed |
+
+## Direction previews: show 2–3 directions before building the whole deck
+Frontend Slides' principle is *show, don't tell*: people find what they want by seeing it. So it renders
+three single-slide title previews before generating the deck. We do the same, from **the user's own
+blueprint**, with one difference: each direction shows the **cover and one typical slide** from the
+deck (a chart, a process, a product screen). The density and composition of real content are part
+of the choice, and a cover alone hides them.
+
+Mechanism (no new blueprint fields): `python shared/preview_directions.py blueprint.json out/ --systems=a,b,c`.
+- Copies the blueprint once per direction, sets `design.system`, and drops the blueprint's own
+  `design.palette`/`design.tokens` so each direction shows its own (`--keep-brand` keeps them, for
+  brand work).
+- Keeps the cover plus one or two typical slides (auto-picked, or `--slides=id1,id2`), with every reveal
+  shown.
+- Renders each with `shared/render_html.py` and writes `out/index.html`: one row per direction, each with
+  the slides side by side, plus a line of what changes (title scale and weight, alignment, motif, frame,
+  margin).
+- With Node + Playwright it also writes PNGs (`--png`), so the comparison opens anywhere.
+
+What makes directions a real choice (brief-and-audience.md §4): they must differ in composition and
+typography (tokens: `titleScale`, `titleWeight`, `coverAlign`, `motif`, `frame`, `margin`, `kicker`),
+not only in colour. Good default trios:
+
+| Deck | Directions to preview |
+|---|---|
+| executive / data briefing | `executive-data-briefing` · `swiss` · `editorial-report` |
+| teaching / workshop | `classroom-workshop` · `cobalt-grid` · `keynote` |
+| product / launch / demo | `product-demo` · `keynote` · `signal` |
+| research / technical | `technical-case` · `cobalt-grid` · `mono` |
+
+Preview authenticity (from Frontend Slides): the slides show the deck's real content. Direction names
+and labels go in the comparison page around the slides, never on a slide.
 
 ---
 

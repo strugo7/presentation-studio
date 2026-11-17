@@ -10,8 +10,10 @@ Produce the structural half of `blueprint.json`.
 
 ## References — open when
 - `references/structure-frameworks.md` — Step 2, choosing a scaffold.
-- `references/deck-playbooks.md` — Step 2, once you know the audience/delivery mode: open only the
-  matching playbook (executive, investor, students, technical, self-read, demo).
+- `references/deck-playbooks.md` — Step 2, once you know the audience/delivery mode. Read §0 (the
+  chooser table) and the live-vs-read rule, then only the matching playbook: executive, investor,
+  students, technical, self-read, demo, research, data briefing, marketing/launch, sale,
+  architecture, tutorial.
 - `references/pedagogy.md` — Steps 5–6, for teaching decks and engagement placement.
 - `references/charts-and-diagrams.md` — Step 5, whenever a slide has numbers, a process, a protocol or a
   timeline; also before using a screenshot as evidence.
@@ -44,6 +46,16 @@ Diagnose from audience + goal, state your pick and why in one line, let the user
 | Progress update | **The Report-out** (headline → scorecard → wins → misses → insight → plan → ask) |
 | Persuade to act, emotional | **Monroe's Motivated Sequence** |
 | Research / analytical claim | **SCR / SCQA** (situation → complication → [question] → resolution) |
+| Seminar, conference, defence | **Research question → evidence** (question → definitions → method → findings → limits → answer) |
+| Metrics / analytics read-out | **Report-out** or **Answer-first**, a chart chosen per question |
+| Launch, campaign, adopt a change | **Duarte sparkline** (what is ↔ what could be) |
+| One buyer, one deal | **Need → proof → next step** (deck-playbooks.md #10) |
+| System design / architecture decision | **C4 zoom**: context → parts → the part that changes → interaction → trade-offs → decision |
+| Teach a procedure | **Workshop** with steps: goal → prerequisites → action + expected result → check → errors |
+
+Then open the matching playbook in deck-playbooks.md. Its **Live vs. read** line decides what goes on the
+slide and what goes in the notes. If the brief asks for both a live and a read version, plan two cuts
+from the same sources, not one deck exported twice.
 
 ## Step 3 — Write the ghost deck FIRST
 Before any slide body, write the ordered list of **action titles** — one full declarative sentence per

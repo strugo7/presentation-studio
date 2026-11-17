@@ -197,6 +197,11 @@ def kicker_text(sl, kicker):
 def header(slide, sl, kicker, title, dark=False, size=30, x=None, w=None, y0=None):
     x = MG if x is None else x; w = CW if w is None else w
     y0 = (0.62 if TOK["motif"] == "rule" else 0.42) if y0 is None else y0
+    if TOK["motif"] == "numbers" and sec_index(sl) and not dark:   # keep the title clear of the section numeral
+        nx0, nx1 = (0.25, 2.85) if RTL else (13.333 - 2.85, 13.333 - 0.25)
+        if x < nx1 and x + w > nx0:
+            if RTL: cut = max(0.0, nx1 - x); x += cut; w -= cut
+            else: w -= max(0.0, x + w - nx0)
     tcol = WHITE if dark else C("ink"); kcol = MUTE_D if dark else (C("mute") if TOK["kicker"] == "caps" else C("accent"))
     k = kicker_text(sl, kicker)
     if k:
@@ -211,7 +216,7 @@ def footer(slide, sl, dark):
         para(tb(slide, MG, 6.98, CW, 0.32, MSO_ANCHOR.BOTTOM), f, 9.5, MUTE_D if dark else C("mute"), first=True, sa=0)
 
 # ---------- exhibits ----------
-SERIES = ["accent", "accent2", "mute", "ink"]
+SER_HEX, HL_HEX, BASE1_HEX = bl.chart_colors(pal)   # same inks as the HTML chart (distinct even when accent == accent2)
 def ex_image(slide, ref, x, y, w, h, caption, alt="", bleed=False):
     path = A.file_for(ref, raster_only=True)
     if not path:
@@ -272,7 +277,8 @@ def ex_chart(slide, data, x, y, w, h):
         try: pl.gap_width = 60
         except Exception: pass
     for i, s in enumerate(ch.series):
-        col = C(SERIES[i % 4])
+        single_hl = sp["kind"] in ("column", "bar") and len(sp["series"]) == 1 and sp["highlight"] is not None
+        col = RGBColor.from_string(BASE1_HEX if single_hl else SER_HEX[i % 4])
         if sp["kind"] == "line":
             s.format.line.color.rgb = col; s.format.line.width = Pt(3); s.smooth = False
             s.marker.style = XL_MARKER_STYLE.CIRCLE; s.marker.size = 7
@@ -289,7 +295,7 @@ def ex_chart(slide, data, x, y, w, h):
         else:
             s.format.fill.solid(); s.format.fill.fore_color.rgb = col
             if len(sp["series"]) == 1 and sp["highlight"] is not None and sp["highlight"] < len(sp["categories"]):
-                pt = s.points[sp["highlight"]]; pt.format.fill.solid(); pt.format.fill.fore_color.rgb = C("accent2")
+                pt = s.points[sp["highlight"]]; pt.format.fill.solid(); pt.format.fill.fore_color.rgb = RGBColor.from_string(HL_HEX)
     return gf
 def ex_table(slide, data, x, y, w, h):
     cols = data.get("columns", []); rows = data.get("rows", [])

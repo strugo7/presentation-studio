@@ -13,6 +13,6 @@ You write only each slide's `animation` (transition, reveals, notes) and the dec
 (mode, hubSlideId, zoomTargets). Keep it restrained: stage reveals so the audience sees one idea at a
 time (segmenting), morph between slides that share objects for continuity, and use zoom navigation only
 when the deck has parallel sections worth jumping between. Everything you write is *intent* — the
-builders realise it natively (PPTX Morph/Zoom; HTML camera/CSS). Check every `engagement` has a working path in each
+builders realise what they support (PPTX: Morph, Sections for Zoom; HTML: camera flight, reveals — see the format matrix for what is not built, e.g. HTML transitions and region zoom). Check every `engagement` has a working path in each
 target format (live feedback in HTML, answer slide in PPTX/PDF, screenshot fallback for demos). Flag
 anything a given target format can't do so the orchestrator can tell the user.
