@@ -215,7 +215,7 @@ def footer(slide, sl, dark):
     x, w = MG, CW
     if LOGO and sl.get("role", "concept") not in LOGO["skip"]:
         lh, lw = LOGO["height"] / 144, LOGO["width"] / 144            # 1920 px stage = 13.333 in
-        src = A.file_for(LOGO["refOnDark"] if bl.logo_on_dark(sl, RTL) else LOGO["ref"], raster_only=True)
+        src = A.file_for(LOGO["refOnDark"] if bl.logo_on_dark(sl, RTL, file_for=lambda r: A.file_for(r, raster_only=True)) else LOGO["ref"], raster_only=True)
         if src:
             lx = MG if RTL else 13.333 - MG - lw
             pic = slide.shapes.add_picture(src, Inches(lx), Inches(7.5 - 34 / 144 - lh), Inches(lw), Inches(lh))

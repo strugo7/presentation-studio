@@ -461,15 +461,30 @@ def logo_spec(bp):
             "opacity": float(lg.get("opacity", 0.9)), "skip": set(lg.get("skipRoles", []))}
 
 
-def logo_on_dark(sl, rtl, split_photo_reaches_corner=True):
-    """True when the logo sits on a dark slide, a photo background, or a photo bleeding into its corner."""
+def image_corner_is_dark(path, rtl, threshold=150):
+    """Mean luminance of the image's bottom corner where the logo lands; True if dark. No PIL -> True."""
+    try:
+        from PIL import Image
+        im = Image.open(path).convert("L"); w, h = im.size
+        box = (0, int(h * 0.8), int(w * 0.35), h) if rtl else (int(w * 0.65), int(h * 0.8), w, h)
+        px = list(im.crop(box).resize((32, 16)).getdata())
+        return sum(px) / len(px) < threshold
+    except Exception:
+        return True
+
+
+def logo_on_dark(sl, rtl, split_photo_reaches_corner=True, file_for=None):
+    """True when the logo sits on a dark slide, a photo background, or a dark photo bleeding into its corner."""
     role = sl.get("role", "concept")
     if sl.get("dark", role in ("cover", "stakes", "close", "quote", "divider")): return True
     if (sl.get("background") or {}).get("assetRef") or (sl.get("background") or {}).get("photo"): return True
     ex = sl.get("exhibit") or {}
     end_side = "left" if rtl else "right"
-    return (split_photo_reaches_corner and sl.get("layout") == "split" and ex.get("type") == "image" and not exhibit_devices(ex)
-            and ex.get("side", "left") == end_side)
+    if not (split_photo_reaches_corner and sl.get("layout") == "split" and ex.get("type") == "image"
+            and not exhibit_devices(ex) and ex.get("side", "left") == end_side):
+        return False
+    path = file_for(ex.get("ref")) if file_for else None
+    return image_corner_is_dark(path, rtl) if path else True
 
 
 class Assets:

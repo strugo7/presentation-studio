@@ -230,9 +230,9 @@
    ],
    "exhibit": {
     "type": "image",
-    "ref": "cover",
+    "ref": "corgi",
     "side": "left",
-    "caption": "כל אינטראקציה עם הכלב היא חוויית למידה"
+    "caption": "כל מפגש עם הכלב הוא חוויית למידה"
    },
    "citations": [
     {
@@ -282,21 +282,20 @@
    "id": "classical",
    "section": "s2",
    "role": "process",
+   "layout": "split",
    "kicker": "התניה קלאסית",
    "actionTitle": "בהתניה קלאסית הכלב מחבר גירוי לרגש: הפעמון מתחיל לבשר על אוכל",
    "exhibit": {
-    "type": "diagram",
-    "caption": "הניסוי של פבלוב, מפושט",
-    "data": {
-     "kind": "chain",
-     "steps": [
-      "צליל פעמון + אוכל",
-      "חזרה שוב ושוב",
-      "הפעמון לבדו מעורר ציפייה"
-     ]
-    }
+    "type": "image",
+    "ref": "pavlov",
+    "side": "left",
+    "caption": "הניסוי של פבלוב: הכלב, הפעמון ומד הרוק (איור)"
    },
    "bullets": [
+    {
+     "text": "פעמון + אוכל שוב ושוב, עד שהפעמון לבדו מעורר ציפייה",
+     "lead": "המנגנון"
+    },
     {
      "text": "חיזוק שם הכלב, תגובת רוגע",
      "lead": "באילוף"
@@ -320,14 +319,19 @@
      {
       "step": 1,
       "show": [
-       "exhibit"
+       "bullet:0"
       ]
      },
      {
       "step": 2,
       "show": [
-       "bullet:0",
        "bullet:1"
+      ]
+     },
+     {
+      "step": 3,
+      "show": [
+       "bullet:2"
       ]
      }
     ]
@@ -486,6 +490,11 @@
    "dark": true,
    "kicker": "חלק 2",
    "actionTitle": "שלושה עקרונות מכריעים אם הלמידה תצליח: תזמון, עקביות וחיזוק",
+   "background": {
+    "kind": "photo",
+    "assetRef": "shepherd",
+    "scrim": true
+   },
    "animation": {
     "transition": "morph"
    },
@@ -560,7 +569,13 @@
    "id": "consistency",
    "section": "s3",
    "role": "concept",
-   "layout": "statement",
+   "layout": "split",
+   "exhibit": {
+    "type": "image",
+    "ref": "attention",
+    "side": "left",
+    "caption": "כלב שיודע למה לצפות, מתרכז במאמן"
+   },
    "kicker": "עיקרון 2 · עקביות",
    "actionTitle": "עקביות היא ביטחון לכלב: אותו אות, מכל בני הבית, לאורך זמן",
    "bullets": [
@@ -613,19 +628,14 @@
    "id": "positive",
    "section": "s3",
    "role": "process",
+   "layout": "split",
    "kicker": "עיקרון 3 · חיזוק חיובי",
    "actionTitle": "חיזוק חיובי בונה מוטיבציה, ואז מורידים אותו בהדרגה עד שהפקודה הופכת להרגל",
    "exhibit": {
-    "type": "diagram",
-    "caption": "המסלול של חיזוק לאורך האימון",
-    "data": {
-     "kind": "chain",
-     "steps": [
-      "תגמול גבוה ומיידי",
-      "תגמול מדורג ונמוך יותר",
-      "הפקודה הופכת להרגל"
-     ]
-    }
+    "type": "image",
+    "ref": "lure",
+    "side": "left",
+    "caption": "תגמול מהיד, ברגע הנכון"
    },
    "bullets": [
     {
@@ -635,6 +645,10 @@
     {
      "text": "חיזוק מיידי = מוטיבציה גבוהה",
      "lead": "הכלל"
+    },
+    {
+     "text": "מתגמול גבוה ומיידי לתגמול מדורג, עד הרגל",
+     "lead": "הדרגתיות"
     }
    ],
    "citations": [
@@ -650,14 +664,19 @@
      {
       "step": 1,
       "show": [
-       "exhibit"
+       "bullet:0"
       ]
      },
      {
       "step": 2,
       "show": [
-       "bullet:0",
        "bullet:1"
+      ]
+     },
+     {
+      "step": 3,
+      "show": [
+       "bullet:2"
       ]
      }
     ]
@@ -1007,6 +1026,71 @@
     "cover",
     "what",
     "close"
+   ]
+  },
+  {
+   "id": "corgi",
+   "path": "assets/what-corgi-hand.jpg",
+   "kind": "photo",
+   "provider": "unsplash",
+   "license": "Unsplash License",
+   "licenseUrl": "https://unsplash.com/license",
+   "credit": "Unsplash",
+   "alt": "כלב קורגי מרחרח יד מושטת על מדשאה",
+   "usedIn": [
+    "what"
+   ]
+  },
+  {
+   "id": "pavlov",
+   "path": "assets/classical-pavlov.jpg",
+   "kind": "illustration",
+   "provider": "wikimedia",
+   "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pavlov_experiments_with_dog_Wellcome_M0014738.jpg",
+   "creator": "Wellcome Collection",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "credit": "Wellcome Collection, CC BY 4.0, via Wikimedia Commons",
+   "alt": "איור של ניסוי פבלוב: כלב רתום על שולחן, צינור לאיסוף רוק, וחוקר שמתעד מעבר לקיר",
+   "usedIn": [
+    "classical"
+   ]
+  },
+  {
+   "id": "shepherd",
+   "path": "assets/principles-shepherd.jpg",
+   "kind": "photo",
+   "provider": "unsplash",
+   "license": "Unsplash License",
+   "licenseUrl": "https://unsplash.com/license",
+   "credit": "Unsplash (תמונת ראי)",
+   "alt": "כלב רועה גרמני יושב בפארק ומביט במאמנת",
+   "usedIn": [
+    "div_princ"
+   ]
+  },
+  {
+   "id": "attention",
+   "path": "assets/consistency-attention.jpg",
+   "kind": "photo",
+   "provider": "unsplash",
+   "license": "Unsplash License",
+   "licenseUrl": "https://unsplash.com/license",
+   "credit": "Unsplash (חיתוך)",
+   "alt": "כלב ויזסלה יושב בין רגלי בעליו ומביט למעלה בריכוז",
+   "usedIn": [
+    "consistency"
+   ]
+  },
+  {
+   "id": "lure",
+   "path": "assets/positive-lure.jpg",
+   "kind": "photo",
+   "provider": "user",
+   "credit": "תמונה ממאגר חינמי, שנשלחה על ידי צוות הקורס",
+   "alt": "מאמנת מתכופפת ומגישה תגמול מהיד לכלב קטן בפארק",
+   "usedIn": [
+    "positive"
    ]
   },
   {
