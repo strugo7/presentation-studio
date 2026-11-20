@@ -284,12 +284,14 @@ STRINGS = {
            "credit": "Image", "accessed": "accessed", "answer": "Answer", "correct": "Correct.",
            "incorrect": "Not quite.", "reveal": "Reveal answer", "poll": "Local poll: counts on this device only",
            "back": "Back to the question", "usedOn": "slide", "license": "License", "try": "Choose an answer",
-           "demo": "Demo", "activity": "Activity", "question": "Question", "cont": "cont."},
+           "demo": "Demo", "activity": "Activity", "question": "Question", "cont": "cont.",
+           "next": "Next", "prev": "Previous", "rotate": "Turn your phone sideways for a bigger view"},
     "he": {"sources": "מקורות וקרדיטים", "source": "מקור", "sourcesShort": "מקורות",
            "credit": "תמונה", "accessed": "נבדק", "answer": "תשובה", "correct": "נכון.",
            "incorrect": "לא בדיוק.", "reveal": "חשיפת התשובה", "poll": "סקר מקומי: נספר במכשיר הזה בלבד",
            "back": "חזרה לשאלה", "usedOn": "שקף", "license": "רישיון", "try": "בחרו תשובה",
-           "demo": "הדגמה", "activity": "פעילות", "question": "שאלה", "cont": "המשך"},
+           "demo": "הדגמה", "activity": "פעילות", "question": "שאלה", "cont": "המשך",
+           "next": "הבא", "prev": "הקודם", "rotate": "סובבו את הטלפון לרוחב לתצוגה גדולה יותר"},
 }
 
 
