@@ -50,6 +50,8 @@ def asset_src(ref):
     if not os.path.exists(dst): shutil.copy(src, dst)
     return "assets/" + name
 
+LOGO = bl.logo_spec(BP)
+
 def sec_index(sl):
     for i, s in enumerate(sections):
         if sl.get("section") == s.get("id") or sl.get("id") in (s.get("slideIds") or []): return i + 1
@@ -407,6 +409,9 @@ def slide_section(sl):
         deco += f'<div class="secnum" aria-hidden="true">{si:02d}</div>'
     foot = bl.slide_footer(BP, sl, bl.slide_asset_ids(sl))
     foot = f'<div class="foot"><cite>{E(foot)}</cite></div>' if foot and role not in ("references",) else ""
+    if LOGO and role not in LOGO["skip"]:
+        lsrc = asset_src(LOGO["refOnDark"] if bl.logo_on_dark(sl, RTL, split_photo_reaches_corner=False) else LOGO["ref"])
+        if lsrc: foot += f'<img class="logo" src="{lsrc}" alt="" aria-hidden="true">'
     notes = f'<aside class="notes">{E(sl.get("speakerNotes",""))}</aside>' if sl.get("speakerNotes") else ""
     return (f'<section class="{cls}" id="s-{E(sl["id"])}" data-max="{mx}" aria-roledescription="slide" aria-label="{E(sl.get("actionTitle") or role)}">'
             f'{bg}{deco}<div class="ov"></div>{body}{foot}{notes}</section>')
@@ -525,6 +530,7 @@ pre.code{color:#cfe;font-family:var(--mono);font-size:22px;padding:24px;text-ali
 .secnum{position:absolute;top:10px;''' + END + r''':50px;font-size:230px;font-weight:800;line-height:1;color:var(--hair);opacity:.7;z-index:0;font-variant-numeric:tabular-nums}
 .foot{position:absolute;bottom:44px;right:var(--m);left:var(--m);font-size:19px;line-height:1.35;color:var(--mute);z-index:3}.foot cite{font-style:normal}
 .slide.dark .foot{color:#9aa6b2}
+''' + (f'.logo{{position:absolute;bottom:34px;{"left" if RTL else "right"}:var(--m);height:{LOGO["height"]:.0f}px;width:auto;opacity:{LOGO["opacity"]};z-index:4;pointer-events:none}}.foot{{{"padding-left" if RTL else "padding-right"}:{LOGO["width"] + 32:.0f}px}}' if LOGO else '') + r'''
 .engage{margin-top:28px;padding:28px 32px;border:1.5px solid var(--hair);border-radius:max(10px,var(--r));background:rgba(255,255,255,.75)}
 .slide.dark .engage{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)}
 .eg-k{font-size:20px;font-weight:800;letter-spacing:.1em;color:var(--accent);margin-bottom:6px}.eg-p{font-size:32px;font-weight:700;color:inherit;margin-bottom:18px;line-height:1.3}

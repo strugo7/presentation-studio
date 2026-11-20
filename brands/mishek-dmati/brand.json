@@ -1,0 +1,19 @@
+{
+  "name": "משק דמתי · בית לכלבים",
+  "appliesTo": "every dog-training deck built for the school",
+  "design": {
+    "system": "classroom-workshop",
+    "logo": { "assetRef": "brand_logo", "assetRefOnDark": "brand_logo_light",
+              "height": 84, "aspect": 1.103, "opacity": 0.9 }
+  },
+  "assets": [
+    { "id": "brand_logo", "path": "assets/brand-logo-ink.png", "kind": "logo", "provider": "user",
+      "alt": "", "usedIn": [] },
+    { "id": "brand_logo_light", "path": "assets/brand-logo-light.png", "kind": "logo", "provider": "user",
+      "alt": "", "usedIn": [] }
+  ],
+  "files": {
+    "assets/brand-logo-ink.png": "logo-ink.png",
+    "assets/brand-logo-light.png": "logo-light.png"
+  }
+}

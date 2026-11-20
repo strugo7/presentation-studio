@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 290" width="320" height="290">
+  <!-- Mishek Dmati — dog school logo (vector redraw; replace with the original artwork when available) -->
+  <style>
+    .ln{fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+    .t1{font-family:'Assistant',sans-serif;font-weight:300;font-variation-settings:'wght' 300;font-size:30px;fill:currentColor}
+    .t2{font-family:'Assistant',sans-serif;font-weight:800;font-variation-settings:'wght' 800;font-size:23px;fill:currentColor}
+  </style>
+  <g style="color:#000">
+    <circle class="ln" cx="160" cy="104" r="96"/>
+    <path fill="currentColor" d="M160 110c-20 0-40 24-45 42-4 15 5 25 18 25 12 0 18-6 27-6s15 6 27 6c13 0 22-10 18-25-5-18-25-42-45-42z"/>
+    <ellipse fill="currentColor" cx="113" cy="101" rx="12" ry="17" transform="rotate(-22 113 101)"/>
+    <ellipse fill="currentColor" cx="141" cy="69" rx="13" ry="18" transform="rotate(-8 141 69)"/>
+    <ellipse fill="currentColor" cx="179" cy="69" rx="13" ry="18" transform="rotate(8 179 69)"/>
+    <ellipse fill="currentColor" cx="207" cy="101" rx="12" ry="17" transform="rotate(22 207 101)"/>
+    <line class="ln" x1="4" y1="226" x2="84" y2="226"/>
+    <line class="ln" x1="236" y1="226" x2="316" y2="226"/>
+    <text class="t1" x="160" y="236" text-anchor="middle" direction="rtl">משק דמתי</text>
+    <text class="t2" x="160" y="276" text-anchor="middle" direction="rtl">בית לכלבים</text>
+  </g>
+</svg>

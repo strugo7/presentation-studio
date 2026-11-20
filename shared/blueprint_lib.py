@@ -451,6 +451,27 @@ def _slug(s):
     return s[:40] or "asset"
 
 
+def logo_spec(bp):
+    """design.logo -> normalised dict, or None. Height is in px on the 1920x1080 stage."""
+    lg = (bp.get("design") or {}).get("logo")
+    if not lg or not lg.get("assetRef"): return None
+    h = float(lg.get("height", 84))
+    return {"ref": lg["assetRef"], "refOnDark": lg.get("assetRefOnDark") or lg["assetRef"],
+            "height": h, "width": h * float(lg.get("aspect", 1.0)),
+            "opacity": float(lg.get("opacity", 0.9)), "skip": set(lg.get("skipRoles", []))}
+
+
+def logo_on_dark(sl, rtl, split_photo_reaches_corner=True):
+    """True when the logo sits on a dark slide, a photo background, or a photo bleeding into its corner."""
+    role = sl.get("role", "concept")
+    if sl.get("dark", role in ("cover", "stakes", "close", "quote", "divider")): return True
+    if (sl.get("background") or {}).get("assetRef") or (sl.get("background") or {}).get("photo"): return True
+    ex = sl.get("exhibit") or {}
+    end_side = "left" if rtl else "right"
+    return (split_photo_reaches_corner and sl.get("layout") == "split" and ex.get("type") == "image" and not exhibit_devices(ex)
+            and ex.get("side", "left") == end_side)
+
+
 class Assets:
     def __init__(self, bp, assets_dir):
         self.bp = bp

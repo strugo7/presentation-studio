@@ -40,6 +40,13 @@
    "display": "Assistant",
    "body": "Assistant",
    "mono": "JetBrains Mono"
+  },
+  "logo": {
+   "assetRef": "brand_logo",
+   "assetRefOnDark": "brand_logo_light",
+   "height": 84,
+   "aspect": 1.103,
+   "opacity": 0.9
   }
  },
  "sources": [
@@ -760,7 +767,7 @@
    ],
    "engagement": {
     "type": "activity",
-    "prompt": "בזוגות: כל אחד מבצע 5 חזרות עם הכלב, והשני מודד כמה שניות עברו בין המבט לתגמול.",
+    "prompt": "בזוגות: 5 חזרות לכל אחד, והשני מודד את הזמן מהמבט לתגמול.",
     "presenterCue": "מחלקים לזוגות, 5 דקות תרגול, ואז שאלה אחת לחדר: מה היה הכי קשה בתזמון?"
    },
    "citations": [
@@ -1001,6 +1008,22 @@
     "what",
     "close"
    ]
+  },
+  {
+   "id": "brand_logo",
+   "path": "assets/brand-logo-ink.png",
+   "kind": "logo",
+   "provider": "user",
+   "alt": "",
+   "usedIn": []
+  },
+  {
+   "id": "brand_logo_light",
+   "path": "assets/brand-logo-light.png",
+   "kind": "logo",
+   "provider": "user",
+   "alt": "",
+   "usedIn": []
   }
  ]
 }

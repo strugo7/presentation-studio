@@ -67,8 +67,10 @@ It checks: every `citations[].sourceId` resolves to one `sources[]` entry; every
     "motif":   "faint graph grid + big section numbers",
     "gridBackground": true,
     "variant": "free text: how this deck departs from its preset",       // optional
-    "tokens":  { "titleScale": 1.1, "motif": "rule" }                     // optional per-deck overrides
-  },
+    "tokens":  { "titleScale": 1.1, "motif": "rule" },                    // optional per-deck overrides
+    "logo":    { "assetRef": "brand_logo", "assetRefOnDark": "brand_logo_light",   // optional brand logo:
+                 "height": 84, "aspect": 1.1, "opacity": 0.9, "skipRoles": [] }    // bottom corner at the end of
+  },                                                                               // the reading direction, every slide
 
   "sources": [                    // optional: everything the deck's claims rest on
     { "id": "rfc8446", "title": "RFC 8446 …", "shortTitle": "RFC 8446",

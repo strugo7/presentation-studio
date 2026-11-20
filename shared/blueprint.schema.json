@@ -168,6 +168,42 @@
         "tokens": {
           "type": "object",
           "description": "per-deck overrides of the system tokens (titleScale, motif, frame, ...)"
+        },
+        "logo": {
+          "type": "object",
+          "description": "brand logo on every slide, in the bottom corner at the end of the reading direction",
+          "properties": {
+            "assetRef": {
+              "type": "string",
+              "description": "assets[] id of the logo for light slides (transparent PNG)"
+            },
+            "assetRefOnDark": {
+              "type": "string",
+              "description": "assets[] id of a light version for dark slides and photos"
+            },
+            "height": {
+              "type": "number",
+              "description": "px on the 1920x1080 stage (default 84)"
+            },
+            "aspect": {
+              "type": "number",
+              "description": "width / height of the logo artwork (default 1)"
+            },
+            "opacity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "skipRoles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "assetRef"
+          ]
         }
       }
     },

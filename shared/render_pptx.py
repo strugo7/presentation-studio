@@ -210,10 +210,24 @@ def header(slide, sl, kicker, title, dark=False, size=30, x=None, w=None, y0=Non
         sz = max(22, size * TS * bl.title_scale_for(title))
         para(tb(slide, x, y0 + 0.4, w, 1.3, name="!!title"), title, sz, tcol, BOLDT, AL_MAIN, FD, sa=0, line=1.03, first=True)
 
+LOGO = bl.logo_spec(BP)
 def footer(slide, sl, dark):
+    x, w = MG, CW
+    if LOGO and sl.get("role", "concept") not in LOGO["skip"]:
+        lh, lw = LOGO["height"] / 144, LOGO["width"] / 144            # 1920 px stage = 13.333 in
+        src = A.file_for(LOGO["refOnDark"] if bl.logo_on_dark(sl, RTL) else LOGO["ref"], raster_only=True)
+        if src:
+            lx = MG if RTL else 13.333 - MG - lw
+            pic = slide.shapes.add_picture(src, Inches(lx), Inches(7.5 - 34 / 144 - lh), Inches(lw), Inches(lh))
+            pic.name = "Logo"; set_alt(pic, "")
+            if LOGO["opacity"] < 1:
+                blip = pic._element.find('.//' + qn('a:blip'))
+                blip.append(parse_xml('<a:alphaModFix %s amt="%d"/>' % (nsdecls('a'), int(LOGO["opacity"] * 100000))))
+            w = CW - lw - 0.22
+            if RTL: x = MG + lw + 0.22
     f = bl.slide_footer(BP, sl, bl.slide_asset_ids(sl))
     if f and sl.get("role") != "references":
-        para(tb(slide, MG, 6.98, CW, 0.32, MSO_ANCHOR.BOTTOM), f, 9.5, MUTE_D if dark else C("mute"), first=True, sa=0)
+        para(tb(slide, x, 6.98, w, 0.32, MSO_ANCHOR.BOTTOM), f, 9.5, MUTE_D if dark else C("mute"), first=True, sa=0)
 
 # ---------- exhibits ----------
 SER_HEX, HL_HEX, BASE1_HEX = bl.chart_colors(pal)   # same inks as the HTML chart (distinct even when accent == accent2)
@@ -583,14 +597,14 @@ def render(sl, n):
         place_exhibit(s, ex, (MG, top + 0.5, CW, hh))
         y = top + 0.5 + hh + (0.1 if dk == "sequence" else 0.65)
         bh = bullets_box(s, bullets, MG, y, CW, 6.85 - y, 16)
-        if has_eng: engagement_box(s, sl, MG, y + bh, CW * 0.6, 6.85 - y - bh, dark)
+        if has_eng: engagement_box(s, sl, MG + (CW * 0.4 if RTL else 0), y + bh, CW * 0.6, 6.85 - y - bh, dark)
     elif ex and (role == "comparison" or ex.get("type") == "table"):
         header(s, sl, kicker, title, dark=dark)
         rows = len((ex.get("data") or {}).get("rows", [])) + 1
         th = min(3.6, 0.5 * rows)
         place_exhibit(s, ex, (MG + 0.25, top + 0.3, CW - 0.5, th))
         bh = bullets_box(s, bullets, MG + 0.25, top + 0.55 + th, CW - 0.5, 6.85 - (top + 0.55 + th), 15)
-        if has_eng: engagement_box(s, sl, MG + 0.25, top + 0.6 + th + bh, CW * 0.6, 6.85 - (top + 0.6 + th + bh), dark)
+        if has_eng: engagement_box(s, sl, MG + (CW * 0.4 - 0.25 if RTL else 0.25), top + 0.6 + th + bh, CW * 0.6, 6.85 - (top + 0.6 + th + bh), dark)
     else:  # concept / evidence with or without an exhibit
         header(s, sl, kicker, title, dark=dark)
         cdw = CW * 0.47; txw = CW * 0.47; gap = CW - cdw - txw
